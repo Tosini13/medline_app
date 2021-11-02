@@ -6,9 +6,10 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListItemButton,
 } from "@mui/material";
 import { Add, Badge, Logout } from "@mui/icons-material";
+
+export const drawerWidth = "250px";
 
 type TDrawerProps = {};
 
@@ -21,7 +22,7 @@ const Drawer: React.FC<TDrawerProps> = () => {
         style={{
           height: "100%",
           backgroundColor: "#2D6B5F",
-          minWidth: "250px",
+          minWidth: drawerWidth,
         }}
         justifyContent="space-between"
       >

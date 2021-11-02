@@ -1,10 +1,20 @@
-import Drawer from "./components/nav/Drawer";
+import Lines from "./components/lines/Lines";
+import Drawer, { drawerWidth } from "./components/nav/Drawer";
+import styled from "styled-components";
+
+const Main = styled.div`
+  width: calc(100% - ${drawerWidth} - 10px);
+  padding: 5px;
+  margin-left: auto;
+`;
 
 function App() {
   return (
     <div>
       <Drawer />
-      <p>Welcome to medLine client!</p>
+      <Main>
+        <Lines />
+      </Main>
     </div>
   );
 }
