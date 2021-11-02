@@ -1,0 +1,14 @@
+# =============== BACKEND ===============
+
+# DEPENDENCIES
+
+server/node_modules
+
+server/.env
+
+
+# BUILD
+
+server/build
+
+server/gallery
