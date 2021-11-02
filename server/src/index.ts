@@ -1,6 +1,7 @@
 import express from "express";
 import AWS from "aws-sdk";
 import { connectMongoose } from "./mongo/config";
+import path from "path";
 import router from "./routes";
 import { initNodeGallery } from "./controllers/images";
 
@@ -30,14 +31,24 @@ app.use((req, res, next) => {
   next();
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 app.use(express.urlencoded());
 app.use(express.json());
 
 app.use("/api", router);
 
-app.get("/", (req, res) => {
-  res.send("Welcome to MedLine!");
+// app.get("/", (req, res) => {
+//   res.send("Welcome to MedLine!");
+// });
+
+// SERVE CLIENT
+
+const CLIENT_PATH = process.env.CLIENT_PATH ?? "../client/build";
+app.use(express.static(path.resolve(__dirname, CLIENT_PATH))); // ../../client/build
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, CLIENT_PATH, "index.html"));
 });
+
 app.listen(port, () => console.log(`server is listening on ${port}`));

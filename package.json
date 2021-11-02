@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/build/index.js",
-    "dev": "cd server && nodemon src/index.ts",
+    "start": "cd server && npm start",
+    "start:client": "cd client && npm start",
+    "dev": "cd server && npm run dev",
     "dev:client": "cd client && set PORT=3001 && npm run start",
-    "build:server": "cd server && tsc",
+    "build:server": "cd server && npm run build",
     "build:client": "cd client && npm install && npm run build",
-    "postinstall": "npm run build:server && npm run build:client"
+    "postinstall": "npm run build",
+    "build": "npm run build:client && npm run build:server",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "keywords": [],
   "author": "",
