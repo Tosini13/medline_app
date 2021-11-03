@@ -5,6 +5,13 @@ import { TLine } from "../../../models/backend";
 import Value from "./Value";
 import { formatDistanceToNowStrict } from "date-fns";
 
+const TypographySubHeader = styled(Typography)`
+  color: gray;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
 const PaperStyled = styled(Paper)<{ color: string }>`
   box-shadow: 0px 2px 1px -1px ${(props) => props.color},
     0px 1px 1px 0px ${(props) => props.color},
@@ -27,30 +34,34 @@ const Line: React.FC<TLineProps> = ({ line }) => {
     <PaperStyled style={{ padding: "5px" }} color={line.color}>
       <Grid container direction="column">
         <Grid item>
-          <Grid container justifyContent="space-between">
+          <Grid container justifyContent="flex-start" wrap="nowrap">
             <Grid item>
-              <Typography variant="subtitle2" style={{ color: "gray" }}>
+              <TypographySubHeader variant="subtitle2">
                 Last updated{" "}
                 {formatDistanceToNowStrict(line.lastUpdated, {
                   addSuffix: true,
                 })}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle2" style={{ color: "gray" }}>
-                {line.contributions} contributions
-              </Typography>
+              </TypographySubHeader>
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
-          <Typography align="center" fontWeight="700">
+          <Typography
+            align="center"
+            fontWeight="700"
+            style={{ marginTop: "10px" }}
+          >
             {line.title}
           </Typography>
           <Typography style={{ height: "50px" }}>{line.description}</Typography>
         </Grid>
         <Grid item style={{ padding: "0px 4px 10px 0px" }}>
-          <Grid container justifyContent="flex-end" alignItems="center">
+          <Grid container justifyContent="space-between" alignItems="flex-end">
+            <Grid item>
+              <TypographySubHeader variant="subtitle2">
+                {line.contributions} contributions
+              </TypographySubHeader>
+            </Grid>
             <Grid item>
               <Value value={line.value} />
             </Grid>

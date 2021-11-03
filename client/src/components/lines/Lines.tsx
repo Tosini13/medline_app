@@ -21,14 +21,14 @@ const Lines: React.FC<TLinesProps> = () => {
       value: LINE_VALUE.HIGH_VALUE,
       color: "#711010",
       lastUpdated: subDays(new Date(), 7),
-      contributions: 10,
+      contributions: 10123123,
     },
     {
       title: "Ankle",
       value: LINE_VALUE.NORMAL,
       color: "#8E9008",
       lastUpdated: subDays(new Date(), 190),
-      contributions: 1,
+      contributions: 10123123213123123123,
     },
     {
       title: "Back",
@@ -41,7 +41,7 @@ const Lines: React.FC<TLinesProps> = () => {
   return (
     <Grid container spacing={2}>
       {mockLines.map((line) => (
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} lg={4}>
           <Line line={line} />
         </Grid>
       ))}
