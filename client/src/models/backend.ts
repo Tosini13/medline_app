@@ -2,6 +2,9 @@ export type TLine = {
   title: string;
   description?: string;
   value: LINE_VALUE;
+  color: string;
+  lastUpdated: Date;
+  contributions: number;
 };
 
 export enum LINE_VALUE {
