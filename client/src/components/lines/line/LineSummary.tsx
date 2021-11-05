@@ -16,7 +16,7 @@ const PaperStyled = styled(Paper)<{ color: string }>`
   margin: 0px 5px 0px 2px;
   box-shadow: 0px 2px 1px -1px ${(props) => props.color},
     0px 1px 1px 0px ${(props) => props.color},
-    0px 1px 3px 0px ${(props) => props.color};
+    0px 1px 3px 0px ${(props) => props.color} !important;
   transition: all 0.3s;
   &:hover {
     cursor: pointer;
@@ -37,7 +37,7 @@ const LineSummary: React.FC<TLineSummaryProps> = ({ line }) => {
         <Grid item>
           <Grid container justifyContent="flex-start" wrap="nowrap">
             <Grid item>
-              <TypographySubHeader variant="subtitle2">
+              <TypographySubHeader variant="subtitle2" color="GrayText">
                 Last updated{" "}
                 {formatDistanceToNowStrict(line.lastUpdated, {
                   addSuffix: true,
@@ -56,10 +56,10 @@ const LineSummary: React.FC<TLineSummaryProps> = ({ line }) => {
           </Typography>
           <Typography style={{ height: "50px" }}>{line.description}</Typography>
         </Grid>
-        <Grid item style={{ padding: "0px 4px 10px 0px" }}>
+        <Grid item>
           <Grid container justifyContent="space-between" alignItems="flex-end">
             <Grid item>
-              <TypographySubHeader variant="subtitle2">
+              <TypographySubHeader variant="subtitle2" color="GrayText">
                 {line.contributions} contributions
               </TypographySubHeader>
             </Grid>

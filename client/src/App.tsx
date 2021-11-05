@@ -10,14 +10,13 @@ const Main = styled.div`
   @media screen and (min-width: 900px) {
     width: calc(100% - ${drawerWidth} - 10px);
   }
-  padding: 5px;
   margin-left: auto;
 `;
 
 function App() {
   return (
     <BrowserRouter basename={ERoutes.lines}>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", overflowX: "hidden" }}>
         <Drawer />
         <Main>
           <Routes>

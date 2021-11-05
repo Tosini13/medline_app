@@ -4,8 +4,14 @@ import { LINE_VALUE } from "../../../models/backend";
 import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
 
 const ValueIconContainer = styled.div<{ value: LINE_VALUE }>`
+  height: 25px;
+  width: 25px;
+  position: relative;
+  transform: rotate(-90deg);
   & > svg {
-    margin-left: -18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     ${(props) => {
       switch (props.value) {
         case LINE_VALUE.HIGHEST_VALUE:
@@ -17,8 +23,15 @@ const ValueIconContainer = styled.div<{ value: LINE_VALUE }>`
       }
     }}
   }
-  width: fit-content;
-  transform: rotate(-90deg);
+  & > svg:nth-child(1) {
+    transform: translate(-75%, -50%);
+  }
+  & > svg:nth-child(2) {
+    transform: translate(-50%, -50%);
+  }
+  & > svg:nth-child(3) {
+    transform: translate(-25%, -50%);
+  }
 `;
 
 type TValueProps = {

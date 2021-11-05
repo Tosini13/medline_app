@@ -2,14 +2,18 @@ import { createTheme } from "@mui/material";
 
 declare module "@mui/material/styles" {
   interface Theme {
-    status: {
-      danger: string;
+    value: {
+      normal: string;
+      high: string;
+      highest: string;
     };
   }
   // allow configuration using `createTheme`
   interface ThemeOptions {
-    status?: {
-      danger?: string;
+    value?: {
+      normal?: string;
+      high?: string;
+      highest?: string;
     };
   }
 }
@@ -37,5 +41,10 @@ export const theme = createTheme({
     h5: {
       fontFamily: ["Content", "Raleway", "sans-serif"].join(","),
     },
+  },
+  value: {
+    normal: "green",
+    high: "yellow",
+    highest: "red",
   },
 });

@@ -8,11 +8,11 @@ import { theme } from "./style/theme";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <StylesProvider injectFirst>
+    <StylesProvider injectFirst>
+      <ThemeProvider theme={theme}>
         <App />
-      </StylesProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </StylesProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
