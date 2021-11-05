@@ -8,12 +8,39 @@ import {
   ListItemText,
   Hidden,
 } from "@mui/material";
-import { Add, Badge, Logout } from "@mui/icons-material";
+import { Add, Badge, Logout, FormatLineSpacing } from "@mui/icons-material";
 import Hamburger from "../buttons/Hamburger";
+import { useNavigate } from "react-router";
+import { ERoutes } from "../../models/routes";
+
+type TMenuElementProps = {
+  onClick?: () => void;
+  Icon: any;
+  text: string;
+};
+
+const MenuElement: React.FC<TMenuElementProps> = ({ onClick, Icon, text }) => {
+  const ListItemContainer: React.FC = onClick
+    ? ({ children }) => (
+        <ListItem button onClick={onClick}>
+          {children}
+        </ListItem>
+      )
+    : ({ children }) => <ListItem>{children}</ListItem>;
+  return (
+    <ListItemContainer>
+      <ListItemIcon>
+        <Icon style={{ color: "white" }} />
+      </ListItemIcon>
+      <ListItemText primary={text} style={{ color: "white" }} />
+    </ListItemContainer>
+  );
+};
 
 type TMenuProps = {};
 
 const Menu: React.FC<TMenuProps> = () => {
+  const navigate = useNavigate();
   return (
     <Grid
       container
@@ -27,28 +54,26 @@ const Menu: React.FC<TMenuProps> = () => {
     >
       <Grid item>
         <List>
-          <ListItem>
-            <ListItemIcon>
-              <Badge style={{ color: "white" }} />
-            </ListItemIcon>
-            <ListItemText primary="Admin" style={{ color: "white" }} />
-          </ListItem>
-          <ListItem button>
-            <ListItemIcon>
-              <Add style={{ color: "white" }} />
-            </ListItemIcon>
-            <ListItemText primary="Create Line" style={{ color: "white" }} />
-          </ListItem>
+          <MenuElement Icon={Badge} text="Admin" />
+          <MenuElement
+            Icon={FormatLineSpacing}
+            text="Lines"
+            onClick={() => navigate(ERoutes.lines)}
+          />
+          <MenuElement
+            Icon={Add}
+            text="Create Line"
+            onClick={() => navigate(ERoutes.create)}
+          />
         </List>
       </Grid>
       <Grid item>
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <Logout style={{ color: "white" }} />
-            </ListItemIcon>
-            <ListItemText primary="Log out" style={{ color: "white" }} />
-          </ListItem>
+          <MenuElement
+            Icon={Logout}
+            text="Log out"
+            onClick={() => navigate(ERoutes.logIn)}
+          />
         </List>
       </Grid>
     </Grid>

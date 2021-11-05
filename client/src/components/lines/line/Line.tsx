@@ -6,7 +6,6 @@ import Value from "./Value";
 import { formatDistanceToNowStrict } from "date-fns";
 
 const TypographySubHeader = styled(Typography)`
-  color: gray;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
