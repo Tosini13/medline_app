@@ -1,8 +1,9 @@
 import React from "react";
-import Line from "./line/Line";
+import LineSummary from "./line/LineSummary";
 import { LINE_VALUE, TLine } from "../../models/backend";
 import { Grid } from "@mui/material";
 import { subDays, subMinutes } from "date-fns";
+import Line from "./line/Line";
 
 type TLinesProps = {};
 
@@ -37,14 +38,35 @@ const Lines: React.FC<TLinesProps> = () => {
       lastUpdated: new Date(),
       contributions: 4,
     },
+    {
+      title: "Back",
+      value: LINE_VALUE.HIGH_VALUE,
+      color: "gray",
+      lastUpdated: new Date(),
+      contributions: 4,
+    },
+    {
+      title: "Back",
+      value: LINE_VALUE.HIGH_VALUE,
+      color: "gray",
+      lastUpdated: new Date(),
+      contributions: 4,
+    },
   ];
   return (
     <Grid container spacing={2}>
-      {mockLines.map((line) => (
-        <Grid item xs={12} sm={6} lg={4}>
-          <Line line={line} />
+      <Grid item xs={12} md={6} style={{ height: "100vh", overflowY: "auto" }}>
+        <Grid container spacing={2} style={{ padding: "0px 2px" }}>
+          {mockLines.map((line) => (
+            <Grid item xs={12} sm={12} xl={6}>
+              <LineSummary line={line} />
+            </Grid>
+          ))}
         </Grid>
-      ))}
+      </Grid>
+      <Grid item xs={12} md={6} style={{ height: "100vh", overflowY: "auto" }}>
+        <Line />
+      </Grid>
     </Grid>
   );
 };
