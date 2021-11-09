@@ -8,7 +8,13 @@ import {
   ListItemText,
   Hidden,
 } from "@mui/material";
-import { Add, Badge, Logout, FormatLineSpacing } from "@mui/icons-material";
+import {
+  Add,
+  Badge,
+  Logout,
+  FormatLineSpacing,
+  Info,
+} from "@mui/icons-material";
 import Hamburger from "../buttons/Hamburger";
 import { useNavigate } from "react-router";
 import { ERoutes } from "../../models/routes";
@@ -69,6 +75,7 @@ const Menu: React.FC<TMenuProps> = () => {
       </Grid>
       <Grid item>
         <List>
+          <MenuElement Icon={Info} text="Version 1.0" />
           <MenuElement
             Icon={Logout}
             text="Log out"
