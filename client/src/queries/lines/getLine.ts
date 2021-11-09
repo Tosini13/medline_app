@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { Id, TLine } from "../../models/backend";
-import { LINES_API_URL, LINE_API_URL } from "../../models/endpoints";
+import { LINE_API_URL } from "../../models/endpoints";
 
 export type TUseGetLineParams = {
   id: Id;
