@@ -5,6 +5,7 @@ import { MoreVert, Close } from "@mui/icons-material";
 import Value from "./Value";
 import { useGetLine } from "../../../queries/lines/getLine";
 import Loading from "../../loading/Loading";
+import { deleteLine } from "../../../queries/lines/deleteLine";
 
 type TLineProps = {};
 
@@ -17,6 +18,11 @@ const Line: React.FC<TLineProps> = () => {
     return <Loading />;
   }
   const line = response?.data;
+
+  const handleDeleteLine = async () => {
+    await deleteLine({ id: id as string }); // TODO: check erros
+    navigate("/");
+  };
 
   return (
     <Grid
@@ -36,7 +42,7 @@ const Line: React.FC<TLineProps> = () => {
             <Typography variant="h5">{line.title}</Typography>
           </Grid>
           <Grid item>
-            <IconButton disabled>
+            <IconButton onClick={handleDeleteLine}>
               <MoreVert fontSize="large" />
             </IconButton>
           </Grid>
@@ -53,7 +59,11 @@ const Line: React.FC<TLineProps> = () => {
             </Typography>
           </Grid>
           <Grid item>
-            <Button variant="contained" color="secondary">
+            <Button
+              variant="contained"
+              color="secondary"
+              disabled={!line.description}
+            >
               Show description
             </Button>
           </Grid>
