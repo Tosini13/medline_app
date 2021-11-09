@@ -1,26 +1,41 @@
 import { Request, Response } from "express";
 import { LeanDocument } from "mongoose";
 import Line, { ILine, TLine, TLineRes } from "../models/line";
+import { getEventsQtt } from "./actions/events";
 
-const convertLine = (line: LeanDocument<ILine>): TLineRes => ({
-  id: line._id,
-  title: line.title,
-  value: line.value,
-  description: line.description,
-  color: line.color,
-  lastUpdate: line.lastUpdate,
-  contributions: 15, // TODO: get events qtt
-});
+const convertLine = async (line: LeanDocument<ILine>): Promise<TLineRes> => {
+  const contributions = await getEventsQtt(line._id);
+  return {
+    id: line._id,
+    title: line.title,
+    value: line.value,
+    description: line.description,
+    color: line.color,
+    lastUpdate: line.lastUpdate,
+    contributions: contributions,
+  };
+};
 
 export const getLines = (req: Request, res: Response) => {
   Line.find({})
-    .then((items) => res.send(items.map((item) => convertLine(item))))
+    .then(async (items) => {
+      const lines = await Promise.all(
+        items.map(async (item) => await convertLine(item))
+      );
+      res.send(lines);
+    })
     .catch((err) => console.log(err));
 };
 
 export const getLine = (req: Request, res: Response) => {
   Line.find({ _id: req.params.id })
-    .then((items) => res.send(items.map((item) => convertLine(item))))
+    .then(async (items) => {
+      if (items.length) {
+        res.send(await convertLine(items[0]));
+      } else {
+        res.send();
+      }
+    })
     .catch((err) => console.log(err));
 };
 
@@ -34,7 +49,7 @@ export const createLine = (req: Request, res: Response) => {
   };
 
   Line.create(line)
-    .then((createdItem) => res.send(convertLine(createdItem)))
+    .then(async (createdItem) => res.send(await convertLine(createdItem)))
     .catch((e) => console.log(e));
 };
 
@@ -57,6 +72,9 @@ export const updateLine = async (req: Request, res: Response) => {
 
 export const deleteLine = (req: Request, res: Response) => {
   Line.findByIdAndRemove({ _id: req.params.id })
-    .then((deletedItem) => deletedItem && res.send(convertLine(deletedItem)))
+    .then(
+      async (deletedItem) =>
+        deletedItem && res.send(await convertLine(deletedItem))
+    )
     .catch((e) => console.log(e));
 };

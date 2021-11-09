@@ -8,12 +8,10 @@ export type TUseGetLineParams = {
 };
 
 export const useGetLine = ({ id }: TUseGetLineParams) => {
-  const [response, setResponse] = useState<
-    AxiosResponse<TLine[]> | undefined
-  >();
+  const [response, setResponse] = useState<AxiosResponse<TLine> | undefined>();
   useEffect(() => {
     const fetch = async () => {
-      const res = await axios.get<TLine[]>(LINE_API_URL(id));
+      const res = await axios.get<TLine>(LINE_API_URL(id));
       setResponse(res);
     };
     fetch();

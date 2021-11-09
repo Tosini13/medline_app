@@ -3,6 +3,7 @@ import LineSummary from "./line/LineSummary";
 import { Grid } from "@mui/material";
 import { navigateTo } from "../../models/routes";
 import { useGetLines } from "../../queries/lines/getLines";
+import Loading from "../loading/Loading";
 
 type TLinesProps = {};
 
@@ -12,8 +13,8 @@ const Lines: React.FC<TLinesProps> = () => {
 
   const res = useGetLines();
 
-  if (!res) {
-    return null;
+  if (!res?.data) {
+    return <Loading />;
   }
 
   return (

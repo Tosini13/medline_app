@@ -4,6 +4,7 @@ import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { MoreVert, Close } from "@mui/icons-material";
 import Value from "./Value";
 import { useGetLine } from "../../../queries/lines/getLine";
+import Loading from "../../loading/Loading";
 
 type TLineProps = {};
 
@@ -11,10 +12,11 @@ const Line: React.FC<TLineProps> = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const response = useGetLine({ id: id as string });
+
   if (!response?.data) {
-    return null;
+    return <Loading />;
   }
-  const [line] = response?.data;
+  const line = response?.data;
 
   return (
     <Grid
