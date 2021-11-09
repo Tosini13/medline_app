@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CreateLine from "./components/lines/form/CreateLine";
 import LogIn from "./components/auth/LogIn/LogIn";
 import { ERoutes } from "./models/routes";
+import LinePage from "./components/lines/line/LinePage";
 
 const Main = styled.div`
   @media screen and (min-width: 900px) {
@@ -15,12 +16,13 @@ const Main = styled.div`
 
 function App() {
   return (
-    <BrowserRouter basename={ERoutes.lines}>
+    <BrowserRouter basename={"/"}>
       <div style={{ position: "relative", overflowX: "hidden" }}>
         <Drawer />
         <Main>
           <Routes>
-            <Route path={ERoutes.lines} element={<Lines />} />
+            <Route path={"/"} element={<Lines />} />
+            <Route path={`${ERoutes.lines}/:id`} element={<LinePage />} />
             <Route path={ERoutes.create} element={<CreateLine />} />
             <Route path={ERoutes.logIn} element={<LogIn />} />
           </Routes>

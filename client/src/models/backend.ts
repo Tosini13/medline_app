@@ -1,4 +1,7 @@
+export type Id = string;
+
 export type TLine = {
+  id: Id;
   title: string;
   description?: string;
   value: LINE_VALUE;

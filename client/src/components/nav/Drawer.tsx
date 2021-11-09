@@ -58,7 +58,7 @@ const Menu: React.FC<TMenuProps> = () => {
           <MenuElement
             Icon={FormatLineSpacing}
             text="Lines"
-            onClick={() => navigate(ERoutes.lines)}
+            onClick={() => navigate("/")}
           />
           <MenuElement
             Icon={Add}

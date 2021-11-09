@@ -1,12 +1,16 @@
 import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { MoreVert, Close } from "@mui/icons-material";
-import { TLine } from "../../../models/backend";
 import Value from "./Value";
+import { mockLines } from "../../../mock/lines";
 
-type TLineProps = { handleClose: () => void; line?: TLine };
+type TLineProps = {};
 
-const Line: React.FC<TLineProps> = ({ handleClose, line }) => {
+const Line: React.FC<TLineProps> = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const line = mockLines.find((line) => line.id === id);
   if (!line) {
     return null;
   }
@@ -20,7 +24,7 @@ const Line: React.FC<TLineProps> = ({ handleClose, line }) => {
       <Grid item>
         <Grid container justifyContent="space-between" alignItems="flex-start">
           <Grid item>
-            <IconButton onClick={handleClose}>
+            <IconButton onClick={() => navigate("/")}>
               <Close color="secondary" fontSize="large" />
             </IconButton>
           </Grid>
