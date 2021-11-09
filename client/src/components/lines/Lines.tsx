@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import LineSummary from "./line/LineSummary";
 import { Grid } from "@mui/material";
 import { navigateTo } from "../../models/routes";
+import { useGetLines } from "../../queries/lines/getLines";
 import { mockLines } from "../../mock/lines";
 
 type TLinesProps = {};
@@ -9,6 +10,13 @@ type TLinesProps = {};
 const Lines: React.FC<TLinesProps> = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const res = useGetLines();
+
+  if (!res) {
+    return null;
+  }
+  console.log("res", res);
 
   return (
     <Grid container spacing={2} style={{ padding: "5px 2px" }}>

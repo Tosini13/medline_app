@@ -47,6 +47,12 @@ app.use("/api", router);
 const CLIENT_PATH = process.env.CLIENT_PATH ?? "../client/build";
 app.use(express.static(path.resolve(__dirname, CLIENT_PATH))); // ../../client/build
 
+console.log("CLIENT_PATH", CLIENT_PATH);
+console.log(
+  'path.resolve(__dirname, CLIENT_PATH, "index.html")',
+  path.resolve(__dirname, CLIENT_PATH, "index.html")
+);
+
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, CLIENT_PATH, "index.html"));
 });
