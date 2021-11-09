@@ -39,7 +39,7 @@ const LineSummary: React.FC<TLineSummaryProps> = ({ line }) => {
             <Grid item>
               <TypographySubHeader variant="subtitle2" color="GrayText">
                 Last updated{" "}
-                {formatDistanceToNowStrict(line.lastUpdated, {
+                {formatDistanceToNowStrict(new Date(line.lastUpdate), {
                   addSuffix: true,
                 })}
               </TypographySubHeader>

@@ -16,11 +16,10 @@ const Lines: React.FC<TLinesProps> = () => {
   if (!res) {
     return null;
   }
-  console.log("res", res);
 
   return (
     <Grid container spacing={2} style={{ padding: "5px 2px" }}>
-      {mockLines.map((line) => (
+      {res.data.map((line) => (
         <Grid
           item
           xs={12}

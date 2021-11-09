@@ -8,7 +8,7 @@ export const mockLines: TLine[] = [
     value: LINE_VALUE.HIGHEST_VALUE,
     description: "Lorem ipsum",
     color: "#2d6b5f",
-    lastUpdated: subMinutes(new Date(), 5),
+    lastUpdate: subMinutes(new Date(), 5),
     contributions: 15,
   },
   {
@@ -16,7 +16,7 @@ export const mockLines: TLine[] = [
     title: "Stomach",
     value: LINE_VALUE.HIGH_VALUE,
     color: "#711010",
-    lastUpdated: subDays(new Date(), 7),
+    lastUpdate: subDays(new Date(), 7),
     contributions: 144,
   },
   {
@@ -24,7 +24,7 @@ export const mockLines: TLine[] = [
     title: "Ankle",
     value: LINE_VALUE.NORMAL,
     color: "#8E9008",
-    lastUpdated: subDays(new Date(), 190),
+    lastUpdate: subDays(new Date(), 190),
     contributions: 123,
   },
   {
@@ -32,7 +32,7 @@ export const mockLines: TLine[] = [
     title: "Back",
     value: LINE_VALUE.HIGH_VALUE,
     color: "gray",
-    lastUpdated: new Date(),
+    lastUpdate: new Date(),
     contributions: 4,
   },
   {
@@ -40,7 +40,7 @@ export const mockLines: TLine[] = [
     title: "Back",
     value: LINE_VALUE.HIGH_VALUE,
     color: "gray",
-    lastUpdated: new Date(),
+    lastUpdate: new Date(),
     contributions: 4,
   },
   {
@@ -48,7 +48,7 @@ export const mockLines: TLine[] = [
     title: "Back",
     value: LINE_VALUE.HIGH_VALUE,
     color: "gray",
-    lastUpdated: new Date(),
+    lastUpdate: new Date(),
     contributions: 4,
   },
 ];

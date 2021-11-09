@@ -3,17 +3,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { MoreVert, Close } from "@mui/icons-material";
 import Value from "./Value";
-import { mockLines } from "../../../mock/lines";
+import { useGetLine } from "../../../queries/lines/getLine";
 
 type TLineProps = {};
 
 const Line: React.FC<TLineProps> = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const line = mockLines.find((line) => line.id === id);
-  if (!line) {
+  const response = useGetLine({ id: id as string });
+  if (!response?.data) {
     return null;
   }
+  const [line] = response?.data;
+
   return (
     <Grid
       container

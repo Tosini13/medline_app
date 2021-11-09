@@ -15,22 +15,35 @@ const SLine = new Schema({
     type: String,
     required: [true, "value is required"],
   },
+  color: {
+    type: String,
+    required: [true, "color is required"],
+  },
+  lastUpdate: {
+    type: String,
+    required: [true, "lastUpdated is required"],
+  },
 });
 
 export type TLine = {
   title: string;
   description?: string;
   value: LINE_VALUE;
+  color: string;
+  lastUpdate: Date;
 };
 
 export type TLineRes = TLine & {
   id: Id;
+  contributions: number;
 };
 
 export interface ILine extends Document {
   title: string;
   description?: string;
   value: LINE_VALUE;
+  color: string;
+  lastUpdate: Date;
 }
 
 const Line = mongoose.model<ILine>("lines", SLine);

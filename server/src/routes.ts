@@ -14,6 +14,7 @@ import {
 import {
   createLine,
   deleteLine,
+  getLine,
   getLines,
   updateLine,
 } from "./controllers/lines";
@@ -30,6 +31,7 @@ router.delete("/events/:id", deleteEvent);
 // -----------------------------------------
 // LINES
 router.get("/lines", getLines);
+router.get("/lines/:id", getLine);
 router.post("/lines", createLine);
 router.put("/lines/:id", updateLine);
 router.delete("/lines/:id", deleteLine);

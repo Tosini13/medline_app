@@ -6,7 +6,7 @@ export type TLine = {
   description?: string;
   value: LINE_VALUE;
   color: string;
-  lastUpdated: Date;
+  lastUpdate: Date;
   contributions: number;
 };
 

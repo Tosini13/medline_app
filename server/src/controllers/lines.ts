@@ -7,10 +7,19 @@ const convertLine = (line: LeanDocument<ILine>): TLineRes => ({
   title: line.title,
   value: line.value,
   description: line.description,
+  color: line.color,
+  lastUpdate: line.lastUpdate,
+  contributions: 15, // TODO: get events qtt
 });
 
 export const getLines = (req: Request, res: Response) => {
   Line.find({})
+    .then((items) => res.send(items.map((item) => convertLine(item))))
+    .catch((err) => console.log(err));
+};
+
+export const getLine = (req: Request, res: Response) => {
+  Line.find({ _id: req.params.id })
     .then((items) => res.send(items.map((item) => convertLine(item))))
     .catch((err) => console.log(err));
 };
@@ -20,6 +29,8 @@ export const createLine = (req: Request, res: Response) => {
     title: req.body.title,
     description: req.body.description,
     value: req.body.value,
+    color: req.body.color,
+    lastUpdate: req.body.lastUpdate,
   };
 
   Line.create(line)
@@ -32,6 +43,8 @@ export const updateLine = async (req: Request, res: Response) => {
     title: req.body.title,
     description: req.body.description,
     value: req.body.value,
+    color: req.body.color,
+    lastUpdate: req.body.lastUpdate,
   };
 
   try {
