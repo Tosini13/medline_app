@@ -23,15 +23,6 @@ const ValueIconContainer = styled.div<{ value: LINE_VALUE }>`
       }
     }}
   }
-  & > svg:nth-child(1) {
-    transform: translate(-75%, -50%);
-  }
-  & > svg:nth-child(2) {
-    transform: translate(-50%, -50%);
-  }
-  & > svg:nth-child(3) {
-    transform: translate(-25%, -50%);
-  }
 `;
 
 type TValueProps = {
@@ -56,7 +47,7 @@ type TNormalValueProps = {};
 const NormalValue: React.FC<TNormalValueProps> = () => {
   return (
     <ValueIconContainer value={LINE_VALUE.NORMAL}>
-      <ArrowForwardIos />
+      <ArrowForwardIos style={{ transform: "translate(-50%, -50%)" }} />
     </ValueIconContainer>
   );
 };
@@ -66,8 +57,8 @@ type THighValueProps = {};
 const HighValue: React.FC<THighValueProps> = () => {
   return (
     <ValueIconContainer value={LINE_VALUE.HIGH_VALUE}>
-      <ArrowForwardIos />
-      <ArrowForwardIos />
+      <ArrowForwardIos style={{ transform: "translate(-62.5%, -50%)" }} />
+      <ArrowForwardIos style={{ transform: "translate(-37.5%, -50%)" }} />
     </ValueIconContainer>
   );
 };
@@ -77,9 +68,9 @@ type THighestValueProps = {};
 const HighestValue: React.FC<THighestValueProps> = () => {
   return (
     <ValueIconContainer value={LINE_VALUE.HIGHEST_VALUE}>
-      <ArrowForwardIos />
-      <ArrowForwardIos />
-      <ArrowForwardIos />
+      <ArrowForwardIos style={{ transform: "translate(-50%, -50%)" }} />
+      <ArrowForwardIos style={{ transform: "translate(-75%, -50%)" }} />
+      <ArrowForwardIos style={{ transform: "translate(-25%, -50%)" }} />
     </ValueIconContainer>
   );
 };

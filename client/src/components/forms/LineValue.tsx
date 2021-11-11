@@ -1,4 +1,5 @@
-import { IconButton, Paper } from "@mui/material";
+import { DialogTitle, DialogContent } from "@material-ui/core";
+import { Dialog, Grid, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { LINE_VALUE } from "../../models/backend";
 import Value from "../lines/line/Value";
@@ -19,19 +20,35 @@ const LineValue: React.FC<TLineValueProps> = ({ setValue, value }) => {
       <IconButton onClick={() => setOpen(true)}>
         <Value value={value} />
       </IconButton>
-      {open && (
-        <Paper style={{}}>
-          <IconButton onClick={() => chooseValue(LINE_VALUE.NORMAL)}>
-            <Value value={LINE_VALUE.NORMAL} />
-          </IconButton>
-          <IconButton onClick={() => chooseValue(LINE_VALUE.HIGH_VALUE)}>
-            <Value value={LINE_VALUE.HIGH_VALUE} />
-          </IconButton>
-          <IconButton onClick={() => chooseValue(LINE_VALUE.HIGHEST_VALUE)}>
-            <Value value={LINE_VALUE.HIGHEST_VALUE} />
-          </IconButton>
-        </Paper>
-      )}
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>
+          <Typography align="center">Choose Line Value</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            spacing={3}
+          >
+            <Grid item>
+              <IconButton onClick={() => chooseValue(LINE_VALUE.NORMAL)}>
+                <Value value={LINE_VALUE.NORMAL} />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={() => chooseValue(LINE_VALUE.HIGH_VALUE)}>
+                <Value value={LINE_VALUE.HIGH_VALUE} />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={() => chooseValue(LINE_VALUE.HIGHEST_VALUE)}>
+                <Value value={LINE_VALUE.HIGHEST_VALUE} />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };

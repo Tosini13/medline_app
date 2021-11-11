@@ -21,6 +21,7 @@ const Lines: React.FC<TLinesProps> = () => {
     <Grid container spacing={2} style={{ padding: "5px 2px" }}>
       {res.data.map((line) => (
         <Grid
+          key={line.id}
           item
           xs={12}
           sm={12}

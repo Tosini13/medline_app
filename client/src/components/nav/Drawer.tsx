@@ -1,13 +1,6 @@
 import { useState } from "react";
 import DrawerMui from "@mui/material/Drawer";
-import {
-  List,
-  Grid,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Hidden,
-} from "@mui/material";
+import { List, Grid, Hidden } from "@mui/material";
 import {
   Add,
   Badge,
@@ -18,30 +11,7 @@ import {
 import Hamburger from "../buttons/Hamburger";
 import { useNavigate } from "react-router";
 import { ERoutes } from "../../models/routes";
-
-type TMenuElementProps = {
-  onClick?: () => void;
-  Icon: any;
-  text: string;
-};
-
-const MenuElement: React.FC<TMenuElementProps> = ({ onClick, Icon, text }) => {
-  const ListItemContainer: React.FC = onClick
-    ? ({ children }) => (
-        <ListItem button onClick={onClick}>
-          {children}
-        </ListItem>
-      )
-    : ({ children }) => <ListItem>{children}</ListItem>;
-  return (
-    <ListItemContainer>
-      <ListItemIcon>
-        <Icon style={{ color: "white" }} />
-      </ListItemIcon>
-      <ListItemText primary={text} style={{ color: "white" }} />
-    </ListItemContainer>
-  );
-};
+import ListElement from "../reusable/list/ListElement";
 
 type TMenuProps = {};
 
@@ -60,13 +30,13 @@ const Menu: React.FC<TMenuProps> = () => {
     >
       <Grid item>
         <List>
-          <MenuElement Icon={Badge} text="Admin" />
-          <MenuElement
+          <ListElement Icon={Badge} text="Admin" />
+          <ListElement
             Icon={FormatLineSpacing}
             text="Lines"
             onClick={() => navigate("/")}
           />
-          <MenuElement
+          <ListElement
             Icon={Add}
             text="Create Line"
             onClick={() => navigate(ERoutes.create)}
@@ -75,8 +45,8 @@ const Menu: React.FC<TMenuProps> = () => {
       </Grid>
       <Grid item>
         <List>
-          <MenuElement Icon={Info} text="Version 1.0" />
-          <MenuElement
+          <ListElement Icon={Info} text="Version 1.0" />
+          <ListElement
             Icon={Logout}
             text="Log out"
             onClick={() => navigate(ERoutes.logIn)}
