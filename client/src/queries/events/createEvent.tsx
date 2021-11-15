@@ -7,7 +7,5 @@ export type TCreateEventParams = Omit<
   "id" | "lastUpdate" | "contributions"
 >;
 
-export const createEvent = async (data: TCreateEventParams) => {
-  console.log("data!!", data);
-  return await axios.post<TEvent>(EVENTS_API_URL, data);
-};
+export const createEvent = async (data: TCreateEventParams) =>
+  await axios.post<TEvent>(EVENTS_API_URL, data);

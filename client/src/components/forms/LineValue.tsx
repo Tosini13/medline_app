@@ -17,13 +17,11 @@ const LineValue: React.FC<TLineValueProps> = ({ setValue, value }) => {
   };
   return (
     <>
-      <IconButton onClick={() => setOpen(true)}>
+      <IconButton onClick={() => setOpen(true)} size="large">
         <Value value={value} />
       </IconButton>
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>
-          <Typography align="center">Choose Line Value</Typography>
-        </DialogTitle>
+        <DialogTitle>Choose Line Value</DialogTitle>
         <DialogContent>
           <Grid
             container

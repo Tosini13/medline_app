@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { LINE_VALUE } from "../../../models/backend";
 import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
+import { theme } from "../../../style/theme";
 
 const ValueIconContainer = styled.div<{ value: LINE_VALUE }>`
   height: 25px;
@@ -15,11 +16,11 @@ const ValueIconContainer = styled.div<{ value: LINE_VALUE }>`
     ${(props) => {
       switch (props.value) {
         case LINE_VALUE.HIGHEST_VALUE:
-          return "color: #8D0B0B;";
+          return `color: ${theme.palette.error.main}`;
         case LINE_VALUE.HIGH_VALUE:
-          return "color: #C3AA27;";
+          return `color: ${theme.palette.warning.main}`;
         default:
-          return "color: #2D6B5F;";
+          return `color: ${theme.palette.success.main}`;
       }
     }}
   }

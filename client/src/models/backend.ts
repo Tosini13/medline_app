@@ -14,6 +14,7 @@ export type TEvent = {
   id: Id;
   title: string;
   description?: string;
+  dateTime: Date;
   type: EVENT_TYPE;
   prescriptions?: string[];
   resources?: string[];

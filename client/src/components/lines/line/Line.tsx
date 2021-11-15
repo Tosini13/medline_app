@@ -43,7 +43,7 @@ const Line: React.FC<TLineProps> = () => {
           >
             <Grid item>
               <IconButton onClick={() => navigate("/")}>
-                <Close color="secondary" fontSize="large" />
+                <Close color="primary" fontSize="large" />
               </IconButton>
             </Grid>
             <Grid item style={{ padding: "10px" }}>
@@ -51,7 +51,7 @@ const Line: React.FC<TLineProps> = () => {
             </Grid>
             <Grid item>
               <IconButton onClick={() => setOpenMore(true)}>
-                <MoreVert fontSize="large" />
+                <MoreVert color="primary" fontSize="large" />
               </IconButton>
             </Grid>
           </Grid>
@@ -69,7 +69,7 @@ const Line: React.FC<TLineProps> = () => {
             <Grid item>
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 disabled={!line.description}
               >
                 Show description

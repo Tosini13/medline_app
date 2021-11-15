@@ -33,11 +33,7 @@ const Events: React.FC<TEventsProps> = ({ lineId }) => {
           </Grid>
         ))}
         <Grid item style={{ textAlign: "center" }}>
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => setOpenForm(true)}
-          >
+          <Button variant="contained" onClick={() => setOpenForm(true)}>
             Add Event
           </Button>
         </Grid>

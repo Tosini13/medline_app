@@ -23,18 +23,19 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
     defaultValues: {
       title: "",
       description: "",
+      dateTime: new Date(),
     },
   });
   const onSubmit = async (data: TEventForm) => {
     const eventData: TCreateEventParams = {
       title: data.title,
       description: data.description,
+      dateTime: data.dateTime,
       type,
       line: lineId,
     };
     try {
-      const res = await createEvent(eventData); // TODO: check errors
-      console.log("res", res);
+      await createEvent(eventData);
       navigate(navigateTo.line(lineId));
       handleClose();
     } catch (e) {
@@ -44,7 +45,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
   return (
     <Dialog open={open}>
       <DialogTitle>Create Event</DialogTitle>
-      <DialogContent>
+      <DialogContent style={{ position: "relative", overflowX: "hidden" }}>
         <EventForm
           type={type}
           setType={setType}

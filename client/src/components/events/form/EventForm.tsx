@@ -4,6 +4,7 @@ import { EVENT_TYPE } from "../../../models/backend";
 import { TextFieldRUForm } from "../../forms/TextField";
 import EventType from "../../forms/EventType";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import ControlledDateTimePicker from "../../forms/controlled/ControlledDateTimePicker";
 
 export type TEventForm = {
   title: string;
@@ -11,6 +12,7 @@ export type TEventForm = {
   type: EVENT_TYPE;
   prescriptions?: string[];
   resources?: string[];
+  dateTime: Date;
 };
 
 type TEventFormProps = {
@@ -52,13 +54,21 @@ const EventForm: React.FC<TEventFormProps> = ({
           />
         </Grid>
         <Grid item>
+          <ControlledDateTimePicker
+            label="Date and Time"
+            name="dateTime"
+            control={control}
+            rules={{ required: true }}
+          />
+        </Grid>
+        <Grid item>
           <Grid container justifyContent="space-around" alignItems="center">
             <Grid item>
               <EventType type={type} setType={setType} />
             </Grid>
             <Grid item>
               <IconButton size="large" disabled>
-                <AttachFileIcon style={{ color: "#2D6B5F" }} />
+                <AttachFileIcon />
               </IconButton>
             </Grid>
           </Grid>
@@ -66,12 +76,12 @@ const EventForm: React.FC<TEventFormProps> = ({
         <Grid item>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              <Button type="submit" variant="contained" color="secondary">
+              <Button type="submit" variant="contained" color="primary">
                 Create
               </Button>
             </Grid>
             <Grid item>
-              <Button variant="contained" onClick={handleCancel}>
+              <Button variant="contained" onClick={handleCancel} color="error">
                 Cancel
               </Button>
             </Grid>

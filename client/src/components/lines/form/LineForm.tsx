@@ -69,7 +69,7 @@ const LineForm: React.FC<TLineFormProps> = ({
         <Grid item>
           <Grid container alignItems="center" justifyContent="center">
             <Grid item>
-              <Button type="submit" variant="contained" color="secondary">
+              <Button type="submit" variant="contained" color="primary">
                 Submit
               </Button>
             </Grid>

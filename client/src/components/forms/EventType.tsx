@@ -1,10 +1,25 @@
-import { DialogTitle, DialogContent } from "@material-ui/core";
-import { LocalHospital } from "@mui/icons-material";
-import { Dialog, Grid, IconButton, List, Typography } from "@mui/material";
+import { IconButton, List, Popover, Typography } from "@mui/material";
 import { useState } from "react";
 import { EVENT_TYPE } from "../../models/backend";
 import EventTypeIcon from "../events/EventTypeIcon";
 import ListElement from "../reusable/list/ListElement";
+import styled from "styled-components";
+
+const ListStyle = styled(List)<{
+  open: boolean;
+}>`
+  min-width: 250px;
+  position: absolute !important;
+  padding: 0px !important;
+  background-color: white;
+  z-index: 100;
+  height: 100%;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  transition: all 0.3s;
+  transform: translateX(${(props) => (props.open ? "0%" : "100%")});
+`;
 
 type TEventTypeProps = {
   type: EVENT_TYPE;
@@ -12,19 +27,37 @@ type TEventTypeProps = {
 };
 
 const EventType: React.FC<TEventTypeProps> = ({ setType, type }) => {
-  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const chooseType = (value: EVENT_TYPE) => {
-    setOpen(false);
+    setAnchorEl(null);
     setType(value);
   };
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+
   return (
     <>
-      <IconButton size="large" onClick={() => setOpen(true)}>
-        <EventTypeIcon type={type} style={{ color: "#2D6B5F" }} />
+      <IconButton size="large" onClick={handleClick}>
+        <EventTypeIcon type={type} />
       </IconButton>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Choose Line Value</DialogTitle>
-        <List style={{ minWidth: "250px" }}>
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={() => setAnchorEl(null)}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <List>
           <ListElement
             onClick={() => chooseType(EVENT_TYPE.APPOINTMENT)}
             Icon={<EventTypeIcon type={EVENT_TYPE.APPOINTMENT} />}
@@ -50,34 +83,9 @@ const EventType: React.FC<TEventTypeProps> = ({ setType, type }) => {
             color="black"
           />
         </List>
-      </Dialog>
+      </Popover>
     </>
   );
 };
 
 export default EventType;
-
-type TEventTypeOptionProps = {
-  handleCLick: () => void;
-  text: string;
-  type: EVENT_TYPE;
-};
-
-const EventTypeOption: React.FC<TEventTypeOptionProps> = ({
-  text,
-  type,
-  handleCLick,
-}) => {
-  return (
-    <Grid container justifyContent="space-between" alignItems="center">
-      <Grid item>
-        <IconButton onClick={handleCLick}>
-          <EventTypeIcon type={type} />
-        </IconButton>
-      </Grid>
-      <Grid item style={{ flexGrow: 1 }}>
-        <Typography>{text}</Typography>
-      </Grid>
-    </Grid>
-  );
-};
