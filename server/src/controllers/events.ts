@@ -6,23 +6,26 @@ const convertEvent = (doc: LeanDocument<IEvent>): TEventRes => ({
   id: doc._id,
   line: doc.line,
   title: doc.title,
+  type: doc.type,
+  dateTime: doc.dateTime,
   description: doc.description,
   prescriptions: doc.prescriptions,
   resources: doc.resources,
-  type: doc.type,
 });
 
 const getEventFromBody = (body: TEvent): TEvent => ({
   title: body.title,
   line: body.line,
+  type: body.type,
+  dateTime: body.dateTime,
   description: body.description,
   prescriptions: body.prescriptions,
   resources: body.resources,
-  type: body.type,
 });
 
 export const getEvents = (req: Request, res: Response) => {
   Event.find({ line: req.params.lineId })
+    .sort({ dateTime: 1 })
     .then((items) => res.send(items.map((item) => convertEvent(item))))
     .catch((err) => console.log(err));
 };

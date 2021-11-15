@@ -3,17 +3,21 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { StylesProvider, ThemeProvider } from "@mui/styles";
+import { StylesProvider } from "@mui/styles";
 import { theme } from "./style/theme";
 
+import { LocalizationProvider } from "@mui/lab";
+import DateAdapter from "@mui/lab/AdapterDateFns";
+import { ThemeProvider } from "@mui/material/styles";
+
 ReactDOM.render(
-  <React.StrictMode>
-    <StylesProvider injectFirst>
-      <ThemeProvider theme={theme}>
+  <LocalizationProvider dateAdapter={DateAdapter}>
+    <ThemeProvider theme={theme}>
+      <StylesProvider injectFirst>
         <App />
-      </ThemeProvider>
-    </StylesProvider>
-  </React.StrictMode>,
+      </StylesProvider>
+    </ThemeProvider>
+  </LocalizationProvider>,
   document.getElementById("root")
 );
 

@@ -15,6 +15,10 @@ const SEvent = new Schema({
     type: String,
     required: [true, "type is required"],
   },
+  dateTime: {
+    type: String,
+    required: [true, "dateTime is required"],
+  },
   prescriptions: {
     type: [String],
     required: false,
@@ -33,6 +37,7 @@ export type TEvent = {
   title: string;
   description?: string;
   type: EVENT_TYPE;
+  dateTime: Date;
   prescriptions?: string[];
   resources?: string[];
   line: Id;
@@ -46,6 +51,7 @@ export interface IEvent extends Document {
   title: string;
   description?: string;
   type: EVENT_TYPE;
+  dateTime: Date;
   resources?: string[];
   prescriptions?: string[];
   line: Id;

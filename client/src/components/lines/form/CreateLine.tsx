@@ -8,6 +8,7 @@ import {
 } from "../../../queries/lines/createLine";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
+import { theme } from "../../../style/theme";
 
 type TCreateLineProps = {};
 
@@ -18,7 +19,7 @@ const CreateLine: React.FC<TCreateLineProps> = () => {
   const { handleSubmit, control } = useForm<TLineForm>({
     defaultValues: {
       name: "",
-      color: "#2D6B5F",
+      color: theme.palette.primary.main,
     },
   });
 

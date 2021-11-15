@@ -17,7 +17,7 @@ const LineMore: React.FC<TLineMoreProps> = ({
     <Dialog open={open} onClose={handleClose}>
       <List>
         <ListElement
-          Icon={Delete}
+          Icon={<Delete color="primary" />}
           text="Delete Line"
           onClick={handleDelete}
           color="black"

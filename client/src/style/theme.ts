@@ -21,16 +21,25 @@ declare module "@mui/material/styles" {
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#fff",
-      contrastText: "#313131",
+      main: "#2D6B5F",
+      contrastText: "#fff",
     },
     secondary: {
-      main: "#2D6B5F",
+      main: "#000",
       contrastText: "#fff",
     },
     text: {
       primary: "#313131",
-      secondary: "#fff",
+      secondary: "#000",
+    },
+    success: {
+      main: "#2D6B5F",
+    },
+    warning: {
+      main: "#C3AA27",
+    },
+    error: {
+      main: "#8D0B0B",
     },
   },
   typography: {

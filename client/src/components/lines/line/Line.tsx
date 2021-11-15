@@ -7,6 +7,7 @@ import { useGetLine } from "../../../queries/lines/getLine";
 import Loading from "../../loading/Loading";
 import { deleteLine } from "../../../queries/lines/deleteLine";
 import LineMore from "./LineMore";
+import Events from "../../events/Events";
 
 type TLineProps = {};
 
@@ -42,7 +43,7 @@ const Line: React.FC<TLineProps> = () => {
           >
             <Grid item>
               <IconButton onClick={() => navigate("/")}>
-                <Close color="secondary" fontSize="large" />
+                <Close color="primary" fontSize="large" />
               </IconButton>
             </Grid>
             <Grid item style={{ padding: "10px" }}>
@@ -50,7 +51,7 @@ const Line: React.FC<TLineProps> = () => {
             </Grid>
             <Grid item>
               <IconButton onClick={() => setOpenMore(true)}>
-                <MoreVert fontSize="large" />
+                <MoreVert color="primary" fontSize="large" />
               </IconButton>
             </Grid>
           </Grid>
@@ -68,7 +69,7 @@ const Line: React.FC<TLineProps> = () => {
             <Grid item>
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 disabled={!line.description}
               >
                 Show description
@@ -84,6 +85,7 @@ const Line: React.FC<TLineProps> = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Events lineId={line.id} />
       <LineMore
         handleDelete={handleDeleteLine}
         open={openMore}
