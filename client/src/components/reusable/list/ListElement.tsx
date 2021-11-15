@@ -2,7 +2,7 @@ import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
 type TListElementProps = {
   onClick?: () => void;
-  Icon: any;
+  Icon: React.ReactNode;
   text: string;
   color?: string;
 };
@@ -22,9 +22,7 @@ const ListElement: React.FC<TListElementProps> = ({
     : ({ children }) => <ListItem>{children}</ListItem>;
   return (
     <ListItemContainer>
-      <ListItemIcon>
-        <Icon style={{ color: color ?? "white" }} />
-      </ListItemIcon>
+      <ListItemIcon>{Icon}</ListItemIcon>
       <ListItemText primary={text} style={{ color: color ?? "white" }} />
     </ListItemContainer>
   );

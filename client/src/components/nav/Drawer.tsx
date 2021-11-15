@@ -30,14 +30,17 @@ const Menu: React.FC<TMenuProps> = () => {
     >
       <Grid item>
         <List>
-          <ListElement Icon={Badge} text="Admin" />
           <ListElement
-            Icon={FormatLineSpacing}
+            Icon={<Badge style={{ color: "white" }} />}
+            text="Admin"
+          />
+          <ListElement
+            Icon={<FormatLineSpacing style={{ color: "white" }} />}
             text="Lines"
             onClick={() => navigate("/")}
           />
           <ListElement
-            Icon={Add}
+            Icon={<Add style={{ color: "white" }} />}
             text="Create Line"
             onClick={() => navigate(ERoutes.create)}
           />
@@ -45,9 +48,12 @@ const Menu: React.FC<TMenuProps> = () => {
       </Grid>
       <Grid item>
         <List>
-          <ListElement Icon={Info} text="Version 1.0" />
           <ListElement
-            Icon={Logout}
+            Icon={<Info style={{ color: "white" }} />}
+            text="Version 1.0"
+          />
+          <ListElement
+            Icon={<Logout style={{ color: "white" }} />}
             text="Log out"
             onClick={() => navigate(ERoutes.logIn)}
           />

@@ -10,6 +10,16 @@ export type TLine = {
   contributions: number;
 };
 
+export type TEvent = {
+  id: Id;
+  title: string;
+  description?: string;
+  type: EVENT_TYPE;
+  prescriptions?: string[];
+  resources?: string[];
+  line: Id;
+};
+
 export enum LINE_VALUE {
   "NORMAL" = "NORMAL",
   "HIGH_VALUE" = "HIGH_VALUE",

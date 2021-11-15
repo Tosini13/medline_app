@@ -7,6 +7,7 @@ import { useGetLine } from "../../../queries/lines/getLine";
 import Loading from "../../loading/Loading";
 import { deleteLine } from "../../../queries/lines/deleteLine";
 import LineMore from "./LineMore";
+import Events from "../../events/Events";
 
 type TLineProps = {};
 
@@ -84,6 +85,7 @@ const Line: React.FC<TLineProps> = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Events lineId={line.id} />
       <LineMore
         handleDelete={handleDeleteLine}
         open={openMore}
