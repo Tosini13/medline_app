@@ -20,9 +20,11 @@ const Event: React.FC<TEventProps> = ({ event }) => {
           <Grid item>
             <Typography>{event.title}</Typography>
           </Grid>
-          <Grid item>
-            <Typography>{event.description}</Typography>
-          </Grid>
+          {event.description && (
+            <Grid item>
+              <Typography>{event.description}</Typography>
+            </Grid>
+          )}
           {event.resources?.length ? (
             <Grid item style={{ width: "100%" }}>
               <Resources resources={event.resources} />

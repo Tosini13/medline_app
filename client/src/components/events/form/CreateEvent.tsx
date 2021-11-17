@@ -1,5 +1,4 @@
 import { AxiosResponse } from "axios";
-import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
@@ -14,7 +13,7 @@ import {
 } from "@mui/material";
 
 import useAsync from "../../../helpers/useAsync";
-import { EVENT_TYPE, Id } from "../../../models/backend";
+import { EVENT_TYPE, Id, TResource } from "../../../models/backend";
 import { navigateTo } from "../../../models/routes";
 import {
   createEvent,
@@ -35,14 +34,20 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
 }) => {
   const navigate = useNavigate();
   const { isProcessing, execute } = useAsync();
-  const [type, setType] = useState(EVENT_TYPE.APPOINTMENT);
-  const { handleSubmit, control } = useForm<TEventForm>({
+  const { handleSubmit, control, reset } = useForm<TEventForm>({
     defaultValues: {
       title: "",
       description: "",
       dateTime: new Date(),
+      type: EVENT_TYPE.APPOINTMENT,
     },
   });
+
+  const handleCloseAndReset = () => {
+    handleClose();
+    reset();
+  };
+
   const onSubmit: SubmitHandler<TEventForm> = async (data) => {
     let res;
     if (data.files) {
@@ -50,7 +55,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
         files: data.files,
       };
       try {
-        res = await execute<AxiosResponse<string[] | undefined, any>>(
+        res = await execute<AxiosResponse<TResource[] | undefined, any>>(
           uploadFiles(fileDate)
         );
       } catch (e) {
@@ -61,20 +66,18 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
       title: data.title,
       description: data.description,
       dateTime: data.dateTime,
-      type,
+      type: data.type,
       line: lineId,
       resources: res?.data,
     };
     try {
       await execute(createEvent(eventData));
       navigate(navigateTo.line(lineId));
-      handleClose();
+      handleCloseAndReset();
     } catch (e) {
       console.error("STH went wrong!!");
     }
   };
-
-  console.log("isProcessing", isProcessing);
 
   const Actions = (
     <Grid container justifyContent="space-between" alignItems="center">
@@ -94,7 +97,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
       <Grid item>
         <Button
           variant="outlined"
-          onClick={handleClose}
+          onClick={handleCloseAndReset}
           color="primary"
           startIcon={<Cancel />}
           disabled={isProcessing}
@@ -111,8 +114,6 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
       <DialogContent style={{ position: "relative", overflowX: "hidden" }}>
         <EventForm
           Actions={Actions}
-          type={type}
-          setType={setType}
           control={control}
           handleSubmit={(data) => handleSubmit(onSubmit)(data)}
         />

@@ -1,5 +1,6 @@
 import mongoose, { Document } from "mongoose";
 import { EVENT_TYPE, Id, LINE_VALUE } from "./types";
+
 const Schema = mongoose.Schema;
 
 const SEvent = new Schema({
@@ -24,7 +25,12 @@ const SEvent = new Schema({
     required: false,
   },
   resources: {
-    type: [String],
+    type: [
+      {
+        path: String,
+        name: String,
+      },
+    ],
     required: false,
   },
   line: {
@@ -33,13 +39,17 @@ const SEvent = new Schema({
   },
 });
 
+export type TResource = {
+  path: string;
+  name: string;
+};
 export type TEvent = {
   title: string;
   description?: string;
   type: EVENT_TYPE;
   dateTime: Date;
   prescriptions?: string[];
-  resources?: string[];
+  resources?: TResource[];
   line: Id;
 };
 
@@ -52,7 +62,7 @@ export interface IEvent extends Document {
   description?: string;
   type: EVENT_TYPE;
   dateTime: Date;
-  resources?: string[];
+  resources?: TResource[];
   prescriptions?: string[];
   line: Id;
 }

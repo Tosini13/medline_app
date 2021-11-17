@@ -44,7 +44,7 @@ export const uploadFile = async (req: Request, res: Response) => {
       filename: req.file.filename,
       mimetype: req.file.mimetype,
     });
-    res.send(file.Location);
+    res.send({ path: file.Location, name: req.file.originalname });
   } catch (e) {
     console.error("e", e);
     res.sendStatus(400);
@@ -66,7 +66,12 @@ export const uploadFiles = (req: Request, res: Response) => {
 
   Promise.all(promises)
     .then((data) => {
-      res.send(data.map((img) => img.Location));
+      res.send(
+        data.map((img, i) => ({
+          path: img.Location,
+          name: files[i]?.originalname,
+        }))
+      );
     })
     .catch((e) => {
       throw Error(e);
@@ -89,7 +94,7 @@ export const updateFile = async (req: Request, res: Response) => {
     filename: req.file.filename,
     mimetype: req.file.mimetype,
   });
-  res.send(file.Location);
+  res.send({ path: file.Location, name: req.file.originalname });
 };
 
 export const deleteFile = async (req: Request, res: Response) => {
