@@ -13,10 +13,16 @@ import { useNavigate } from "react-router";
 import { ERoutes } from "../../models/routes";
 import ListElement from "../reusable/list/ListElement";
 
-type TMenuProps = {};
+type TMenuProps = {
+  handleClose: () => void;
+};
 
-const Menu: React.FC<TMenuProps> = () => {
+const Menu: React.FC<TMenuProps> = ({ handleClose }) => {
   const navigate = useNavigate();
+  const handleChooseOption = (handleCallback: () => void) => {
+    handleCallback();
+    handleClose();
+  };
   return (
     <Grid
       container
@@ -37,12 +43,12 @@ const Menu: React.FC<TMenuProps> = () => {
           <ListElement
             Icon={<FormatLineSpacing style={{ color: "white" }} />}
             text="Lines"
-            onClick={() => navigate("/")}
+            onClick={() => handleChooseOption(() => navigate("/"))}
           />
           <ListElement
             Icon={<Add style={{ color: "white" }} />}
             text="Create Line"
-            onClick={() => navigate(ERoutes.create)}
+            onClick={() => handleChooseOption(() => navigate(ERoutes.create))}
           />
         </List>
       </Grid>
@@ -55,7 +61,7 @@ const Menu: React.FC<TMenuProps> = () => {
           <ListElement
             Icon={<Logout style={{ color: "white" }} />}
             text="Log out"
-            onClick={() => navigate(ERoutes.logIn)}
+            onClick={() => handleChooseOption(() => navigate(ERoutes.logIn))}
           />
         </List>
       </Grid>
@@ -77,13 +83,13 @@ const Drawer: React.FC<TDrawerProps> = () => {
           open={open}
           onClose={() => setOpen(false)}
         >
-          <Menu />
+          <Menu handleClose={() => setOpen(false)} />
         </DrawerMui>
         <Hamburger open={open} toggleOpen={() => setOpen(!open)} />
       </Hidden>
       <Hidden mdDown>
         <DrawerMui variant="permanent" open={true}>
-          <Menu />
+          <Menu handleClose={() => setOpen(false)} />
         </DrawerMui>
       </Hidden>
     </>
