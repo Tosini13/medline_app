@@ -24,13 +24,20 @@ import {
   uploadFiles,
 } from "../../../queries/files/uploadFiles";
 import EventForm, { TEventForm } from "./EventForm";
+import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
 
-type TCreateEventProps = { open: boolean; handleClose: () => void; lineId: Id };
+type TCreateEventProps = {
+  open: boolean;
+  handleClose: () => void;
+  lineId: Id;
+  reExecuteGetEvents: TUseGetEventsReturn["reExecute"];
+};
 
 const CreateEvent: React.FC<TCreateEventProps> = ({
   open,
   handleClose,
   lineId,
+  reExecuteGetEvents,
 }) => {
   const navigate = useNavigate();
   const { isProcessing, execute } = useAsync();
@@ -74,6 +81,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
       await execute(createEvent(eventData));
       navigate(navigateTo.line(lineId));
       handleCloseAndReset();
+      reExecuteGetEvents();
     } catch (e) {
       console.error("STH went wrong!!");
     }

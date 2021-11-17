@@ -1,10 +1,15 @@
 import { useState } from "react";
 
-const useAsync = () => {
+export type TUseAsyncResult = {
+  isProcessing: boolean;
+  execute: <TResult>(promise: Promise<TResult>) => Promise<TResult>;
+};
+
+const useAsync = (): TUseAsyncResult => {
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   return {
     isProcessing,
-    execute: async <T>(promise: Promise<T>) => {
+    execute: async <TResult>(promise: Promise<TResult>) => {
       setIsProcessing(true);
       const response = await promise;
       setIsProcessing(false);

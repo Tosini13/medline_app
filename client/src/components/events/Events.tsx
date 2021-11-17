@@ -1,19 +1,18 @@
-import { useState } from "react";
-import { Grid, Button } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Id } from "../../models/backend";
 import { useGetEvents } from "../../queries/events/getEvents";
 import Loading from "../loading/Loading";
 import Event from "./event/Event";
 import CreateEvent from "./form/CreateEvent";
-import { Add } from "@mui/icons-material";
 
 type TEventsProps = {
   lineId: Id;
+  openForm: boolean;
+  setOpenForm: (b: boolean) => void;
 };
 
-const Events: React.FC<TEventsProps> = ({ lineId }) => {
-  const response = useGetEvents(lineId);
-  const [openForm, setOpenForm] = useState(false);
+const Events: React.FC<TEventsProps> = ({ lineId, openForm, setOpenForm }) => {
+  const { response, reExecute } = useGetEvents(lineId);
 
   if (!response?.data) {
     return <Loading />;
@@ -24,8 +23,8 @@ const Events: React.FC<TEventsProps> = ({ lineId }) => {
       <Grid
         container
         direction="column"
-        spacing={4}
-        style={{ padding: "5px" }}
+        spacing={3}
+        style={{ padding: "5px", paddingTop: "25px" }}
         alignItems="stretch"
       >
         {response?.data.map((event) => (
@@ -33,20 +32,12 @@ const Events: React.FC<TEventsProps> = ({ lineId }) => {
             <Event event={event} />
           </Grid>
         ))}
-        <Grid item style={{ textAlign: "center" }}>
-          <Button
-            variant="contained"
-            onClick={() => setOpenForm(true)}
-            startIcon={<Add />}
-          >
-            Add Event
-          </Button>
-        </Grid>
       </Grid>
       <CreateEvent
         open={openForm}
         handleClose={() => setOpenForm(false)}
         lineId={lineId}
+        reExecuteGetEvents={reExecute}
       />
     </>
   );

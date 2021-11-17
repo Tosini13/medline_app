@@ -1,29 +1,60 @@
-import { Dialog, List } from "@mui/material";
+import { Divider, List, Popover } from "@mui/material";
 import ListElement from "../../reusable/list/ListElement";
-import { Delete } from "@mui/icons-material";
+import { Delete, Add } from "@mui/icons-material";
 
 type TLineMoreProps = {
   handleDelete: () => void;
-  open: boolean;
+  anchorEl: HTMLButtonElement | null;
   handleClose: () => void;
+  handleOpenEventForm: () => void;
 };
 
 const LineMore: React.FC<TLineMoreProps> = ({
-  open,
+  anchorEl,
+  handleOpenEventForm,
   handleClose,
   handleDelete,
 }) => {
+  const handleClickEvent = () => {
+    handleClose();
+    handleOpenEventForm();
+  };
+
+  const handleClickDelete = () => {
+    handleClose();
+    handleDelete();
+  };
+
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Popover
+      open={Boolean(anchorEl)}
+      anchorEl={anchorEl}
+      onClose={handleClose}
+      anchorOrigin={{
+        vertical: "bottom",
+        horizontal: "right",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+    >
       <List>
+        <ListElement
+          Icon={<Add color="primary" />}
+          text="Create Event"
+          onClick={handleClickEvent}
+          color="black"
+        />
+        <Divider />
         <ListElement
           Icon={<Delete color="error" />}
           text="Delete Line"
-          onClick={handleDelete}
+          onClick={handleClickDelete}
           color="black"
         />
       </List>
-    </Dialog>
+    </Popover>
   );
 };
 
