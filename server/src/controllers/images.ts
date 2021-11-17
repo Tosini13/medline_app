@@ -21,7 +21,7 @@ const multerStorage = multer.diskStorage({
     cb(null, galleryDir);
   },
   filename: (_req, file, cb) => {
-    const extension = file.mimetype.replace("image/", "");
+    const extension = file.mimetype.replace("/", ".");
     const filename = `gallery_image_${format(new Date(), DATE_FILE_NAME)}`;
     cb(null, `${filename}.${extension}`);
   },

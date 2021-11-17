@@ -38,8 +38,8 @@ router.delete("/lines/:id", deleteLine);
 
 // -----------------------------------------
 // IMAGES
-router.post("/images", multerConfig.single("img"), uploadImage);
-router.put("/images", multerConfig.single("img"), updateImage);
+router.post("/images", multerConfig.single("file"), uploadImage);
+router.put("/images", multerConfig.single("file"), updateImage);
 router.delete("/images", deleteImage);
 
 export default router;

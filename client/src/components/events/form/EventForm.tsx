@@ -1,10 +1,11 @@
-import { Grid, Button, IconButton } from "@mui/material";
-import { Control } from "react-hook-form";
+import { Grid, Button } from "@mui/material";
+import { Control, UseFormRegister } from "react-hook-form";
 import { EVENT_TYPE } from "../../../models/backend";
 import { TextFieldRUForm } from "../../forms/TextField";
 import EventType from "../../forms/EventType";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
+import { Cancel, Add } from "@mui/icons-material";
 import ControlledDateTimePicker from "../../forms/controlled/ControlledDateTimePicker";
+import ControlledUploadFiles from "../../forms/controlled/ControlledUploadFiles";
 
 export type TEventForm = {
   title: string;
@@ -13,22 +14,29 @@ export type TEventForm = {
   prescriptions?: string[];
   resources?: string[];
   dateTime: Date;
+  files: Array<File | Blob> | null;
 };
 
 type TEventFormProps = {
   type: EVENT_TYPE;
   setType: (value: EVENT_TYPE) => void;
+  files: Array<File | Blob> | null;
+  setFiles: (files: Array<File | Blob> | null) => void;
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
   control: Control<TEventForm>;
   handleCancel: () => void;
+  register: UseFormRegister<TEventForm>;
 };
 
 const EventForm: React.FC<TEventFormProps> = ({
   control,
   type,
   setType,
+  files,
+  setFiles,
   handleSubmit,
   handleCancel,
+  register,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -67,21 +75,29 @@ const EventForm: React.FC<TEventFormProps> = ({
               <EventType type={type} setType={setType} />
             </Grid>
             <Grid item>
-              <IconButton size="large" disabled>
-                <AttachFileIcon />
-              </IconButton>
+              <ControlledUploadFiles control={control} name="files" />
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              <Button type="submit" variant="contained" color="primary">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                startIcon={<Add />}
+              >
                 Create
               </Button>
             </Grid>
             <Grid item>
-              <Button variant="contained" onClick={handleCancel} color="error">
+              <Button
+                variant="outlined"
+                onClick={handleCancel}
+                color="primary"
+                startIcon={<Cancel />}
+              >
                 Cancel
               </Button>
             </Grid>

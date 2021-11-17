@@ -1,5 +1,5 @@
 import { DialogTitle, DialogContent } from "@material-ui/core";
-import { Dialog, Grid, IconButton, Typography } from "@mui/material";
+import { Dialog, Grid, IconButton } from "@mui/material";
 import { useState } from "react";
 import { LINE_VALUE } from "../../models/backend";
 import Value from "../lines/line/Value";
