@@ -2,9 +2,10 @@ import { Grid, IconButton, List, Popover } from "@mui/material";
 import DescriptionIcon from "@mui/icons-material/Description";
 import { useState } from "react";
 import ListElement from "../../reusable/list/ListElement";
+import { TResource } from "../../../models/backend";
 
 type TResourcesProps = {
-  resources: string[];
+  resources: TResource[];
 };
 
 const Resources: React.FC<TResourcesProps> = ({ resources }) => {
@@ -46,8 +47,9 @@ const Resources: React.FC<TResourcesProps> = ({ resources }) => {
         <List>
           {resources.map((resource) => (
             <ListElement
-              onClick={() => handleChoose(resource)}
-              text={resource}
+              key={resource.path}
+              onClick={() => handleChoose(resource.path)}
+              text={resource.name}
               color="black"
             />
           ))}

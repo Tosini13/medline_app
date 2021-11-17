@@ -6,11 +6,12 @@ import {
   updateEvent,
 } from "./controllers/events";
 import {
-  deleteImage,
+  deleteFile,
   multerConfig,
-  updateImage,
-  uploadImage,
-} from "./controllers/images";
+  updateFile,
+  uploadFile,
+  uploadFiles,
+} from "./controllers/files";
 import {
   createLine,
   deleteLine,
@@ -38,8 +39,9 @@ router.delete("/lines/:id", deleteLine);
 
 // -----------------------------------------
 // IMAGES
-router.post("/images", multerConfig.single("file"), uploadImage);
-router.put("/images", multerConfig.single("file"), updateImage);
-router.delete("/images", deleteImage);
+router.post("/files", multerConfig.array("files"), uploadFiles);
+router.post("/images", multerConfig.single("file"), uploadFile);
+router.put("/images", multerConfig.single("file"), updateFile);
+router.delete("/images", deleteFile);
 
 export default router;

@@ -11,3 +11,4 @@ export const EVENTS_API_URL = `${API_URL}/events`;
 export const EVENTS_LINE_API_URL = (lineId: Id) =>
   `${API_URL}/events/${lineId}`;
 export const IMAGES_API_URL = `${API_URL}/images`;
+export const FILES_API_URL = `${API_URL}/files`;

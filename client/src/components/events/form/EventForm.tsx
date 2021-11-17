@@ -1,11 +1,10 @@
-import { Grid, Button } from "@mui/material";
-import { Control, UseFormRegister } from "react-hook-form";
+import { Grid } from "@mui/material";
+import { Control } from "react-hook-form";
 import { EVENT_TYPE } from "../../../models/backend";
 import { TextFieldRUForm } from "../../forms/TextField";
-import EventType from "../../forms/EventType";
-import { Cancel, Add } from "@mui/icons-material";
 import ControlledDateTimePicker from "../../forms/controlled/ControlledDateTimePicker";
 import ControlledUploadFiles from "../../forms/controlled/ControlledUploadFiles";
+import ControlledEventType from "../../forms/controlled/ControlledEventType";
 
 export type TEventForm = {
   title: string;
@@ -18,25 +17,15 @@ export type TEventForm = {
 };
 
 type TEventFormProps = {
-  type: EVENT_TYPE;
-  setType: (value: EVENT_TYPE) => void;
-  files: Array<File | Blob> | null;
-  setFiles: (files: Array<File | Blob> | null) => void;
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
   control: Control<TEventForm>;
-  handleCancel: () => void;
-  register: UseFormRegister<TEventForm>;
+  Actions: React.ReactNode;
 };
 
 const EventForm: React.FC<TEventFormProps> = ({
   control,
-  type,
-  setType,
-  files,
-  setFiles,
   handleSubmit,
-  handleCancel,
-  register,
+  Actions,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -72,37 +61,14 @@ const EventForm: React.FC<TEventFormProps> = ({
         <Grid item>
           <Grid container justifyContent="space-around" alignItems="center">
             <Grid item>
-              <EventType type={type} setType={setType} />
+              <ControlledEventType control={control} name="type" />
             </Grid>
             <Grid item>
               <ControlledUploadFiles control={control} name="files" />
             </Grid>
           </Grid>
         </Grid>
-        <Grid item>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                startIcon={<Add />}
-              >
-                Create
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant="outlined"
-                onClick={handleCancel}
-                color="primary"
-                startIcon={<Cancel />}
-              >
-                Cancel
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
+        <Grid item>{Actions}</Grid>
       </Grid>
     </form>
   );

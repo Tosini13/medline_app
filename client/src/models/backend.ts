@@ -1,5 +1,10 @@
 export type Id = string;
 
+export type TResource = {
+  path: string;
+  name: string;
+};
+
 export type TLine = {
   id: Id;
   title: string;
@@ -17,7 +22,7 @@ export type TEvent = {
   dateTime: Date;
   type: EVENT_TYPE;
   prescriptions?: string[];
-  resources?: string[];
+  resources?: TResource[];
   line: Id;
 };
 

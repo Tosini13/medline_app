@@ -5,6 +5,7 @@ import { deleteImageAWS, uploadImageAWS } from "./actions/images";
 import multer from "multer";
 import { DATE_FILE_NAME } from "../models/const";
 import { s3 } from "..";
+import { uploadFileAWS } from "./actions/files";
 
 const galleryDir = "gallery";
 export const AWS_GALLERY_ROOT = "amazonaws.com/";
@@ -22,7 +23,7 @@ const multerStorage = multer.diskStorage({
   },
   filename: (_req, file, cb) => {
     const extension = file.mimetype.replace("/", ".");
-    const filename = `gallery_image_${format(new Date(), DATE_FILE_NAME)}`;
+    const filename = `file_${format(new Date(), DATE_FILE_NAME)}`;
     cb(null, `${filename}.${extension}`);
   },
 });
@@ -31,7 +32,7 @@ export const multerConfig = multer({
   storage: multerStorage,
 });
 
-export const uploadImage = async (req: Request, res: Response) => {
+export const uploadFile = async (req: Request, res: Response) => {
   if (!req.file) {
     res.send("Image was not uploaded properly");
     return;
@@ -43,14 +44,41 @@ export const uploadImage = async (req: Request, res: Response) => {
       filename: req.file.filename,
       mimetype: req.file.mimetype,
     });
-    res.send(file.Location);
+    res.send({ path: file.Location, name: req.file.originalname });
   } catch (e) {
     console.error("e", e);
     res.sendStatus(400);
   }
 };
 
-export const updateImage = async (req: Request, res: Response) => {
+export const uploadFiles = (req: Request, res: Response) => {
+  const files = req.files as Express.Multer.File[]; // Is it ok?!?
+  let promises: any[] = [];
+  files.forEach((file) => {
+    promises.push(
+      uploadFileAWS({
+        path: file.path,
+        filename: file.filename,
+        mimetype: file.mimetype,
+      })
+    );
+  });
+
+  Promise.all(promises)
+    .then((data) => {
+      res.send(
+        data.map((img, i) => ({
+          path: img.Location,
+          name: files[i]?.originalname,
+        }))
+      );
+    })
+    .catch((e) => {
+      throw Error(e);
+    });
+};
+
+export const updateFile = async (req: Request, res: Response) => {
   const oldPath = req?.query?.path as string | undefined;
   const key = oldPath?.split(AWS_GALLERY_ROOT)[1];
   if (key) {
@@ -66,10 +94,10 @@ export const updateImage = async (req: Request, res: Response) => {
     filename: req.file.filename,
     mimetype: req.file.mimetype,
   });
-  res.send(file.Location);
+  res.send({ path: file.Location, name: req.file.originalname });
 };
 
-export const deleteImage = async (req: Request, res: Response) => {
+export const deleteFile = async (req: Request, res: Response) => {
   const path = req?.query?.path as string | undefined;
   if (path) {
     const key = path.split(AWS_GALLERY_ROOT)[1];
