@@ -1,25 +1,8 @@
-import { IconButton, List, Popover, Typography } from "@mui/material";
+import { IconButton, List, Popover } from "@mui/material";
 import { useState } from "react";
 import { EVENT_TYPE } from "../../models/backend";
 import EventTypeIcon from "../events/EventTypeIcon";
 import ListElement from "../reusable/list/ListElement";
-import styled from "styled-components";
-
-const ListStyle = styled(List)<{
-  open: boolean;
-}>`
-  min-width: 250px;
-  position: absolute !important;
-  padding: 0px !important;
-  background-color: white;
-  z-index: 100;
-  height: 100%;
-  width: 100%;
-  top: 0px;
-  left: 0px;
-  transition: all 0.3s;
-  transform: translateX(${(props) => (props.open ? "0%" : "100%")});
-`;
 
 type TEventTypeProps = {
   type: EVENT_TYPE;

@@ -5,6 +5,7 @@ import { useGetEvents } from "../../queries/events/getEvents";
 import Loading from "../loading/Loading";
 import Event from "./event/Event";
 import CreateEvent from "./form/CreateEvent";
+import { Add } from "@mui/icons-material";
 
 type TEventsProps = {
   lineId: Id;
@@ -33,7 +34,11 @@ const Events: React.FC<TEventsProps> = ({ lineId }) => {
           </Grid>
         ))}
         <Grid item style={{ textAlign: "center" }}>
-          <Button variant="contained" onClick={() => setOpenForm(true)}>
+          <Button
+            variant="contained"
+            onClick={() => setOpenForm(true)}
+            startIcon={<Add />}
+          >
             Add Event
           </Button>
         </Grid>
