@@ -6,7 +6,7 @@ import { TLine } from "../../../models/backend";
 
 type TLineHeaderProps = {
   line: TLine;
-  handleOpenMore: () => void;
+  handleOpenMore: (event: React.MouseEvent<HTMLButtonElement>) => void;
   handleClose: () => void;
 };
 
@@ -22,7 +22,12 @@ const LineHeader: React.FC<TLineHeaderProps> = ({
       container
       direction="column"
       spacing={2}
-      style={{ paddingLeft: "5px", paddingRight: "5px" }}
+      style={{
+        paddingLeft: "5px",
+        paddingRight: "5px",
+        boxShadow: "0px 0px 8px -3px rgb(0 0 0 / 70%)",
+        zIndex: 1,
+      }}
     >
       <Grid item>
         <Grid container justifyContent="space-between" alignItems="flex-start">
@@ -42,7 +47,12 @@ const LineHeader: React.FC<TLineHeaderProps> = ({
         </Grid>
       </Grid>
       <Grid item>
-        <Grid container justifyContent="space-between" alignItems="center">
+        <Grid
+          container
+          justifyContent="space-between"
+          alignItems="center"
+          style={{ paddingBottom: line.description ? "0px" : "25px" }}
+        >
           <Grid item xs={2}>
             <Typography align="center" fontSize="large">
               {line.contributions}
@@ -52,14 +62,16 @@ const LineHeader: React.FC<TLineHeaderProps> = ({
             </Typography>
           </Grid>
           <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={!line.description}
-              onClick={() => setOpenDesc(!openDesc)}
-            >
-              {openDesc ? "Hide" : "Show"} description
-            </Button>
+            {line.description && (
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={!line.description}
+                onClick={() => setOpenDesc(!openDesc)}
+              >
+                {openDesc ? "Hide" : "Show"} description
+              </Button>
+            )}
           </Grid>
           <Grid item xs={2}>
             <Grid container justifyContent="center">
