@@ -56,7 +56,7 @@ const Menu: React.FC<TMenuProps> = ({ handleClose }) => {
         <List>
           <ListElement
             Icon={<Info style={{ color: "white" }} />}
-            text="Version 1.0"
+            text={`Version ${process.env.REACT_APP_VERSION}`}
           />
           <ListElement
             Icon={<Logout style={{ color: "white" }} />}

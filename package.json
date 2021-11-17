@@ -13,7 +13,8 @@
     "build": "npm run build:client && npm run build:server",
     "postinstall": "npm run build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "client:version": "cd client && npm run version:patch"
   },
   "keywords": [],
   "author": "",
