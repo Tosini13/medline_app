@@ -1,7 +1,19 @@
-import { Dialog, DialogContent, DialogTitle } from "@mui/material";
+import { AxiosResponse } from "axios";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+
+import { Cancel, Add } from "@mui/icons-material";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  Button,
+  CircularProgress,
+} from "@mui/material";
+
+import useAsync from "../../../helpers/useAsync";
 import { EVENT_TYPE, Id } from "../../../models/backend";
 import { navigateTo } from "../../../models/routes";
 import {
@@ -22,9 +34,9 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
   lineId,
 }) => {
   const navigate = useNavigate();
-  const [files, setFiles] = useState<Array<File | Blob> | null>(null);
+  const { isProcessing, execute } = useAsync();
   const [type, setType] = useState(EVENT_TYPE.APPOINTMENT);
-  const { handleSubmit, control, register } = useForm<TEventForm>({
+  const { handleSubmit, control } = useForm<TEventForm>({
     defaultValues: {
       title: "",
       description: "",
@@ -35,10 +47,12 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
     let res;
     if (data.files) {
       const fileDate: TUploadFilesParams = {
-        file: data.files[0],
+        files: data.files,
       };
       try {
-        res = await uploadFiles(fileDate);
+        res = await execute<AxiosResponse<string[] | undefined, any>>(
+          uploadFiles(fileDate)
+        );
       } catch (e) {
         console.error("STH went wrong with uploading!!");
       }
@@ -49,29 +63,58 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
       dateTime: data.dateTime,
       type,
       line: lineId,
-      resources: res && [res.data],
+      resources: res?.data,
     };
     try {
-      await createEvent(eventData);
+      await execute(createEvent(eventData));
       navigate(navigateTo.line(lineId));
       handleClose();
     } catch (e) {
       console.error("STH went wrong!!");
     }
   };
+
+  console.log("isProcessing", isProcessing);
+
+  const Actions = (
+    <Grid container justifyContent="space-between" alignItems="center">
+      <Grid item>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          startIcon={
+            isProcessing ? <CircularProgress size={"20px"} /> : <Add />
+          }
+          disabled={isProcessing}
+        >
+          Create
+        </Button>
+      </Grid>
+      <Grid item>
+        <Button
+          variant="outlined"
+          onClick={handleClose}
+          color="primary"
+          startIcon={<Cancel />}
+          disabled={isProcessing}
+        >
+          Cancel
+        </Button>
+      </Grid>
+    </Grid>
+  );
+
   return (
     <Dialog open={open}>
       <DialogTitle>Create Event</DialogTitle>
       <DialogContent style={{ position: "relative", overflowX: "hidden" }}>
         <EventForm
+          Actions={Actions}
           type={type}
           setType={setType}
-          files={files}
-          setFiles={setFiles}
           control={control}
           handleSubmit={(data) => handleSubmit(onSubmit)(data)}
-          handleCancel={handleClose}
-          register={register}
         />
       </DialogContent>
     </Dialog>

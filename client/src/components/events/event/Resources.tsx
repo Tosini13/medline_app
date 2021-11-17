@@ -46,6 +46,7 @@ const Resources: React.FC<TResourcesProps> = ({ resources }) => {
         <List>
           {resources.map((resource) => (
             <ListElement
+              key={resource}
               onClick={() => handleChoose(resource)}
               text={resource}
               color="black"

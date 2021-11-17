@@ -3,7 +3,7 @@ import AWS from "aws-sdk";
 import { connectMongoose } from "./mongo/config";
 import path from "path";
 import router from "./routes";
-import { initNodeGallery } from "./controllers/images";
+import { initNodeGallery } from "./controllers/files";
 
 require("dotenv").config();
 const app = express();

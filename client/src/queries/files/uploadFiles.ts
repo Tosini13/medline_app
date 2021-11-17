@@ -1,12 +1,12 @@
 import axios from "axios";
-import { IMAGES_API_URL } from "../../models/endpoints";
+import { FILES_API_URL } from "../../models/endpoints";
 
-export type TUploadFilesParams = { file: any };
+export type TUploadFilesParams = { files: any[] };
 
-export const uploadFiles = async ({ file }: TUploadFilesParams) => {
+export const uploadFiles = async ({ files }: TUploadFilesParams) => {
   let formData = new FormData();
-  formData.append("file", file);
-  return await axios.post<string>(IMAGES_API_URL, formData, {
+  Object.values(files).forEach((file) => formData.append(`files`, file));
+  return await axios.post<string[] | undefined>(FILES_API_URL, formData, {
     headers: {
       "content-type": "multipart/form-data",
     },
