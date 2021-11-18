@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { LeanDocument } from "mongoose";
 import Line, { ILine, TLine, TLineRes } from "../models/line";
 import { getEventsQtt } from "./actions/events";
+import { removeLineEvents } from "./actions/lines";
 
 const convertLine = async (line: LeanDocument<ILine>): Promise<TLineRes> => {
   const contributions = await getEventsQtt(line._id);
@@ -72,9 +73,12 @@ export const updateLine = async (req: Request, res: Response) => {
 
 export const deleteLine = (req: Request, res: Response) => {
   Line.findByIdAndRemove({ _id: req.params.id })
-    .then(
-      async (deletedItem) =>
-        deletedItem && res.send(await convertLine(deletedItem))
-    )
+    .then(async (deletedItem) => {
+      if (!deletedItem) return;
+      const line = await convertLine(deletedItem);
+      await removeLineEvents(line.id);
+
+      res.send(line);
+    })
     .catch((e) => console.log(e));
 };

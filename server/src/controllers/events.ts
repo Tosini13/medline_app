@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { LeanDocument, ObjectId } from "mongoose";
 import Event, { IEvent, TEventRes, TEvent } from "../models/event";
+import { removeResources } from "./actions/events";
 
-const convertEvent = (doc: LeanDocument<IEvent>): TEventRes => ({
+export const convertEvent = (doc: LeanDocument<IEvent>): TEventRes => ({
   id: doc._id,
   line: doc.line,
   title: doc.title,
@@ -51,6 +52,14 @@ export const updateEvent = async (req: Request, res: Response) => {
 
 export const deleteEvent = (req: Request, res: Response) => {
   Event.findByIdAndRemove({ _id: req.params.id })
-    .then((deletedItem) => deletedItem && res.send(convertEvent(deletedItem)))
+    .then(async (deletedItem) => {
+      if (deletedItem) {
+        const convertedEvent = convertEvent(deletedItem);
+        if (convertedEvent.resources) {
+          await removeResources(convertedEvent.resources);
+        }
+        res.send(convertEvent(deletedItem));
+      }
+    })
     .catch((e) => console.log(e));
 };

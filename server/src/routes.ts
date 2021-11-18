@@ -41,7 +41,7 @@ router.delete("/lines/:id", deleteLine);
 // IMAGES
 router.post("/files", multerConfig.array("files"), uploadFiles);
 router.post("/images", multerConfig.single("file"), uploadFile);
-router.put("/images", multerConfig.single("file"), updateFile);
-router.delete("/images", deleteFile);
+router.put("/files", multerConfig.single("file"), updateFile);
+router.delete("/files", deleteFile);
 
 export default router;

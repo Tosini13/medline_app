@@ -4,11 +4,9 @@ import { Request, Response } from "express";
 import { deleteImageAWS, uploadImageAWS } from "./actions/images";
 import multer from "multer";
 import { DATE_FILE_NAME } from "../models/const";
-import { s3 } from "..";
 import { uploadFileAWS } from "./actions/files";
 
 const galleryDir = "gallery";
-export const AWS_GALLERY_ROOT = "amazonaws.com/";
 
 export const initNodeGallery = () => {
   const galleryPath = `./${galleryDir}`;
@@ -80,9 +78,8 @@ export const uploadFiles = (req: Request, res: Response) => {
 
 export const updateFile = async (req: Request, res: Response) => {
   const oldPath = req?.query?.path as string | undefined;
-  const key = oldPath?.split(AWS_GALLERY_ROOT)[1];
-  if (key) {
-    await deleteImageAWS({ key });
+  if (oldPath) {
+    await deleteImageAWS({ path: oldPath });
   }
 
   if (!req.file) {
@@ -100,8 +97,7 @@ export const updateFile = async (req: Request, res: Response) => {
 export const deleteFile = async (req: Request, res: Response) => {
   const path = req?.query?.path as string | undefined;
   if (path) {
-    const key = path.split(AWS_GALLERY_ROOT)[1];
-    await deleteImageAWS({ key });
+    await deleteImageAWS({ path });
     res.send(req.query.path);
   } else {
     res.send(new Error("wrong path"));

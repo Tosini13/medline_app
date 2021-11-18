@@ -9,7 +9,6 @@ import {
   DialogTitle,
   Grid,
   Button,
-  CircularProgress,
 } from "@mui/material";
 
 import useAsync from "../../../helpers/useAsync";
@@ -25,6 +24,7 @@ import {
 } from "../../../queries/files/uploadFiles";
 import EventForm, { TEventForm } from "./EventForm";
 import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
+import { LoadingIcon } from "../../forms/Buttons";
 
 type TCreateEventProps = {
   open: boolean;
@@ -94,9 +94,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
           type="submit"
           variant="contained"
           color="primary"
-          startIcon={
-            isProcessing ? <CircularProgress size={"20px"} /> : <Add />
-          }
+          startIcon={isProcessing ? <LoadingIcon /> : <Add />}
           disabled={isProcessing}
         >
           Create
