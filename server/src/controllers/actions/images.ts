@@ -1,6 +1,7 @@
 import fs from "fs";
 import { s3 } from "../..";
 
+export const AWS_GALLERY_ROOT = "amazonaws.com/";
 // ################## UPLOAD ######################
 
 type TUploadImageAWSParams = {
@@ -29,10 +30,11 @@ export const uploadImageAWS = async ({
 
 // ################## DELETE ######################
 
-type TDeleteImageAWSAWSParams = {
-  key: string;
+type TDeleteImageAWSParams = {
+  path: string;
 };
-export const deleteImageAWS = async ({ key }: TDeleteImageAWSAWSParams) => {
+export const deleteImageAWS = async ({ path }: TDeleteImageAWSParams) => {
+  const key = path.split(AWS_GALLERY_ROOT)[1];
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME ?? "",
     Key: key,

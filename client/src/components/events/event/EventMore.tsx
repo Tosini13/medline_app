@@ -1,17 +1,17 @@
 import { Divider, List, Popover } from "@mui/material";
 import ListElement from "../../reusable/list/ListElement";
-import { Delete, Add, Edit } from "@mui/icons-material";
+import { Delete, Add } from "@mui/icons-material";
 import useAsync from "../../../helpers/useAsync";
 import { LoadingIcon } from "../../forms/Buttons";
 
-type TLineMoreProps = {
+type TEventMoreProps = {
   handleDelete: () => Promise<void>;
   anchorEl: HTMLButtonElement | null;
   handleClose: () => void;
   handleOpenEventForm: () => void;
 };
 
-const LineMore: React.FC<TLineMoreProps> = ({
+const EventMore: React.FC<TEventMoreProps> = ({
   anchorEl,
   handleOpenEventForm,
   handleClose,
@@ -47,15 +47,14 @@ const LineMore: React.FC<TLineMoreProps> = ({
       <List>
         <ListElement
           Icon={<Add color="primary" />}
-          text="Create Event"
+          text="Edit Event"
           onClick={handleClickEvent}
           color="black"
         />
-        <ListElement Icon={<Edit />} text="Edit Line" color="gray" />
         <Divider />
         <ListElement
           Icon={isProcessing ? <LoadingIcon /> : <Delete color="error" />}
-          text="Delete Line"
+          text="Delete Event"
           onClick={handleClickDelete}
           color="black"
         />
@@ -64,4 +63,4 @@ const LineMore: React.FC<TLineMoreProps> = ({
   );
 };
 
-export default LineMore;
+export default EventMore;

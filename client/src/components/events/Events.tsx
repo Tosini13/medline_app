@@ -29,7 +29,7 @@ const Events: React.FC<TEventsProps> = ({ lineId, openForm, setOpenForm }) => {
       >
         {response?.data.map((event) => (
           <Grid item key={event.id}>
-            <Event event={event} />
+            <Event event={event} reExecuteGetEvents={reExecute} />
           </Grid>
         ))}
       </Grid>
