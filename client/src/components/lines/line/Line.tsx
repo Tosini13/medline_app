@@ -8,6 +8,7 @@ import LineMore from "./LineMore";
 import Events from "../../events/Events";
 import LineHeader from "./LineHeader";
 import useAsync from "../../../helpers/useAsync";
+import { useGetEvents } from "../../../queries/events/getEvents";
 
 type TLineProps = {};
 
@@ -19,7 +20,10 @@ const Line: React.FC<TLineProps> = () => {
   const [openEventForm, setOpenEventForm] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-  const response = useGetLine({ id: id as string, execute });
+  const { response } = useGetLine({ id: id as string, execute });
+  const { response: resEvents, reExecute: reExecuteGetEvents } = useGetEvents(
+    id as string
+  );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -31,8 +35,12 @@ const Line: React.FC<TLineProps> = () => {
   const line = response?.data;
 
   const handleDeleteLine = async () => {
-    await deleteLine({ id: id as string }); // TODO: check erros
-    navigate("/");
+    try {
+      await deleteLine({ id: id as string }); // TODO: check errors
+      navigate("/");
+    } catch (e) {
+      console.error("e", e);
+    }
   };
 
   return (
@@ -41,12 +49,15 @@ const Line: React.FC<TLineProps> = () => {
         line={line}
         handleOpenMore={handleClick}
         handleClose={() => navigate("/")}
+        contributions={resEvents?.data.length}
       />
       <div style={{ flexGrow: 1, overflowY: "auto" }}>
         <Events
           lineId={line.id}
           openForm={openEventForm}
           setOpenForm={setOpenEventForm}
+          reExecuteGetEvents={reExecuteGetEvents}
+          resEvents={resEvents}
         />
       </div>
       <LineMore

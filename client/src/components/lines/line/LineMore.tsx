@@ -45,7 +45,7 @@ const LineMore: React.FC<TLineMoreProps> = ({
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
-        onClose={isProcessing ? undefined : handleClose}
+        onClose={handleClose}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",
@@ -65,9 +65,9 @@ const LineMore: React.FC<TLineMoreProps> = ({
           <ListElement Icon={<Edit />} text="Edit Line" color="gray" />
           <Divider />
           <ListElement
-            Icon={isProcessing ? <LoadingIcon /> : <Delete color="error" />}
+            Icon={<Delete color="error" />}
             text="Delete Line"
-            onClick={() => setOpenQuestion(true)}
+            onClick={() => handleClickOption(() => setOpenQuestion(true))}
             color="black"
           />
         </List>
