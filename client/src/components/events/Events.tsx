@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Id } from "../../models/backend";
 import { TUseGetEventsReturn } from "../../queries/events/getEvents";
 import { TUseGetLineReturn } from "../../queries/lines/getLine";

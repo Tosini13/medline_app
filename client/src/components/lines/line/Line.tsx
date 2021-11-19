@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { useGetLine } from "../../../queries/lines/getLine";
 import Loading from "../../global/loading/Loading";
@@ -14,6 +14,10 @@ type TLineProps = {};
 
 const Line: React.FC<TLineProps> = () => {
   const { id } = useParams();
+  // const location = useLocation();
+  console.log("id", id);
+  // console.log("location", location);
+
   const navigate = useNavigate();
   const { isProcessing, execute } = useAsync();
 
