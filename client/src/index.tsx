@@ -9,15 +9,18 @@ import { theme } from "./style/theme";
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import { ThemeProvider } from "@mui/material/styles";
+import { SnackbarProvider } from "notistack";
 
 ReactDOM.render(
-  <LocalizationProvider dateAdapter={DateAdapter}>
-    <ThemeProvider theme={theme}>
-      <StylesProvider injectFirst>
-        <App />
-      </StylesProvider>
-    </ThemeProvider>
-  </LocalizationProvider>,
+  <SnackbarProvider>
+    <LocalizationProvider dateAdapter={DateAdapter}>
+      <ThemeProvider theme={theme}>
+        <StylesProvider injectFirst>
+          <App />
+        </StylesProvider>
+      </ThemeProvider>
+    </LocalizationProvider>
+  </SnackbarProvider>,
   document.getElementById("root")
 );
 

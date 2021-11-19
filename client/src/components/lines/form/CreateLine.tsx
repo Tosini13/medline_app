@@ -9,10 +9,12 @@ import {
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { theme } from "../../../style/theme";
+import { useSnackbar } from "notistack";
 
 type TCreateLineProps = {};
 
 const CreateLine: React.FC<TCreateLineProps> = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [lineValue, setLineValue] = useState<LINE_VALUE>(LINE_VALUE.NORMAL);
 
@@ -30,8 +32,13 @@ const CreateLine: React.FC<TCreateLineProps> = () => {
       color: data.color,
       value: lineValue,
     };
-    await createLine(lineData); // TODO: check errors
-    navigate("/");
+    try {
+      await createLine(lineData); // TODO: check errors
+      navigate("/");
+      enqueueSnackbar("Line was created!", { variant: "success" });
+    } catch (e) {
+      enqueueSnackbar("Something went wrong!", { variant: "error" });
+    }
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { useGetLine } from "../../../queries/lines/getLine";
-import Loading from "../../loading/Loading";
+import Loading from "../../global/loading/Loading";
 import { deleteLine } from "../../../queries/lines/deleteLine";
 import LineMore from "./LineMore";
 import Events from "../../events/Events";

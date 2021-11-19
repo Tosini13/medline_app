@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { Id } from "../../models/backend";
 import { useGetEvents } from "../../queries/events/getEvents";
-import Loading from "../loading/Loading";
+import Loading from "../global/loading/Loading";
 import Event from "./event/Event";
 import CreateEvent from "./form/CreateEvent";
 
