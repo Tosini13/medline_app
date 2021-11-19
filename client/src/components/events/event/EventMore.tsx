@@ -1,6 +1,6 @@
 import { Button, Divider, List, Popover } from "@mui/material";
 import ListElement from "../../reusable/list/ListElement";
-import { Delete, Add, Cancel } from "@mui/icons-material";
+import { Delete, Edit, Cancel } from "@mui/icons-material";
 import useAsync from "../../../helpers/useAsync";
 import { LoadingIcon } from "../../forms/Buttons";
 import Question from "../../global/question/Question";
@@ -50,10 +50,10 @@ const EventMore: React.FC<TEventMoreProps> = ({
       >
         <List>
           <ListElement
-            Icon={<Add color="primary" />}
+            Icon={<Edit />}
             text="Edit Event"
-            onClick={() => handleClickOption(handleOpenEventForm)}
-            color="black"
+            // onClick={() => handleClickOption(handleOpenEventForm)}
+            color="gray"
           />
           <Divider />
           <ListElement

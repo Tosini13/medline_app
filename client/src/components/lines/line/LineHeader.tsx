@@ -3,15 +3,18 @@ import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { MoreVert, Close } from "@mui/icons-material";
 import Value from "./Value";
 import { TLine } from "../../../models/backend";
+import { LoadingIcon } from "../../forms/Buttons";
 
 type TLineHeaderProps = {
   line: TLine;
+  contributions?: number;
   handleOpenMore: (event: React.MouseEvent<HTMLButtonElement>) => void;
   handleClose: () => void;
 };
 
 const LineHeader: React.FC<TLineHeaderProps> = ({
   line,
+  contributions,
   handleOpenMore,
   handleClose,
 }) => {
@@ -54,9 +57,13 @@ const LineHeader: React.FC<TLineHeaderProps> = ({
           style={{ paddingBottom: line.description ? "0px" : "25px" }}
         >
           <Grid item xs={2}>
-            <Typography align="center" fontSize="large">
-              {line.contributions}
-            </Typography>
+            {contributions ? (
+              <Typography align="center" fontSize="large">
+                {contributions}
+              </Typography>
+            ) : (
+              <LoadingIcon />
+            )}
             <Typography align="center" fontSize="xx-small">
               contributions
             </Typography>

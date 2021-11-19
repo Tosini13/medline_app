@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 import { Id, TLine } from "../../models/backend";
 import { LINE_API_URL } from "../../models/endpoints";
@@ -9,15 +9,23 @@ export type TUseGetLineParams = {
   execute: TUseAsyncResult["execute"];
 };
 
-export const useGetLine = ({ id, execute }: TUseGetLineParams) => {
-  const [response, setResponse] = useState<AxiosResponse<TLine> | undefined>();
-  useEffect(() => {
-    const fetch = async () => {
-      const res = await execute(axios.get<TLine>(LINE_API_URL(id)));
-      setResponse(res);
-    };
-    fetch();
-  }, [id]);
+export type TUseGetLineReturn = {
+  response?: AxiosResponse<TLine, any>;
+  reExecute: () => Promise<void>;
+};
 
-  return response;
+export const useGetLine = ({
+  id,
+  execute,
+}: TUseGetLineParams): TUseGetLineReturn => {
+  const [response, setResponse] = useState<AxiosResponse<TLine> | undefined>();
+  const fetch = useCallback(async () => {
+    const res = await execute(axios.get<TLine>(LINE_API_URL(id)));
+    setResponse(res);
+  }, [id]);
+  useEffect(() => {
+    fetch();
+  }, [id, fetch]);
+
+  return { response, reExecute: fetch };
 };
