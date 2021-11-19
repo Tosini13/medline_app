@@ -14,7 +14,8 @@
     "postinstall": "npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "client:version": "cd client && npm run version:patch"
+    "client:version": "cd client && npm run version:patch",
+    "heroku-postbuild": "npm run client:version"
   },
   "keywords": [],
   "author": "",
