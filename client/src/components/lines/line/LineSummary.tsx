@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { TLine } from "../../../models/backend";
 import Value from "./Value";
 import { formatDistanceToNowStrict } from "date-fns";
+import { hexToRgb } from "../../../helpers/calcHexToRGB";
 
 const TypographySubHeader = styled(Typography)`
   text-overflow: ellipsis;
@@ -11,15 +12,20 @@ const TypographySubHeader = styled(Typography)`
   overflow: hidden;
 `;
 
+const getRgba = (color: string, rgba: string = "0.7") => {
+  const rgb = hexToRgb(color);
+  return rgb ? `rgba(${rgb},${rgba})` : color;
+};
+
 const PaperStyled = styled(Paper)<{ color: string }>`
   padding: 5px;
   margin: 0px 5px 0px 2px;
   transition: all 0.3s;
   &:hover {
     cursor: pointer;
-    box-shadow: 0px 2px 1px -1px ${(props) => props.color},
-      0px 1px 1px 0px ${(props) => props.color},
-      0px 1px 3px 1px ${(props) => props.color};
+    box-shadow: 0px 2px 1px -1px ${(props) => getRgba(props.color)},
+      0px 1px 1px 0px ${(props) => getRgba(props.color)},
+      0px 1px 3px 0px ${(props) => getRgba(props.color)};
   }
 `;
 
