@@ -3,7 +3,7 @@ import LineSummary from "./line/LineSummary";
 import { Grid } from "@mui/material";
 import { navigateTo } from "../../models/routes";
 import { useGetLines } from "../../queries/lines/getLines";
-import Loading from "../loading/Loading";
+import Loading from "../global/loading/Loading";
 
 type TLinesProps = {};
 

@@ -25,6 +25,7 @@ import {
 import EventForm, { TEventForm } from "./EventForm";
 import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
 import { LoadingIcon } from "../../forms/Buttons";
+import { useSnackbar } from "notistack";
 
 type TCreateEventProps = {
   open: boolean;
@@ -40,6 +41,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
   reExecuteGetEvents,
 }) => {
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const { isProcessing, execute } = useAsync();
   const { handleSubmit, control, reset } = useForm<TEventForm>({
     defaultValues: {
@@ -66,7 +68,11 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
           uploadFiles(fileDate)
         );
       } catch (e) {
-        console.error("STH went wrong with uploading!!");
+        console.error("Something went wrong while uploading files!!", e);
+        enqueueSnackbar("Something went wrong while uploading files!", {
+          variant: "error",
+        });
+        return;
       }
     }
     const eventData: TCreateEventParams = {
@@ -82,8 +88,12 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
       navigate(navigateTo.line(lineId));
       handleCloseAndReset();
       reExecuteGetEvents();
+      enqueueSnackbar("Event was created!", { variant: "success" });
     } catch (e) {
-      console.error("STH went wrong!!");
+      console.error("Something went wrong while creating event!!", e);
+      enqueueSnackbar("Something went wrong while creating event!", {
+        variant: "error",
+      });
     }
   };
 

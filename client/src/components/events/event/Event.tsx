@@ -9,6 +9,7 @@ import { theme } from "../../../style/theme";
 import EventMore from "./EventMore";
 import { deleteEvent } from "../../../queries/events/deleteEvent";
 import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
+import { useSnackbar } from "notistack";
 
 const TypographyStyled = styled(Typography)`
   color: ${theme.palette.text.secondary};
@@ -22,6 +23,7 @@ type TEventProps = {
 };
 
 const Event: React.FC<TEventProps> = ({ event, reExecuteGetEvents }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [, setOpenEventForm] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
@@ -33,8 +35,10 @@ const Event: React.FC<TEventProps> = ({ event, reExecuteGetEvents }) => {
     try {
       await deleteEvent({ id: event.id });
       reExecuteGetEvents();
+      enqueueSnackbar("Event has been deleted!", { variant: "success" });
     } catch (e) {
       console.error("ERROR", e);
+      enqueueSnackbar("Something went wrong!", { variant: "error" });
     }
   };
   return (

@@ -1,8 +1,10 @@
-import { Divider, List, Popover } from "@mui/material";
+import { Button, Divider, List, Popover } from "@mui/material";
 import ListElement from "../../reusable/list/ListElement";
-import { Delete, Add } from "@mui/icons-material";
+import { Delete, Add, Cancel } from "@mui/icons-material";
 import useAsync from "../../../helpers/useAsync";
 import { LoadingIcon } from "../../forms/Buttons";
+import Question from "../../global/question/Question";
+import { useState } from "react";
 
 type TEventMoreProps = {
   handleDelete: () => Promise<void>;
@@ -17,49 +19,73 @@ const EventMore: React.FC<TEventMoreProps> = ({
   handleClose,
   handleDelete,
 }) => {
+  const [openQuestion, setOpenQuestion] = useState(false);
   const { isProcessing, execute } = useAsync();
-  const handleClickEvent = () => {
+  const handleClickOption = (callback: () => void) => {
+    callback();
     handleClose();
-    handleOpenEventForm();
   };
 
   const handleClickDelete = async () => {
     try {
       await execute(handleDelete());
-      handleClose();
+      setOpenQuestion(false);
     } catch (e) {}
   };
 
   return (
-    <Popover
-      open={Boolean(anchorEl)}
-      anchorEl={anchorEl}
-      onClose={isProcessing ? undefined : handleClose}
-      anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "right",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-    >
-      <List>
-        <ListElement
-          Icon={<Add color="primary" />}
-          text="Edit Event"
-          onClick={handleClickEvent}
-          color="black"
-        />
-        <Divider />
-        <ListElement
-          Icon={isProcessing ? <LoadingIcon /> : <Delete color="error" />}
-          text="Delete Event"
+    <>
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <List>
+          <ListElement
+            Icon={<Add color="primary" />}
+            text="Edit Event"
+            onClick={() => handleClickOption(handleOpenEventForm)}
+            color="black"
+          />
+          <Divider />
+          <ListElement
+            Icon={<Delete color="error" />}
+            text="Delete Event"
+            onClick={() => handleClickOption(() => setOpenQuestion(true))}
+            color="black"
+          />
+        </List>
+      </Popover>
+      <Question
+        title="Do you really want to delete the Event?"
+        open={openQuestion}
+      >
+        <Button
+          variant="outlined"
+          color="error"
           onClick={handleClickDelete}
-          color="black"
-        />
-      </List>
-    </Popover>
+          startIcon={isProcessing ? <LoadingIcon /> : <Delete color="error" />}
+        >
+          Yes
+        </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setOpenQuestion(false)}
+          startIcon={<Cancel />}
+        >
+          No
+        </Button>
+      </Question>
+    </>
   );
 };
 
