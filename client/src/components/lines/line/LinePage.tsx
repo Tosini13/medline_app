@@ -4,6 +4,10 @@ import styled from "styled-components";
 import Lines from "../Lines";
 
 const GridItemLine = styled(Grid)<{ open: boolean }>`
+  box-shadow: 0px 0px 8px 0px rgb(0 0 0 / 60%);
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+
   @media screen and (max-width: 899px) {
     z-index: 101;
     overflow-y: auto;

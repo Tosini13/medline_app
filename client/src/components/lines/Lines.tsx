@@ -18,7 +18,7 @@ const Lines: React.FC<TLinesProps> = () => {
   }
 
   return (
-    <Grid container spacing={2} style={{ padding: "5px 2px" }}>
+    <Grid container spacing={2} style={{ padding: "5px" }}>
       {res.data.map((line) => (
         <Grid
           key={line.id}

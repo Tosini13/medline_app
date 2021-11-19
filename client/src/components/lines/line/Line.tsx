@@ -44,7 +44,7 @@ const Line: React.FC<TLineProps> = () => {
   };
 
   return (
-    <Stack style={{ height: "100vh" }}>
+    <Stack style={{ height: "100%" }}>
       <LineHeader
         line={line}
         handleOpenMore={handleClick}

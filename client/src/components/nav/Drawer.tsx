@@ -12,6 +12,21 @@ import Hamburger from "../buttons/Hamburger";
 import { useNavigate } from "react-router";
 import { ERoutes } from "../../models/routes";
 import ListElement from "../reusable/list/ListElement";
+import styled from "styled-components";
+import { theme } from "../../style/theme";
+
+const DrawerMuiStyled = styled(DrawerMui)`
+  .MuiPaper-root {
+    background-color: transparent;
+    border: none;
+  }
+`;
+
+const DrawerMuiMobileStyled = styled(DrawerMui)`
+  .MuiPaper-root {
+    background-color: ${theme.palette.primary.main} !important;
+  }
+`;
 
 type TMenuProps = {
   handleClose: () => void;
@@ -29,7 +44,6 @@ const Menu: React.FC<TMenuProps> = ({ handleClose }) => {
       direction="column"
       style={{
         height: "100%",
-        backgroundColor: "#2D6B5F",
         minWidth: drawerWidth,
       }}
       justifyContent="space-between"
@@ -78,19 +92,23 @@ const Drawer: React.FC<TDrawerProps> = () => {
   return (
     <>
       <Hidden mdUp>
-        <DrawerMui
+        <DrawerMuiMobileStyled
           variant="temporary"
           open={open}
           onClose={() => setOpen(false)}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+          }}
         >
           <Menu handleClose={() => setOpen(false)} />
-        </DrawerMui>
+        </DrawerMuiMobileStyled>
         <Hamburger open={open} toggleOpen={() => setOpen(!open)} />
       </Hidden>
       <Hidden mdDown>
-        <DrawerMui variant="permanent" open={true}>
+        <DrawerMuiStyled variant="permanent" open={true}>
           <Menu handleClose={() => setOpen(false)} />
-        </DrawerMui>
+        </DrawerMuiStyled>
       </Hidden>
     </>
   );
