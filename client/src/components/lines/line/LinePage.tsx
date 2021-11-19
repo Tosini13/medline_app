@@ -1,7 +1,8 @@
-import { Grid } from "@mui/material";
+import { Grid, Hidden } from "@mui/material";
 import Line from "./Line";
 import styled from "styled-components";
 import Lines from "../Lines";
+import { headerHeight } from "../../nav/MobileNav";
 
 const GridItemLine = styled(Grid)<{ open: boolean }>`
   box-shadow: 0px 0px 8px 0px rgb(0 0 0 / 60%);
@@ -29,20 +30,50 @@ type TLinePageProps = {};
 
 const LinePage: React.FC<TLinePageProps> = () => {
   return (
-    <Grid container>
-      <Grid item xs={12} md={6} style={{ height: "100vh", overflowY: "auto" }}>
-        <Lines />
+    <>
+      <Grid container>
+        <Grid item xs={12} md={6}>
+          <Hidden mdDown>
+            <div style={{ height: "100vh", overflowY: "auto" }}>
+              <Lines />
+            </div>
+          </Hidden>
+          <Hidden mdUp>
+            <div
+              style={{
+                height: `calc(100vh - ${headerHeight})`,
+                overflowY: "auto",
+              }}
+            >
+              <Lines />
+            </div>
+          </Hidden>
+        </Grid>
+        <GridItemLine
+          item
+          xs={12}
+          md={6}
+          style={{ height: "100vh", overflowY: "auto" }}
+          open={true}
+        >
+          <Hidden mdDown>
+            <div style={{ height: "100vh", overflowY: "auto" }}>
+              <Line />
+            </div>
+          </Hidden>
+          <Hidden mdUp>
+            <div
+              style={{
+                height: `calc(100vh - ${headerHeight})`,
+                overflowY: "auto",
+              }}
+            >
+              <Line />
+            </div>
+          </Hidden>
+        </GridItemLine>
       </Grid>
-      <GridItemLine
-        item
-        xs={12}
-        md={6}
-        style={{ height: "100vh", overflowY: "auto" }}
-        open={true}
-      >
-        <Line />
-      </GridItemLine>
-    </Grid>
+    </>
   );
 };
 

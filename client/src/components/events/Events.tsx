@@ -1,4 +1,5 @@
-import { Grid } from "@mui/material";
+import React from "react";
+import { Stack } from "@mui/material";
 import { Id } from "../../models/backend";
 import { TUseGetEventsReturn } from "../../queries/events/getEvents";
 import { TUseGetLineReturn } from "../../queries/lines/getLine";
@@ -26,19 +27,13 @@ const Events: React.FC<TEventsProps> = ({
   }
   return (
     <>
-      <Grid
-        container
-        direction="column"
-        spacing={3}
-        style={{ padding: "5px", paddingTop: "25px" }}
-        alignItems="stretch"
-      >
+      <Stack spacing={1} style={{ padding: "5px", paddingTop: "5px" }}>
         {resEvents?.data.map((event) => (
-          <Grid item key={event.id}>
+          <React.Fragment key={event.id}>
             <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
-          </Grid>
+          </React.Fragment>
         ))}
-      </Grid>
+      </Stack>
       <CreateEvent
         open={openForm}
         handleClose={() => setOpenForm(false)}

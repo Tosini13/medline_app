@@ -1,9 +1,7 @@
 import styled from "styled-components";
+import { theme } from "../../style/theme";
 
 const HamburgerStyled = styled.div<{ open: boolean }>`
-  position: fixed;
-  top: 10px;
-  right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,7 +10,7 @@ const HamburgerStyled = styled.div<{ open: boolean }>`
   padding: 10px;
   z-index: 100;
   > div {
-    background-color: #2d6b5f;
+    background-color: ${theme.palette.primary.contrastText};
     width: 100%;
     height: 3px;
     border-radius: 2px;
