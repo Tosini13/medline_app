@@ -1,14 +1,10 @@
 import { useState } from "react";
-import { Stack, IconButton } from "@mui/material";
 import { TEvent } from "../../../models/backend";
 import EventMore from "./EventMore";
 import { deleteEvent } from "../../../queries/events/deleteEvent";
 import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
 import { useSnackbar } from "notistack";
-import { TypographyEventStyled } from "./EventHeader";
-import { format } from "date-fns";
-import { DATE_TIME_FORMAT } from "../../../models/const";
-import { MoreHoriz } from "@mui/icons-material";
+import EventHeader from "./EventHeader";
 import EventContent from "./EventContent";
 
 type TEventProps = {
@@ -37,24 +33,11 @@ const Event: React.FC<TEventProps> = ({ event, reExecuteGetEvents }) => {
   };
   return (
     <>
-      <Stack
-        direction="row"
-        justifyContent="space-between"
-        alignItems="flex-end"
-      >
-        <TypographyEventStyled
-          align="left"
-          fontWeight={600}
-          style={{ fontSize: "11px" }}
-        >
-          {format(new Date(event.dateTime), DATE_TIME_FORMAT)}
-        </TypographyEventStyled>
-        <Stack alignItems="flex-end">
-          <IconButton onClick={handleClick} style={{ height: "16px" }}>
-            <MoreHoriz color="primary" />
-          </IconButton>
-        </Stack>
-      </Stack>
+      <EventHeader
+        type={event.type}
+        dateTime={event.dateTime}
+        handleClick={handleClick}
+      />
       <EventContent event={event} />
       <EventMore
         handleDelete={handleDeleteEvent}
