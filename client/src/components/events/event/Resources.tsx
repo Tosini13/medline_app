@@ -26,8 +26,8 @@ const Resources: React.FC<TResourcesProps> = ({ resources }) => {
     <>
       <Grid container justifyContent="flex-end">
         <Grid item>
-          <IconButton color="primary" size="large" onClick={handleClick}>
-            <DescriptionIcon />
+          <IconButton color="primary" onClick={handleClick}>
+            <DescriptionIcon fontSize="small" />
           </IconButton>
         </Grid>
       </Grid>{" "}

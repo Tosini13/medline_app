@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Grid, IconButton, Typography } from "@mui/material";
-import { MoreVert, Close } from "@mui/icons-material";
+import { MoreVert } from "@mui/icons-material";
 import Value from "../Value";
 import { TLine } from "../../../../models/backend";
 import { LoadingIcon } from "../../../forms/Buttons";
