@@ -52,7 +52,14 @@ const Line: React.FC<TLineProps> = () => {
         handleClose={() => navigate("/")}
         contributions={resEvents?.data.length}
       />
-      <div style={{ flexGrow: 1, overflowY: "auto" }}>
+      <div
+        style={{
+          flexGrow: 1,
+          position: "relative",
+          display: "flex",
+          overflowY: "hidden",
+        }}
+      >
         <Events
           lineId={line.id}
           openForm={openEventForm}
