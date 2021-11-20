@@ -1,9 +1,5 @@
-import { useState } from "react";
-import { Button, Grid, Hidden, IconButton, Typography } from "@mui/material";
-import { MoreVert, Close } from "@mui/icons-material";
-import Value from "./Value";
+import { Hidden } from "@mui/material";
 import { TLine } from "../../../models/backend";
-import { LoadingIcon } from "../../forms/Buttons";
 import LineHeaderMobile from "./header/LineHeaderMobile";
 import LineHeaderDesktop from "./header/LineHeaderDesktop";
 

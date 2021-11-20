@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 import { Id } from "../../models/backend";
 import { TUseGetEventsReturn } from "../../queries/events/getEvents";
 import { TUseGetLineReturn } from "../../queries/lines/getLine";
@@ -27,11 +27,19 @@ const Events: React.FC<TEventsProps> = ({
   }
   return (
     <>
-      <Stack spacing={1} style={{ padding: "5px", paddingTop: "5px" }}>
+      <Stack spacing={2} style={{ padding: "5px", paddingTop: "5px" }}>
         {resEvents?.data.map((event) => (
-          <React.Fragment key={event.id}>
-            <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
-          </React.Fragment>
+          <>
+            <div
+              key={event.id}
+              style={{
+                padding: "5px 1px",
+              }}
+            >
+              <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
+            </div>
+            <Divider />
+          </>
         ))}
       </Stack>
       <CreateEvent

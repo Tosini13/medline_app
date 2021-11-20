@@ -1,4 +1,4 @@
-import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Hidden, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 
 type TListElementProps = {
   onClick?: () => void;
@@ -23,7 +23,12 @@ const ListElement: React.FC<TListElementProps> = ({
   return (
     <ListItemContainer>
       {Icon && <ListItemIcon>{Icon}</ListItemIcon>}
-      <ListItemText primary={text} style={{ color: color ?? "white" }} />
+      <Hidden mdDown>
+        <ListItemText primary={text} style={{ color: color ?? "white" }} />
+      </Hidden>
+      <Hidden mdUp>
+        <ListItemText primary={text} style={{ color: color ?? "white" }} />
+      </Hidden>
     </ListItemContainer>
   );
 };

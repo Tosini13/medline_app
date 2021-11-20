@@ -11,7 +11,6 @@ import { Grid, Hidden } from "@mui/material";
 import { useState } from "react";
 import { drawerWidth } from "./components/nav/DesktopNav";
 import { headerHeight } from "./components/nav/MobileNav";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 const MainDesktop = styled.div`
   width: calc(100% - ${drawerWidth} - 10px);
@@ -63,8 +62,6 @@ const MainSection: React.FC<TPaperSectionProps> = ({ children, openMenu }) => {
 
 function App() {
   const [openMenu, setOpenMenu] = useState(false);
-  const params = useParams();
-  console.log("params!!!", params);
 
   return (
     <BrowserRouter basename={"/"}>
