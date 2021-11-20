@@ -27,24 +27,32 @@ const Events: React.FC<TEventsProps> = ({
     return <Loading />;
   }
   return (
-    <div style={{ position: "relative" }}>
-      <Stack spacing={2} style={{ margin: "0px 5px" }}>
-        {resEvents?.data.map((event) => (
-          <>
-            <div key={event.id}>
-              <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
-            </div>
-          </>
-        ))}
-      </Stack>
-      <CreateEvent
-        open={openForm}
-        handleClose={() => setOpenForm(false)}
-        lineId={lineId}
-        reExecuteGetEvents={reExecuteGetEvents}
-      />
-      <TimeLine />
-    </div>
+    <>
+      <div
+        style={{
+          display: "flex",
+          flexGrow: 1,
+          overflowY: "auto",
+        }}
+      >
+        <Stack spacing={2} style={{ margin: "0px 5px" }}>
+          {resEvents?.data.map((event) => (
+            <>
+              <div key={event.id}>
+                <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
+              </div>
+            </>
+          ))}
+        </Stack>
+        <CreateEvent
+          open={openForm}
+          handleClose={() => setOpenForm(false)}
+          lineId={lineId}
+          reExecuteGetEvents={reExecuteGetEvents}
+        />
+      </div>
+      <TimeLine events={resEvents?.data} />
+    </>
   );
 };
 
