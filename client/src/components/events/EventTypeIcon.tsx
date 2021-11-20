@@ -10,16 +10,20 @@ type TEventTypeIconProps = {
   style?: any;
 };
 
-const EventTypeIcon: React.FC<TEventTypeIconProps> = ({ type, style }) => {
+const EventTypeIcon: React.FC<TEventTypeIconProps> = ({
+  type,
+  style,
+  ...props
+}) => {
   switch (type) {
     case EVENT_TYPE.APPOINTMENT:
-      return <LocalHospital style={style} color="primary" />;
+      return <LocalHospital style={style} color="primary" {...props} />;
     case EVENT_TYPE.OCCURRENCE:
-      return <Healing style={style} color="primary" />;
+      return <Healing style={style} color="primary" {...props} />;
     case EVENT_TYPE.SURGERY:
-      return <Medication style={style} color="primary" />;
+      return <Medication style={style} color="primary" {...props} />;
     case EVENT_TYPE.TEST:
-      return <Biotech style={style} color="primary" />;
+      return <Biotech style={style} color="primary" {...props} />;
     default:
       return null;
   }

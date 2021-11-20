@@ -1,11 +1,12 @@
 import React from "react";
-import { Divider, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Id } from "../../models/backend";
 import { TUseGetEventsReturn } from "../../queries/events/getEvents";
 import { TUseGetLineReturn } from "../../queries/lines/getLine";
 import Loading from "../global/loading/Loading";
 import Event from "./event/Event";
 import CreateEvent from "./form/CreateEvent";
+import TimeLine from "./timeline/TimeLine";
 
 type TEventsProps = {
   lineId: Id;
@@ -26,19 +27,13 @@ const Events: React.FC<TEventsProps> = ({
     return <Loading />;
   }
   return (
-    <>
-      <Stack spacing={2} style={{ padding: "5px", paddingTop: "5px" }}>
+    <div style={{ position: "relative" }}>
+      <Stack spacing={2} style={{ margin: "0px 5px" }}>
         {resEvents?.data.map((event) => (
           <>
-            <div
-              key={event.id}
-              style={{
-                padding: "5px 1px",
-              }}
-            >
+            <div key={event.id}>
               <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
             </div>
-            <Divider />
           </>
         ))}
       </Stack>
@@ -48,7 +43,8 @@ const Events: React.FC<TEventsProps> = ({
         lineId={lineId}
         reExecuteGetEvents={reExecuteGetEvents}
       />
-    </>
+      <TimeLine />
+    </div>
   );
 };
 
