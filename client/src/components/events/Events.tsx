@@ -37,11 +37,9 @@ const Events: React.FC<TEventsProps> = ({
       >
         <Stack spacing={2} style={{ margin: "0px 5px" }}>
           {resEvents?.data.map((event) => (
-            <>
-              <div key={event.id}>
-                <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
-              </div>
-            </>
+            <div key={event.id}>
+              <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
+            </div>
           ))}
         </Stack>
         <CreateEvent

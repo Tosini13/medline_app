@@ -23,8 +23,6 @@ const MobileNav: React.FC<TMobileNavProps> = ({ open, setOpen }) => {
 
   const isMain = location.pathname === "/";
   const args = location.pathname.split("/");
-  console.log("args", args);
-  console.log("args.length", args.length);
 
   const id = args[args.length - 1];
 
