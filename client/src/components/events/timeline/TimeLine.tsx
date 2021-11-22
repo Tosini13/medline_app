@@ -49,7 +49,7 @@ const TimeLine: React.FC<TTimeLineProps> = ({ events }) => {
           style={{ height: "100%", overflowY: "auto" }}
         >
           {events?.map((event) => (
-            <Tooltip title={event.title} placement="right">
+            <Tooltip title={event.title} placement="right" key={event.id}>
               <IconButton>
                 <EventTypeIcon type={event.type} style={{ color: "white" }} />
               </IconButton>

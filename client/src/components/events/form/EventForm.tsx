@@ -5,6 +5,7 @@ import { TextFieldRUForm } from "../../forms/TextField";
 import ControlledDateTimePicker from "../../forms/controlled/ControlledDateTimePicker";
 import ControlledUploadFiles from "../../forms/controlled/ControlledUploadFiles";
 import ControlledEventType from "../../forms/controlled/ControlledEventType";
+import CircularProgressWithLabel from "../../forms/CircularProgressWithLabel";
 
 export type TEventForm = {
   title: string;
@@ -20,12 +21,14 @@ type TEventFormProps = {
   handleSubmit: React.FormEventHandler<HTMLFormElement>;
   control: Control<TEventForm>;
   Actions: React.ReactNode;
+  uploadProgress: number | null;
 };
 
 const EventForm: React.FC<TEventFormProps> = ({
   control,
   handleSubmit,
   Actions,
+  uploadProgress,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -64,7 +67,11 @@ const EventForm: React.FC<TEventFormProps> = ({
               <ControlledEventType control={control} name="type" />
             </Grid>
             <Grid item>
-              <ControlledUploadFiles control={control} name="files" />
+              {uploadProgress ? (
+                <CircularProgressWithLabel value={uploadProgress} />
+              ) : (
+                <ControlledUploadFiles control={control} name="files" />
+              )}
             </Grid>
           </Grid>
         </Grid>

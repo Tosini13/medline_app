@@ -1,5 +1,4 @@
-import { AxiosResponse } from "axios";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
 import { Cancel, Add } from "@mui/icons-material";
@@ -11,21 +10,13 @@ import {
   Button,
 } from "@mui/material";
 
-import useAsync from "../../../helpers/useAsync";
-import { EVENT_TYPE, Id, TResource } from "../../../models/backend";
+import { EVENT_TYPE, Id } from "../../../models/backend";
 import { navigateTo } from "../../../models/routes";
-import {
-  createEvent,
-  TCreateEventParams,
-} from "../../../queries/events/createEvent";
-import {
-  TUploadFilesParams,
-  uploadFiles,
-} from "../../../queries/files/uploadFiles";
 import EventForm, { TEventForm } from "./EventForm";
 import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
 import { LoadingIcon } from "../../forms/Buttons";
 import { useSnackbar } from "notistack";
+import { useCreateEvent } from "./useCreateEvent";
 
 type TCreateEventProps = {
   open: boolean;
@@ -42,7 +33,6 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
 }) => {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const { isProcessing, execute } = useAsync();
   const { handleSubmit, control, reset } = useForm<TEventForm>({
     defaultValues: {
       title: "",
@@ -57,45 +47,24 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
     reset();
   };
 
-  const onSubmit: SubmitHandler<TEventForm> = async (data) => {
-    let res;
-    if (data.files) {
-      const fileDate: TUploadFilesParams = {
-        files: data.files,
-      };
-      try {
-        res = await execute<AxiosResponse<TResource[] | undefined, any>>(
-          uploadFiles(fileDate)
-        );
-      } catch (e) {
-        console.error("Something went wrong while uploading files!!", e);
-        enqueueSnackbar("Something went wrong while uploading files!", {
-          variant: "error",
-        });
-        return;
-      }
-    }
-    const eventData: TCreateEventParams = {
-      title: data.title,
-      description: data.description,
-      dateTime: data.dateTime,
-      type: data.type,
-      line: lineId,
-      resources: res?.data,
-    };
-    try {
-      await execute(createEvent(eventData));
-      navigate(navigateTo.line(lineId));
-      handleCloseAndReset();
-      reExecuteGetEvents();
-      enqueueSnackbar("Event was created!", { variant: "success" });
-    } catch (e) {
-      console.error("Something went wrong while creating event!!", e);
-      enqueueSnackbar("Something went wrong while creating event!", {
-        variant: "error",
-      });
-    }
+  const callbackSuccess = () => {
+    navigate(navigateTo.line(lineId));
+    handleCloseAndReset();
+    reExecuteGetEvents();
+    enqueueSnackbar("Event was created!", { variant: "success" });
   };
+
+  const callbackError = () => {
+    enqueueSnackbar("Something went wrong while uploading files!", {
+      variant: "error",
+    });
+  };
+
+  const { isProcessing, onSubmit, uploadProgress } = useCreateEvent({
+    callbackSuccess,
+    callbackError,
+    lineId,
+  });
 
   const Actions = (
     <Grid container justifyContent="space-between" alignItems="center">
@@ -107,7 +76,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
           startIcon={isProcessing ? <LoadingIcon /> : <Add />}
           disabled={isProcessing}
         >
-          Create
+          Create {uploadProgress && uploadProgress + "%"}
         </Button>
       </Grid>
       <Grid item>
@@ -132,6 +101,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
           Actions={Actions}
           control={control}
           handleSubmit={(data) => handleSubmit(onSubmit)(data)}
+          uploadProgress={uploadProgress}
         />
       </DialogContent>
     </Dialog>
