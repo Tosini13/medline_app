@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 
-import { Cancel, Add } from "@mui/icons-material";
+import { Cancel, Save } from "@mui/icons-material";
 import {
   Dialog,
   DialogContent,
@@ -10,37 +9,56 @@ import {
   Button,
 } from "@mui/material";
 
-import { EVENT_TYPE, Id } from "../../../models/backend";
-import { navigateTo } from "../../../models/routes";
+import { EVENT_TYPE, Id, TEvent, TResource } from "../../../models/backend";
 import EventForm, { TEventForm } from "./EventForm";
 import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
 import { LoadingIcon } from "../../forms/Buttons";
 import { useSnackbar } from "notistack";
-import { useCreateEvent } from "./useCreateEvent";
+import { useEditEvent } from "./useEditEvent";
+import { useEffect } from "react";
 
-type TCreateEventProps = {
+type TEditEventProps = {
   open: boolean;
   handleClose: () => void;
-  lineId: Id;
+  event: TEvent;
   reExecuteGetEvents: TUseGetEventsReturn["reExecute"];
 };
 
-const CreateEvent: React.FC<TCreateEventProps> = ({
+const EditEvent: React.FC<TEditEventProps> = ({
   open,
   handleClose,
-  lineId,
+  event,
   reExecuteGetEvents,
 }) => {
-  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const { handleSubmit, control, reset, watch } = useForm<TEventForm>({
-    defaultValues: {
-      title: "",
-      description: "",
-      dateTime: new Date(),
-      type: EVENT_TYPE.APPOINTMENT,
-    },
-  });
+  const { handleSubmit, control, reset, watch, setValue } = useForm<TEventForm>(
+    {
+      defaultValues: {
+        title: "",
+        description: "",
+        dateTime: new Date(),
+        type: EVENT_TYPE.APPOINTMENT,
+      },
+    }
+  );
+
+  const handleDeleteResource = (resource: TResource) => {
+    const newResources = watch("resources")?.filter(
+      (r) => r.path !== resource.path
+    );
+    setValue("resources", newResources);
+  };
+
+  useEffect(() => {
+    reset({
+      title: event.title,
+      description: event.description,
+      dateTime: event.dateTime,
+      prescriptions: event.prescriptions,
+      type: event.type,
+      resources: event.resources,
+    });
+  }, [event, reset]);
 
   const handleCloseAndReset = () => {
     handleClose();
@@ -48,7 +66,6 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
   };
 
   const callbackSuccess = () => {
-    navigate(navigateTo.line(lineId));
     handleCloseAndReset();
     reExecuteGetEvents();
     enqueueSnackbar("Event was created!", { variant: "success" });
@@ -60,10 +77,11 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
     });
   };
 
-  const { isProcessing, onSubmit, uploadProgress } = useCreateEvent({
+  const { isProcessing, onSubmit, uploadProgress } = useEditEvent({
     callbackSuccess,
     callbackError,
-    lineId,
+    lineId: event.line,
+    event: event,
   });
 
   const Actions = (
@@ -73,10 +91,10 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
           type="submit"
           variant="contained"
           color="primary"
-          startIcon={isProcessing ? <LoadingIcon /> : <Add />}
+          startIcon={isProcessing ? <LoadingIcon /> : <Save />}
           disabled={isProcessing}
         >
-          Create
+          Save
         </Button>
       </Grid>
       <Grid item>
@@ -95,7 +113,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
 
   return (
     <Dialog open={open}>
-      <DialogTitle>Create Event</DialogTitle>
+      <DialogTitle>Edit Event</DialogTitle>
       <DialogContent style={{ position: "relative", overflowX: "hidden" }}>
         <EventForm
           Actions={Actions}
@@ -103,10 +121,11 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
           watch={watch}
           handleSubmit={(data) => handleSubmit(onSubmit)(data)}
           uploadProgress={uploadProgress}
+          handleDeleteResource={handleDeleteResource}
         />
       </DialogContent>
     </Dialog>
   );
 };
 
-export default CreateEvent;
+export default EditEvent;

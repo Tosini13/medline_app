@@ -50,10 +50,10 @@ const EventMore: React.FC<TEventMoreProps> = ({
       >
         <List>
           <ListElement
-            Icon={<Edit />}
+            Icon={<Edit color="primary" />}
             text="Edit Event"
-            // onClick={() => handleClickOption(handleOpenEventForm)}
-            color="gray"
+            onClick={() => handleClickOption(handleOpenEventForm)}
+            color="black"
           />
           <Divider />
           <ListElement

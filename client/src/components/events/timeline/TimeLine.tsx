@@ -1,3 +1,4 @@
+import React from "react";
 import { IconButton, List } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 import styled from "styled-components";
@@ -48,20 +49,22 @@ const TimeLine: React.FC<TTimeLineProps> = ({ events, callback }) => {
       <div style={{ position: "relative", height: "100%" }}>
         <List style={{ height: "100%", overflowY: "auto" }}>
           {events?.map((event) => (
-            <ListElement
-              Icon={
-                <EventTypeIcon
-                  type={event.type}
-                  style={{ color: theme.palette.primary.contrastText }}
-                />
-              }
-              text={event.title}
-              color={theme.palette.primary.contrastText}
-              onClick={() => {
-                if (callback) callback(event.id);
-                setOpen(false);
-              }}
-            />
+            <React.Fragment key={event.id}>
+              <ListElement
+                Icon={
+                  <EventTypeIcon
+                    type={event.type}
+                    style={{ color: theme.palette.primary.contrastText }}
+                  />
+                }
+                text={event.title}
+                color={theme.palette.primary.contrastText}
+                onClick={() => {
+                  if (callback) callback(event.id);
+                  setOpen(false);
+                }}
+              />
+            </React.Fragment>
           ))}
         </List>
         <IconButtonStyled onClick={() => setOpen(!open)}>

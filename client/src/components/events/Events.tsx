@@ -37,7 +37,7 @@ const Events: React.FC<TEventsProps> = ({
           overflowY: "auto",
         }}
       >
-        <Stack spacing={2} style={{ margin: "0px 5px" }}>
+        <Stack spacing={2} style={{ margin: "0px 5px", width: "100%" }}>
           {resEvents?.data.map((event) => (
             <div key={event.id} id={getDivId(event.id)}>
               <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
