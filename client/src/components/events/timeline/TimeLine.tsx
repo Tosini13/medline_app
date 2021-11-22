@@ -1,10 +1,11 @@
-import { IconButton, Stack, Tooltip } from "@mui/material";
+import { IconButton, List } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 import styled from "styled-components";
 import { theme } from "../../../style/theme";
 import { useState } from "react";
-import { TEvent } from "../../../models/backend";
+import { TEvent, Id } from "../../../models/backend";
 import EventTypeIcon from "../EventTypeIcon";
+import ListElement from "../../reusable/list/ListElement";
 
 const Container = styled.div<{
   open: boolean;
@@ -13,7 +14,8 @@ const Container = styled.div<{
   top: 0px;
   left: 0px;
   height: 100%;
-  width: 100px;
+  width: 300px;
+  max-width: calc(100% - 20px);
   background-color: ${theme.palette.primary.main};
   transition: all 0.3s;
   ${(props) =>
@@ -36,26 +38,32 @@ const IconButtonStyled = styled(IconButton)`
 
 type TTimeLineProps = {
   events?: TEvent[];
+  callback?: (id: Id) => void;
 };
 
-const TimeLine: React.FC<TTimeLineProps> = ({ events }) => {
+const TimeLine: React.FC<TTimeLineProps> = ({ events, callback }) => {
   const [open, setOpen] = useState(false);
   return (
     <Container open={open}>
       <div style={{ position: "relative", height: "100%" }}>
-        <Stack
-          alignItems="center"
-          spacing={2}
-          style={{ height: "100%", overflowY: "auto" }}
-        >
+        <List style={{ height: "100%", overflowY: "auto" }}>
           {events?.map((event) => (
-            <Tooltip title={event.title} placement="right" key={event.id}>
-              <IconButton>
-                <EventTypeIcon type={event.type} style={{ color: "white" }} />
-              </IconButton>
-            </Tooltip>
+            <ListElement
+              Icon={
+                <EventTypeIcon
+                  type={event.type}
+                  style={{ color: theme.palette.primary.contrastText }}
+                />
+              }
+              text={event.title}
+              color={theme.palette.primary.contrastText}
+              onClick={() => {
+                if (callback) callback(event.id);
+                setOpen(false);
+              }}
+            />
           ))}
-        </Stack>
+        </List>
         <IconButtonStyled onClick={() => setOpen(!open)}>
           <MoreVert fontSize="small" style={{ color: "white" }} />
         </IconButtonStyled>

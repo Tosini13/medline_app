@@ -76,7 +76,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
           startIcon={isProcessing ? <LoadingIcon /> : <Add />}
           disabled={isProcessing}
         >
-          Create {uploadProgress && uploadProgress + "%"}
+          Create
         </Button>
       </Grid>
       <Grid item>
