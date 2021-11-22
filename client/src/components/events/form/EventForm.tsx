@@ -1,18 +1,20 @@
-import { Grid } from "@mui/material";
-import { Control } from "react-hook-form";
-import { EVENT_TYPE } from "../../../models/backend";
+import { Grid, Typography } from "@mui/material";
+import { Control, UseFormReturn } from "react-hook-form";
+import { EVENT_TYPE, TResource } from "../../../models/backend";
 import { TextFieldRUForm } from "../../forms/TextField";
 import ControlledDateTimePicker from "../../forms/controlled/ControlledDateTimePicker";
 import ControlledUploadFiles from "../../forms/controlled/ControlledUploadFiles";
 import ControlledEventType from "../../forms/controlled/ControlledEventType";
 import CircularProgressWithLabel from "../../forms/CircularProgressWithLabel";
+import ControlledResource from "../../forms/controlled/ControlledResources";
+import ResourceForm from "./ResourceForm";
 
 export type TEventForm = {
   title: string;
   description?: string;
   type: EVENT_TYPE;
   prescriptions?: string[];
-  resources?: string[];
+  resources?: TResource[];
   dateTime: Date;
   files: Array<File | Blob> | null;
 };
@@ -22,6 +24,8 @@ type TEventFormProps = {
   control: Control<TEventForm>;
   Actions: React.ReactNode;
   uploadProgress: number | null;
+  watch: UseFormReturn<TEventForm>["watch"];
+  handleDeleteResource?: (resource: TResource) => void;
 };
 
 const EventForm: React.FC<TEventFormProps> = ({
@@ -29,7 +33,11 @@ const EventForm: React.FC<TEventFormProps> = ({
   handleSubmit,
   Actions,
   uploadProgress,
+  watch,
+  handleDeleteResource,
 }) => {
+  const resources = watch("resources");
+
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={4} direction="column" alignItems="stretch">
@@ -75,6 +83,20 @@ const EventForm: React.FC<TEventFormProps> = ({
             </Grid>
           </Grid>
         </Grid>
+        {handleDeleteResource && (
+          <Grid item>
+            <Grid container>
+              {resources?.map((resource) => (
+                <Grid item key={resource.path} xs={12}>
+                  <ResourceForm
+                    label={resource.name}
+                    handleDelete={() => handleDeleteResource(resource)}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        )}
         <Grid item>{Actions}</Grid>
       </Grid>
     </form>

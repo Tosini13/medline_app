@@ -6,6 +6,7 @@ import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
 import { useSnackbar } from "notistack";
 import EventHeader from "./EventHeader";
 import EventContent from "./EventContent";
+import EditEvent from "../form/EditEvent";
 
 type TEventProps = {
   event: TEvent;
@@ -14,7 +15,7 @@ type TEventProps = {
 
 const Event: React.FC<TEventProps> = ({ event, reExecuteGetEvents }) => {
   const { enqueueSnackbar } = useSnackbar();
-  const [, setOpenEventForm] = useState(false);
+  const [openEventForm, setOpenEventForm] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,6 +45,12 @@ const Event: React.FC<TEventProps> = ({ event, reExecuteGetEvents }) => {
         anchorEl={anchorEl}
         handleClose={() => setAnchorEl(null)}
         handleOpenEventForm={() => setOpenEventForm(true)}
+      />
+      <EditEvent
+        event={event}
+        open={openEventForm}
+        handleClose={() => setOpenEventForm(false)}
+        reExecuteGetEvents={reExecuteGetEvents}
       />
     </>
   );
