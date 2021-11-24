@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LineForm, { TLineForm } from "./LineForm";
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { LINE_VALUE } from "../../../models/backend";
 import {
   TCreateLineParams,
@@ -41,6 +41,16 @@ const CreateLine: React.FC<TCreateLineProps> = () => {
     }
   };
 
+  const Actions = (
+    <Grid container alignItems="center" justifyContent="center">
+      <Grid item>
+        <Button type="submit" variant="contained" color="primary">
+          Submit
+        </Button>
+      </Grid>
+    </Grid>)
+
+
   return (
     <Grid container direction="column" spacing={4}>
       <Grid item>
@@ -50,6 +60,7 @@ const CreateLine: React.FC<TCreateLineProps> = () => {
       </Grid>
       <Grid item>
         <LineForm
+          Actions={Actions}
           lineValue={lineValue}
           setLineValue={setLineValue}
           control={control}
