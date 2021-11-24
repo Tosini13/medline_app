@@ -4,12 +4,14 @@ import styled from "styled-components";
 import Lines from "../Lines";
 import { headerHeight } from "../../nav/MobileNav";
 
-const GridItemLine = styled(Grid)<{ open: boolean }>`
+const GridItemLine = styled(Grid) <{ open: boolean }>`
   box-shadow: 0px 0px 8px 0px rgb(0 0 0 / 60%);
   border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
 
   @media screen and (max-width: 899px) {
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 10px;
     z-index: 101;
     overflow-y: auto;
     position: absolute;
@@ -20,9 +22,9 @@ const GridItemLine = styled(Grid)<{ open: boolean }>`
     background: white;
     transition: all 0.3s;
     ${(props) =>
-      props.open
-        ? "transform: translateX(0%);"
-        : "transform: translateX(100%);"}
+    props.open
+      ? "transform: translateX(0%);"
+      : "transform: translateX(100%);"}
   }
 `;
 
