@@ -54,9 +54,11 @@ const Events: React.FC<TEventsProps> = ({
       <TimeLine
         events={resEvents?.data}
         callback={(id) =>
-          document
-            .getElementById(getDivId(id))
-            ?.scrollIntoView({ behavior: "smooth" })
+          document.getElementById(getDivId(id))?.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "start",
+          })
         }
       />
     </>
