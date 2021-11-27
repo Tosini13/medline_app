@@ -26,6 +26,16 @@ export type TEvent = {
   line: Id;
 };
 
+
+export type TUser = {
+  id: Id;
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  password: string;
+  token: string;
+};
+
 export enum LINE_VALUE {
   "NORMAL" = "NORMAL",
   "HIGH_VALUE" = "HIGH_VALUE",

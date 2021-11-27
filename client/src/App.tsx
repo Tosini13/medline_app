@@ -12,6 +12,8 @@ import { useState } from "react";
 import { drawerWidth } from "./components/nav/DesktopNav";
 import { headerHeight } from "./components/nav/MobileNav";
 import EditLinePage from "./components/lines/form/edit/EditLinePage";
+import SignUp from "./components/auth/SignUp/SignUp";
+import AuthRedirect from './components/wrappers/AuthRedirect';
 
 const MainDesktop = styled.div`
   width: calc(100% - ${drawerWidth} - 10px);
@@ -76,15 +78,18 @@ function App() {
         }}
       >
         <Drawer open={openMenu} setOpen={setOpenMenu} />
-        <MainSection openMenu={openMenu}>
-          <Routes>
-            <Route path={"/"} element={<Lines />} />
-            <Route path={`${ERoutes.lines}/:id`} element={<LinePage />} />
-            <Route path={ERoutes.create} element={<CreateLine />} />
-            <Route path={`${ERoutes.edit}/:id`} element={<EditLinePage />} />
-            <Route path={ERoutes.logIn} element={<LogIn />} />
-          </Routes>
-        </MainSection>
+        <AuthRedirect>
+          <MainSection openMenu={openMenu}>
+            <Routes>
+              <Route path={"/"} element={<Lines />} />
+              <Route path={`${ERoutes.lines}/:id`} element={<LinePage />} />
+              <Route path={ERoutes.create} element={<CreateLine />} />
+              <Route path={`${ERoutes.edit}/:id`} element={<EditLinePage />} />
+              <Route path={ERoutes.logIn} element={<LogIn />} />
+              <Route path={ERoutes.signUp} element={<SignUp />} />
+            </Routes>
+          </MainSection>
+        </AuthRedirect>
       </div>
     </BrowserRouter>
   );

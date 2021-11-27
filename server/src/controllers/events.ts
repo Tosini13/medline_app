@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
-import { LeanDocument, ObjectId } from "mongoose";
+import { Response } from "express";
+import { LeanDocument } from "mongoose";
+import { IVerifyTokenRequest } from "../middleware/auth";
 import Event, { IEvent, TEventRes, TEvent } from "../models/event";
 import { removeResources } from "./actions/events";
 
@@ -24,14 +25,14 @@ const getEventFromBody = (body: TEvent): TEvent => ({
   resources: body.resources,
 });
 
-export const getEvents = (req: Request, res: Response) => {
+export const getEvents = (req: IVerifyTokenRequest, res: Response) => {
   Event.find({ line: req.params.lineId })
     .sort({ dateTime: 1 })
     .then((items) => res.send(items.map((item) => convertEvent(item))))
     .catch((err) => console.log(err));
 };
 
-export const createEvent = (req: Request, res: Response) => {
+export const createEvent = (req: IVerifyTokenRequest, res: Response) => {
   const event = getEventFromBody(req.body);
 
   Event.create(event)
@@ -39,7 +40,7 @@ export const createEvent = (req: Request, res: Response) => {
     .catch((e) => console.log(e));
 };
 
-export const updateEvent = async (req: Request, res: Response) => {
+export const updateEvent = async (req: IVerifyTokenRequest, res: Response) => {
   const event = getEventFromBody(req.body);
 
   try {
@@ -50,7 +51,7 @@ export const updateEvent = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteEvent = (req: Request, res: Response) => {
+export const deleteEvent = (req: IVerifyTokenRequest, res: Response) => {
   Event.findByIdAndRemove({ _id: req.params.id })
     .then(async (deletedItem) => {
       if (deletedItem) {

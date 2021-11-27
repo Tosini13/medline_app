@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Origin": "*",
     "Cache-Control": "no-cache",
     "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "accept, x-requested-with, origin, Content-Type, cookie, pragma, cache-control, x-access-token",
   });
   next();
 });
