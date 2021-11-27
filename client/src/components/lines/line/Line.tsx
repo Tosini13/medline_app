@@ -9,6 +9,7 @@ import Events from "../../events/Events";
 import LineHeader from "./LineHeader";
 import useAsync from "../../../helpers/useAsync";
 import { useGetEvents } from "../../../queries/events/getEvents";
+import { navigateTo } from "../../../models/routes";
 
 type TLineProps = {};
 
@@ -45,36 +46,40 @@ const Line: React.FC<TLineProps> = () => {
   };
 
   return (
-    <Stack style={{ height: "100%" }}>
-      <LineHeader
-        line={line}
-        handleOpenMore={handleClick}
-        handleClose={() => navigate("/")}
-        contributions={resEvents?.data.length}
-      />
-      <div
-        style={{
-          flexGrow: 1,
-          position: "relative",
-          display: "flex",
-          overflowY: "hidden",
-        }}
-      >
-        <Events
-          lineId={line.id}
-          openForm={openEventForm}
-          setOpenForm={setOpenEventForm}
-          reExecuteGetEvents={reExecuteGetEvents}
-          resEvents={resEvents}
+    <>
+      <Stack style={{ height: "100%" }}>
+        <LineHeader
+          line={line}
+          handleOpenMore={handleClick}
+          handleClose={() => navigate("/")}
+          contributions={resEvents?.data.length}
         />
-      </div>
-      <LineMore
-        handleDelete={handleDeleteLine}
-        anchorEl={anchorEl}
-        handleClose={() => setAnchorEl(null)}
-        handleOpenEventForm={() => setOpenEventForm(true)}
-      />
-    </Stack>
+        <div
+          style={{
+            flexGrow: 1,
+            position: "relative",
+            display: "flex",
+            overflowY: "hidden",
+          }}
+        >
+          <Events
+            lineId={line.id}
+            openForm={openEventForm}
+            setOpenForm={setOpenEventForm}
+            reExecuteGetEvents={reExecuteGetEvents}
+            resEvents={resEvents}
+          />
+        </div>
+        <LineMore
+          handleDelete={handleDeleteLine}
+          anchorEl={anchorEl}
+          handleClose={() => setAnchorEl(null)}
+          handleOpenEventForm={() => setOpenEventForm(true)}
+          handleEditLine={() => navigate(navigateTo.editLine(id as string))}
+
+        />
+      </Stack>
+    </>
   );
 };
 

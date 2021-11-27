@@ -11,6 +11,7 @@ import { Grid, Hidden } from "@mui/material";
 import { useState } from "react";
 import { drawerWidth } from "./components/nav/DesktopNav";
 import { headerHeight } from "./components/nav/MobileNav";
+import EditLinePage from "./components/lines/form/edit/EditLinePage";
 
 const MainDesktop = styled.div`
   width: calc(100% - ${drawerWidth} - 10px);
@@ -80,6 +81,7 @@ function App() {
             <Route path={"/"} element={<Lines />} />
             <Route path={`${ERoutes.lines}/:id`} element={<LinePage />} />
             <Route path={ERoutes.create} element={<CreateLine />} />
+            <Route path={`${ERoutes.edit}/:id`} element={<EditLinePage />} />
             <Route path={ERoutes.logIn} element={<LogIn />} />
           </Routes>
         </MainSection>

@@ -1,4 +1,5 @@
-import { Button, Grid } from "@mui/material";
+import React from 'react';
+import { Grid } from "@mui/material";
 import { Control } from "react-hook-form";
 import { LINE_VALUE } from "../../../models/backend";
 import LineValue from "../../forms/LineValue";
@@ -11,6 +12,7 @@ export type TLineForm = {
 };
 
 type TLineFormProps = {
+  Actions: React.ReactNode;
   lineValue: LINE_VALUE;
   setLineValue: (v: LINE_VALUE) => void;
   control: Control<TLineForm>;
@@ -18,6 +20,7 @@ type TLineFormProps = {
 };
 
 const LineForm: React.FC<TLineFormProps> = ({
+  Actions,
   lineValue,
   setLineValue,
   control,
@@ -67,13 +70,7 @@ const LineForm: React.FC<TLineFormProps> = ({
           </Grid>
         </Grid>
         <Grid item>
-          <Grid container alignItems="center" justifyContent="center">
-            <Grid item>
-              <Button type="submit" variant="contained" color="primary">
-                Submit
-              </Button>
-            </Grid>
-          </Grid>
+          {Actions}
         </Grid>
       </Grid>
     </form>

@@ -6,12 +6,15 @@ import useAsync from "../../../helpers/useAsync";
 import { LoadingIcon } from "../../forms/Buttons";
 import Question from "../../global/question/Question";
 import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router";
+import { navigateTo } from "../../../models/routes";
 
 type TLineMoreProps = {
   handleDelete: () => Promise<void>;
   anchorEl: HTMLButtonElement | null;
   handleClose: () => void;
   handleOpenEventForm: () => void;
+  handleEditLine: () => void;
 };
 
 const LineMore: React.FC<TLineMoreProps> = ({
@@ -19,7 +22,9 @@ const LineMore: React.FC<TLineMoreProps> = ({
   handleOpenEventForm,
   handleClose,
   handleDelete,
+  handleEditLine
 }) => {
+  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [openQuestion, setOpenQuestion] = useState(false);
   const { isProcessing, execute } = useAsync();
@@ -62,7 +67,7 @@ const LineMore: React.FC<TLineMoreProps> = ({
             onClick={() => handleClickOption(handleOpenEventForm)}
             color="black"
           />
-          <ListElement Icon={<Edit />} text="Edit Line" color="gray" />
+          <ListElement Icon={<Edit color="primary" />} text="Edit Line" onClick={() => handleClickOption(handleEditLine)} color="black" />
           <Divider />
           <ListElement
             Icon={<Delete color="error" />}

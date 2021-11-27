@@ -47,7 +47,7 @@ const TimeLine: React.FC<TTimeLineProps> = ({ events, callback }) => {
   return (
     <Container open={open}>
       <div style={{ position: "relative", height: "100%" }}>
-        <List style={{ height: "100%", overflowY: "auto" }}>
+        <List style={{ height: "100%", overflowY: "auto", padding: '0px' }}>
           {events?.map((event) => (
             <React.Fragment key={event.id}>
               <ListElement
