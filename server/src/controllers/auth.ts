@@ -126,7 +126,7 @@ export const resetPassword = async (req: Request, res: Response) => {
                 to: email,
                 subject: 'Set New Password Link. NO REPLY',
                 html: `<h1>Press this link to set new password</h1>
-                <a href='${'http://localhost:3001/check-token?token=' + tokenData.token}'>Reset Password</a><br>
+                <a href='${'https://medlineapp.herokuapp.com/check-token?token=' + tokenData.token}'>Reset Password</a><br>
                 <p>Please do not respond no this email</p>`
             };
 
