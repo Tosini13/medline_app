@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { StylesProvider } from "@mui/styles";
 import { theme } from "./style/theme";
+import { AuthStoreProvider } from './stores/Auth';
 
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
@@ -12,15 +13,17 @@ import { ThemeProvider } from "@mui/material/styles";
 import { SnackbarProvider } from "notistack";
 
 ReactDOM.render(
-  <SnackbarProvider>
-    <LocalizationProvider dateAdapter={DateAdapter}>
-      <ThemeProvider theme={theme}>
-        <StylesProvider injectFirst>
-          <App />
-        </StylesProvider>
-      </ThemeProvider>
-    </LocalizationProvider>
-  </SnackbarProvider>,
+  <AuthStoreProvider>
+    <SnackbarProvider>
+      <LocalizationProvider dateAdapter={DateAdapter}>
+        <ThemeProvider theme={theme}>
+          <StylesProvider injectFirst>
+            <App />
+          </StylesProvider>
+        </ThemeProvider>
+      </LocalizationProvider>
+    </SnackbarProvider>
+  </AuthStoreProvider>,
   document.getElementById("root")
 );
 

@@ -1,4 +1,5 @@
 import express from "express";
+import { login, register, resetPassword, checkToken, setPassword } from "./controllers/auth";
 import {
   createEvent,
   deleteEvent,
@@ -19,23 +20,35 @@ import {
   getLines,
   updateLine,
 } from "./controllers/lines";
+import { getUser } from "./controllers/users";
+import { verifyToken } from "./middleware/auth";
 
 const router = express.Router();
 
+
+// -----------------------------------------
+// USERS
+router.post("/login", login);
+router.post("/register", register);
+router.post("/reset-password", resetPassword);
+router.post("/check-token", checkToken);
+router.post("/set-password", setPassword);
+router.get("/user", verifyToken, getUser);
+
 // -----------------------------------------
 // EVENTS
-router.get("/events/:lineId", getEvents);
-router.post("/events", createEvent);
-router.put("/events/:id", updateEvent);
-router.delete("/events/:id", deleteEvent);
+router.get("/events/:lineId", verifyToken, getEvents);
+router.post("/events", verifyToken, createEvent);
+router.put("/events/:id", verifyToken, updateEvent);
+router.delete("/events/:id", verifyToken, deleteEvent);
 
 // -----------------------------------------
 // LINES
-router.get("/lines", getLines);
-router.get("/lines/:id", getLine);
-router.post("/lines", createLine);
-router.put("/lines/:id", updateLine);
-router.delete("/lines/:id", deleteLine);
+router.get("/lines", verifyToken, getLines);
+router.get("/lines/:id", verifyToken, getLine);
+router.post("/lines", verifyToken, createLine);
+router.put("/lines/:id", verifyToken, updateLine);
+router.delete("/lines/:id", verifyToken, deleteLine);
 
 // -----------------------------------------
 // IMAGES

@@ -1,5 +1,6 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { LeanDocument } from "mongoose";
+import { IVerifyTokenRequest } from "../middleware/auth";
 import Line, { ILine, TLine, TLineRes } from "../models/line";
 import { getEventsQtt } from "./actions/events";
 import { removeLineEvents } from "./actions/lines";
@@ -17,7 +18,7 @@ const convertLine = async (line: LeanDocument<ILine>): Promise<TLineRes> => {
   };
 };
 
-export const getLines = (req: Request, res: Response) => {
+export const getLines = (req: IVerifyTokenRequest, res: Response) => {
   Line.find({})
     .then(async (items) => {
       const lines = await Promise.all(
@@ -28,7 +29,7 @@ export const getLines = (req: Request, res: Response) => {
     .catch((err) => console.log(err));
 };
 
-export const getLine = (req: Request, res: Response) => {
+export const getLine = (req: IVerifyTokenRequest, res: Response) => {
   Line.find({ _id: req.params.id })
     .then(async (items) => {
       if (items.length) {
@@ -40,7 +41,7 @@ export const getLine = (req: Request, res: Response) => {
     .catch((err) => console.log(err));
 };
 
-export const createLine = (req: Request, res: Response) => {
+export const createLine = (req: IVerifyTokenRequest, res: Response) => {
   const line: TLine = {
     title: req.body.title,
     description: req.body.description,
@@ -54,7 +55,7 @@ export const createLine = (req: Request, res: Response) => {
     .catch((e) => console.log(e));
 };
 
-export const updateLine = async (req: Request, res: Response) => {
+export const updateLine = async (req: IVerifyTokenRequest, res: Response) => {
   const line: TLine = {
     title: req.body.title,
     description: req.body.description,
@@ -71,7 +72,7 @@ export const updateLine = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteLine = (req: Request, res: Response) => {
+export const deleteLine = (req: IVerifyTokenRequest, res: Response) => {
   Line.findByIdAndRemove({ _id: req.params.id })
     .then(async (deletedItem) => {
       if (!deletedItem) return;

@@ -26,6 +26,16 @@ export type TEvent = {
   line: Id;
 };
 
+
+export type TUser = {
+  id: Id;
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  password: string;
+  token: string;
+};
+
 export enum LINE_VALUE {
   "NORMAL" = "NORMAL",
   "HIGH_VALUE" = "HIGH_VALUE",
@@ -37,4 +47,21 @@ export enum EVENT_TYPE {
   "OCCURRENCE" = "OCCURRENCE",
   "SURGERY" = "SURGERY",
   "TEST" = "TEST",
+}
+
+export enum ECheckTokenMessage {
+  "TOKEN_VALID" = "TOKEN_VALID",
+  "TOKEN_INVALID" = "TOKEN_INVALID",
+  "TOKEN_EXPIRED" = "TOKEN_EXPIRED",
+}
+
+export enum EResetPasswordMessage {
+  "EMAIL_IS_REQUIRED" = "EMAIL_IS_REQUIRED",
+  "EMAIL_SENT" = "EMAIL_SENT",
+  "EMAIL_SENT_ERROR" = "EMAIL_SENT_ERROR",
+  "INTERNAL_ERROR" = "INTERNAL_ERROR",
+}
+
+export enum ESetNewPasswordMessage {
+  "NEW_PASSWORD_SET" = "NEW_PASSWORD_SET",
 }
