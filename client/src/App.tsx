@@ -15,6 +15,8 @@ import EditLinePage from "./components/lines/form/edit/EditLinePage";
 import SignUp from "./components/auth/SignUp/SignUp";
 import AuthRedirect from './components/wrappers/AuthRedirect';
 import ResetPassword from "./components/auth/ResetPassword/ResetPassword";
+import CheckToken from "./components/auth/CheckToken/CheckToken";
+import SetNewPassword from "./components/auth/SetNewPassword/SetNewPassword";
 
 const MainDesktop = styled.div`
   width: calc(100% - ${drawerWidth} - 10px);
@@ -89,6 +91,8 @@ function App() {
               <Route path={ERoutes.logIn} element={<LogIn />} />
               <Route path={ERoutes.signUp} element={<SignUp />} />
               <Route path={ERoutes.resetPassword} element={<ResetPassword />} />
+              <Route path={ERoutes.checkToken} element={<CheckToken />} />
+              <Route path={ERoutes.setPassword} element={<SetNewPassword />} />
             </Routes>
           </MainSection>
         </AuthRedirect>

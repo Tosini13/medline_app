@@ -48,3 +48,20 @@ export enum EVENT_TYPE {
   "SURGERY" = "SURGERY",
   "TEST" = "TEST",
 }
+
+export enum ECheckTokenMessage {
+  "TOKEN_VALID" = "TOKEN_VALID",
+  "TOKEN_INVALID" = "TOKEN_INVALID",
+  "TOKEN_EXPIRED" = "TOKEN_EXPIRED",
+}
+
+export enum EResetPasswordMessage {
+  "EMAIL_IS_REQUIRED" = "EMAIL_IS_REQUIRED",
+  "EMAIL_SENT" = "EMAIL_SENT",
+  "EMAIL_SENT_ERROR" = "EMAIL_SENT_ERROR",
+  "INTERNAL_ERROR" = "INTERNAL_ERROR",
+}
+
+export enum ESetNewPasswordMessage {
+  "NEW_PASSWORD_SET" = "NEW_PASSWORD_SET",
+}

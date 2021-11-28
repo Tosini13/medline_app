@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register } from "./controllers/auth";
+import { login, register, resetPassword, checkToken, setPassword } from "./controllers/auth";
 import {
   createEvent,
   deleteEvent,
@@ -30,6 +30,9 @@ const router = express.Router();
 // USERS
 router.post("/login", login);
 router.post("/register", register);
+router.post("/reset-password", resetPassword);
+router.post("/check-token", checkToken);
+router.post("/set-password", setPassword);
 router.get("/user", verifyToken, getUser);
 
 // -----------------------------------------

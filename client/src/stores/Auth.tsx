@@ -1,9 +1,9 @@
 import React from "react";
+import axios from "axios";
 import { action, makeObservable, observable } from "mobx";
 import { logIn, TLogInParams } from "../queries/auth/login";
 import { getCurrentUser } from "../queries/users/getCurrentUser";
 import { signUp, TSignUpParams } from "../queries/auth/signUp";
-import axios from "axios";
 
 type TAuthFunc = {
   successCallBack?: () => void;
@@ -36,7 +36,7 @@ class Auth {
     const res = await logIn({ email, password });
     if (res.data.token) {
       this.setAxiosHeaders(res.data.token);
-      localStorage.setItem("token", res.data.token); // TODO: Remove?
+      localStorage.setItem("token", res.data.token);
       this.isLoggedIn = true;
     } else {
       if (failureCallBack) failureCallBack();
@@ -45,41 +45,28 @@ class Auth {
   }
 
 
-  async signUp({ failureCallBack, ...data }: TSignUpStoreParams) {
+  async signUp({ failureCallBack, successCallBack, ...data }: TSignUpStoreParams) {
     const res = await signUp(data);
     if (res.data.token) {
       this.setAxiosHeaders(res.data.token);
-      localStorage.setItem("token", res.data.token); // TODO: Remove?
+      localStorage.setItem("token", res.data.token);
       this.isLoggedIn = true;
+      if (successCallBack) successCallBack();
     } else {
       if (failureCallBack) failureCallBack();
       this.isLoggedIn = false;
     }
   }
 
+
   async logOut({ successCallBack }: TAuthFunc) {
     this.setAxiosHeaders('');
-    localStorage.removeItem('token'); // TODO: Remove?
+    localStorage.removeItem('token');
     this.isLoggedIn = false;
     if (successCallBack) {
       successCallBack();
     }
   }
-
-  // async resetPassword({
-  //   email,
-  //   successCallBack,
-  //   failureCallBack,
-  // }: TResetPassword & TAuthFunc) {
-  //   const res = await resetPassword({ email });
-  //   console.log("resetPassword", res);
-  //   if (res === EUserAuth.PASSWORD_RESET_SUCCESS) {
-  //     if (successCallBack) successCallBack();
-  //   }
-  //   if (res === EUserAuth.PASSWORD_RESET_ERROR) {
-  //     if (failureCallBack) failureCallBack();
-  //   }
-  // }
 
   constructor() {
     makeObservable(this, {

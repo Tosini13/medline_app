@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { ERoutes } from '../../../models/routes';
 import AuthFormContainer from "../AuthFormContainer";
+import { resetPassword, TResetPasswordParams } from "../../../queries/auth/resetPassword";
 
 type TResetPasswordForm = {
     email: string;
@@ -17,23 +18,23 @@ type TResetPasswordForm = {
 type TResetPasswordProps = {};
 
 const ResetPassword: React.FC<TResetPasswordProps> = observer(() => {
+
     const authStore = useContext(AuthStoreContext);
     const navigate = useNavigate();
     const { handleSubmit, control } = useForm<TResetPasswordForm>();
 
     const onSubmit = async (data: TResetPasswordForm) => {
 
-        // const logInParams: TLogInStoreParams = {
-        //   email: data.email,
-        //   password: data.password,
-        //   successCallBack: () => navigate('/')
-        // };
+        const resetPasswordParams: TResetPasswordParams = {
+            email: data.email,
+        };
 
-        // try {
-        //   const res = await authStore.logIn(logInParams);
-        // } catch (e) {
-        //   console.error(e);
-        // }
+        try {
+            const res = await resetPassword(resetPasswordParams);
+            navigate(ERoutes.logIn);
+        } catch (e) {
+            console.error(e);
+        }
 
     }
 
@@ -54,9 +55,8 @@ const ResetPassword: React.FC<TResetPasswordProps> = observer(() => {
                                 label="Email"
                                 control={control}
                                 type="email"
-                                disabled
                             />
-                            <Button type="submit" disabled>
+                            <Button type="submit">
                                 Reset
                             </Button>
                         </Stack>
