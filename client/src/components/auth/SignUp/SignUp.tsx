@@ -1,8 +1,10 @@
+import React, { useContext } from "react";
+import { AuthStoreContext, TSignUpStoreParams } from "../../../stores/Auth";
+import { observer } from "mobx-react";
+
 import { Button, Grid, Paper, Stack, Typography } from "@mui/material";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { signUp, TSignUpParams } from "../../../queries/auth/signUp";
 import { TextFieldRUForm } from "../../forms/TextField";
 
 type TSignUpForm = {
@@ -14,27 +16,22 @@ type TSignUpForm = {
 
 type TSignUpProps = {};
 
-const SignUp: React.FC<TSignUpProps> = () => {
+const SignUp: React.FC<TSignUpProps> = observer(() => {
+    const authStore = useContext(AuthStoreContext);
     const navigate = useNavigate();
     const { handleSubmit, control } = useForm<TSignUpForm>();
 
     const onSubmit = async (data: TSignUpForm) => {
-        console.log('data', data);
-
-        const signUpParams: TSignUpParams = {
+        const signUpParams: TSignUpStoreParams = {
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
-            password: data.password
+            password: data.password,
+            successCallBack: () => navigate('/')
         };
 
         try {
-            const res = await signUp(signUpParams);
-            console.log('res', res);
-            if (res.data.token) {
-                localStorage.setItem("token", res.data.token);
-            }
-            navigate('/');
+            await authStore.signUp(signUpParams);
         } catch (e) {
             console.error(e);
         }
@@ -80,6 +77,6 @@ const SignUp: React.FC<TSignUpProps> = () => {
             </Grid>
         </Grid>
     );
-};
+});
 
 export default SignUp;

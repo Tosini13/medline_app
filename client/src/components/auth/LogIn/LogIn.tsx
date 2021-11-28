@@ -1,8 +1,10 @@
+import React, { useContext } from "react";
+import { observer } from 'mobx-react';
+import { AuthStoreContext, TLogInStoreParams } from "../../../stores/Auth";
+
 import { Grid, Paper, Stack, Typography, Button } from "@mui/material";
-import React from "react";
 import { useForm } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
-import { logIn, TLogInParams } from "../../../queries/auth/login";
 import { useNavigate } from "react-router";
 
 type TLoginForm = {
@@ -12,25 +14,21 @@ type TLoginForm = {
 
 type TLogInProps = {};
 
-const LogIn: React.FC<TLogInProps> = () => {
+const LogIn: React.FC<TLogInProps> = observer(() => {
+  const authStore = useContext(AuthStoreContext);
   const navigate = useNavigate();
   const { handleSubmit, control } = useForm<TLoginForm>();
 
   const onSubmit = async (data: TLoginForm) => {
-    console.log('data', data);
 
-    const logInParams: TLogInParams = {
+    const logInParams: TLogInStoreParams = {
       email: data.email,
-      password: data.password
+      password: data.password,
+      successCallBack: () => navigate('/')
     };
 
     try {
-      const res = await logIn(logInParams);
-      console.log('res', res);
-      if (res.data.token) {
-        localStorage.setItem("token", res.data.token);
-      }
-      navigate('/');
+      const res = await authStore.logIn(logInParams);
     } catch (e) {
       console.error(e);
     }
@@ -38,7 +36,7 @@ const LogIn: React.FC<TLogInProps> = () => {
   }
 
   return (
-    <Grid container alignItems="center" justifyContent="center">
+    <Grid container alignItems="center" justifyContent="center" style={{ height: '100%' }}>
       <Grid item>
         <Paper style={{ padding: '20px' }}>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,6 +71,6 @@ const LogIn: React.FC<TLogInProps> = () => {
       </Grid>
     </Grid>
   );
-};
+});
 
 export default LogIn;

@@ -12,36 +12,46 @@ import { useNavigate } from "react-router";
 import { ERoutes } from "../../models/routes";
 import ListElement from "../reusable/list/ListElement";
 import { TGetCurrentUserResult, useGetCurrentUser } from "../../queries/users/getCurrentUser";
+import { observer } from "mobx-react";
+import { useContext } from "react";
+import { AuthStoreContext } from "../../stores/Auth";
+import { LoadingIcon } from "../forms/Buttons";
+import { theme } from "../../style/theme";
 
 type TMenuProps = {
   handleClose: () => void;
 };
 
-const Menu: React.FC<TMenuProps> = ({ handleClose }) => {
-  const data = useGetCurrentUser();
-  const user = data?.data;
+const Menu: React.FC<TMenuProps> = observer(({ handleClose }) => {
 
-  if (user) {
-    return (<MenuLoggedIn handleClose={handleClose} user={user} />)
+  const authStore = useContext(AuthStoreContext);
+
+  if (authStore.isLoggedIn) {
+    return (<MenuLoggedIn handleClose={handleClose} />)
   }
   return (<MenuLoggedOut handleClose={handleClose} />)
 
-};
+});
 
 export default Menu;
 
 
 type TMenuLoggedInProps = {
   handleClose: () => void;
-  user: TGetCurrentUserResult;
 };
 
-const MenuLoggedIn: React.FC<TMenuLoggedInProps> = ({ handleClose, user }) => {
+const MenuLoggedIn: React.FC<TMenuLoggedInProps> = observer(({ handleClose }) => {
+  const authStore = useContext(AuthStoreContext);
+
+  const res = useGetCurrentUser();
+  const user = res?.data;
+
   const navigate = useNavigate();
   const handleChooseOption = (handleCallback: () => void) => {
     handleCallback();
     handleClose();
   };
+
   return (
     <Grid
       container
@@ -54,8 +64,8 @@ const MenuLoggedIn: React.FC<TMenuLoggedInProps> = ({ handleClose, user }) => {
       <Grid item>
         <List>
           <ListElement
-            Icon={<Badge style={{ color: "white" }} />}
-            text={user?.firstName + " " + user?.lastName}
+            Icon={user ? <Badge style={{ color: "white" }} /> : <LoadingIcon style={{ color: theme.palette.secondary.contrastText }} />}
+            text={user ? `${user.firstName} ${user.lastName}` : ' ... '}
           />
           <ListElement
             Icon={<FormatLineSpacing style={{ color: "white" }} />}
@@ -79,18 +89,14 @@ const MenuLoggedIn: React.FC<TMenuLoggedInProps> = ({ handleClose, user }) => {
             Icon={<Logout style={{ color: "white" }} />}
             text="Log out"
             onClick={() => handleChooseOption(() => {
-              console.log('localStorage.getItem("token")', localStorage.getItem('token'));
-              localStorage.removeItem('token');
-              console.log('localStorage.getItem("token")', localStorage.getItem('token'));
-
-              navigate(ERoutes.logIn);
+              authStore.logOut({ successCallBack: () => navigate(ERoutes.logIn) });
             })}
           />
         </List>
       </Grid>
     </Grid>
   );
-};
+});
 
 
 type TMenuLoggedOutProps = {
