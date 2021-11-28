@@ -14,6 +14,7 @@ import { headerHeight } from "./components/nav/MobileNav";
 import EditLinePage from "./components/lines/form/edit/EditLinePage";
 import SignUp from "./components/auth/SignUp/SignUp";
 import AuthRedirect from './components/wrappers/AuthRedirect';
+import ResetPassword from "./components/auth/ResetPassword/ResetPassword";
 
 const MainDesktop = styled.div`
   width: calc(100% - ${drawerWidth} - 10px);
@@ -87,6 +88,7 @@ function App() {
               <Route path={`${ERoutes.edit}/:id`} element={<EditLinePage />} />
               <Route path={ERoutes.logIn} element={<LogIn />} />
               <Route path={ERoutes.signUp} element={<SignUp />} />
+              <Route path={ERoutes.resetPassword} element={<ResetPassword />} />
             </Routes>
           </MainSection>
         </AuthRedirect>

@@ -2,10 +2,13 @@ import React, { useContext } from "react";
 import { observer } from 'mobx-react';
 import { AuthStoreContext, TLogInStoreParams } from "../../../stores/Auth";
 
-import { Grid, Paper, Stack, Typography, Button } from "@mui/material";
+import { Grid, Stack, Typography, Button, Hidden } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import { ERoutes } from '../../../models/routes';
+import AuthFormContainer from "../AuthFormContainer";
 
 type TLoginForm = {
   email: string;
@@ -38,7 +41,7 @@ const LogIn: React.FC<TLogInProps> = observer(() => {
   return (
     <Grid container alignItems="center" justifyContent="center" style={{ height: '100%' }}>
       <Grid item>
-        <Paper style={{ padding: '20px' }}>
+        <AuthFormContainer>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2}>
               <Typography align="center">
@@ -56,18 +59,20 @@ const LogIn: React.FC<TLogInProps> = observer(() => {
                 control={control}
                 type="password"
               />
-              <Button>
-                I forgot password
-              </Button>
-              <Button>
-                I don't have account yet
-              </Button>
               <Button type="submit">
                 Log In
               </Button>
             </Stack>
           </form>
-        </Paper>
+        </AuthFormContainer>
+        <Stack direction="row" spacing={2}>
+          <Link to={ERoutes.resetPassword}>
+            I forgot password
+          </Link>
+          <Link to={ERoutes.signUp}>
+            I don't have an account yet
+          </Link>
+        </Stack>
       </Grid>
     </Grid>
   );

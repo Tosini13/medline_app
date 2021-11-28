@@ -10,10 +10,12 @@ const AuthRedirect: React.FC<TAuthRedirectProps> = observer(({ children }) => {
     const authStore = useContext(AuthStoreContext);
     const location = useLocation();
 
-    if (!authStore.isLoggedIn && location.pathname !== ERoutes.logIn && location.pathname !== ERoutes.signUp) {
+    const nonAuthPaths = [ERoutes.logIn, ERoutes.signUp, ERoutes.resetPassword]
+
+    if (!authStore.isLoggedIn && !nonAuthPaths.includes(location.pathname as ERoutes)) {
         return <Navigate to={ERoutes.logIn} />
     }
-    if (authStore.isLoggedIn && (location.pathname === ERoutes.logIn || location.pathname === ERoutes.signUp)) {
+    if (authStore.isLoggedIn && (nonAuthPaths.includes(location.pathname as ERoutes))) {
         return <Navigate to={'/'} />
     }
 

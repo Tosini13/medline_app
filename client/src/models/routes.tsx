@@ -6,6 +6,7 @@ export enum ERoutes {
   "edit" = "/edit",
   "logIn" = "/log-in",
   "signUp" = "/sign-up",
+  "resetPassword" = "/reset-password",
 }
 
 export const navigateTo = {

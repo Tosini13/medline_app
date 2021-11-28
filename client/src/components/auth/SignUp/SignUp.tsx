@@ -2,10 +2,13 @@ import React, { useContext } from "react";
 import { AuthStoreContext, TSignUpStoreParams } from "../../../stores/Auth";
 import { observer } from "mobx-react";
 
-import { Button, Grid, Paper, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { TextFieldRUForm } from "../../forms/TextField";
+import { Link } from "react-router-dom";
+import { ERoutes } from "../../../models/routes";
+import AuthFormContainer from "../AuthFormContainer";
 
 type TSignUpForm = {
     firstName: string;
@@ -40,7 +43,7 @@ const SignUp: React.FC<TSignUpProps> = observer(() => {
     return (
         <Grid container alignItems="center" justifyContent="center">
             <Grid item>
-                <Paper style={{ padding: '20px' }}>
+                <AuthFormContainer>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Stack spacing={2}>
                             <Typography align="center">
@@ -73,7 +76,12 @@ const SignUp: React.FC<TSignUpProps> = observer(() => {
                             </Button>
                         </Stack>
                     </form>
-                </Paper>
+                </AuthFormContainer>
+                <Stack direction="row" spacing={2}>
+                    <Link to={ERoutes.logIn}>
+                        Log In
+                    </Link>
+                </Stack>
             </Grid>
         </Grid>
     );

@@ -16,7 +16,6 @@ export const verifyToken = (req: IVerifyTokenRequest, res: Response, next: NextF
 
     try {
         const decoded = jwt.verify(token as string, config.TOKEN_KEY as string);
-        console.log('decoded', decoded);
 
         req.currentUser = decoded;
     } catch (e) {
