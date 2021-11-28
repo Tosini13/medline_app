@@ -4,6 +4,7 @@ export enum ERoutes {
   "lines" = "/lines",
   "create" = "/create",
   "edit" = "/edit",
+  "user" = "/user",
   "logIn" = "/log-in",
   "signUp" = "/sign-up",
   "resetPassword" = "/reset-password",
@@ -14,5 +15,6 @@ export enum ERoutes {
 export const navigateTo = {
   line: (id: Id) => `${ERoutes.lines}/${id}`,
   editLine: (id: Id) => `${ERoutes.edit}/${id}`,
+  user: (id: Id) => `${ERoutes.user}/${id}`,
   setPassword: (token: string) => `${ERoutes.setPassword}?token=${token}`,
 };

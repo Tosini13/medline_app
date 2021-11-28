@@ -34,6 +34,8 @@ export type TUser = {
   email: string;
   password: string;
   token: string;
+  bloodGroup?: BLOOD_GROUP;
+  rhesusFactor?: RH_FACTOR;
 };
 
 export enum LINE_VALUE {
@@ -64,4 +66,16 @@ export enum EResetPasswordMessage {
 
 export enum ESetNewPasswordMessage {
   "NEW_PASSWORD_SET" = "NEW_PASSWORD_SET",
+}
+
+export enum BLOOD_GROUP {
+  "AB" = "AB",
+  "A" = "A",
+  "B" = "B",
+  "ZERO" = "ZERO",
+}
+
+export enum RH_FACTOR {
+  "RHESUS_NEGATIVE" = "RHESUS_NEGATIVE",
+  "RHESUS_POSITIVE" = "RHESUS_POSITIVE",
 }

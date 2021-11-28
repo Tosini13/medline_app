@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
-import User from "../models/user";
+import User, { TUser } from "../models/user";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { IVerifyTokenRequest } from "../middleware/auth";
 import Token from "../models/token";
 import { addDays, isBefore } from "date-fns";
 import nodemailer from 'nodemailer';
-import { ECheckTokenMessage, EResetPasswordMessage, ESetNewPasswordMessage } from "../models/types";
+import { ECheckTokenMessage, EResetPasswordMessage, ESetNewPasswordMessage } from "../models/messages/auth";
+import { convertUser } from "./users";
 
-
+type TRegisterRes = Omit<TUser, "password">;
+type TLoginRes = Omit<TUser, "password">;
 
 export const register = async (req: Request, res: Response) => {
 
@@ -41,9 +42,14 @@ export const register = async (req: Request, res: Response) => {
             }
         );
 
-        user.token = token;
+        const userData = convertUser(user);
 
-        res.status(201).json(user);
+        const response: TRegisterRes = {
+            ...userData,
+            token
+        }
+
+        res.status(201).json(response);
     } catch (e) {
         console.error(e);
         res.status(500).send({ message: 'Server has an internal error', error: e });
@@ -72,9 +78,12 @@ export const login = async (req: Request, res: Response) => {
                 }
             );
 
-            user.token = token;
-
-            res.status(200).json(user);
+            const userData = convertUser(user);
+            const response: TLoginRes = {
+                ...userData,
+                token
+            }
+            res.status(200).json(response);
         }
 
         res.status(400).send({ message: 'Invalid credentials' });
