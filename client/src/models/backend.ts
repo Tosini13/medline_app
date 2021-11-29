@@ -31,10 +31,15 @@ export type TUser = {
   id: Id;
   firstName?: string;
   lastName?: string;
+  dateOfBirth?: Date;
   email: string;
   password: string;
   token: string;
+  bloodGroup?: BLOOD_GROUP | null;
+  rhesusFactor?: RH_FACTOR | null;
 };
+
+export type TUserData = Omit<TUser, "password" | "token">;
 
 export enum LINE_VALUE {
   "NORMAL" = "NORMAL",
@@ -64,4 +69,16 @@ export enum EResetPasswordMessage {
 
 export enum ESetNewPasswordMessage {
   "NEW_PASSWORD_SET" = "NEW_PASSWORD_SET",
+}
+
+export enum BLOOD_GROUP {
+  "AB" = "AB",
+  "A" = "A",
+  "B" = "B",
+  "ZERO" = "ZERO",
+}
+
+export enum RH_FACTOR {
+  "RHESUS_NEGATIVE" = "RHESUS_NEGATIVE",
+  "RHESUS_POSITIVE" = "RHESUS_POSITIVE",
 }

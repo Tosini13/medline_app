@@ -6,8 +6,6 @@ import useAsync from "../../../helpers/useAsync";
 import { LoadingIcon } from "../../forms/Buttons";
 import Question from "../../global/question/Question";
 import { useSnackbar } from "notistack";
-import { useNavigate } from "react-router";
-import { navigateTo } from "../../../models/routes";
 
 type TLineMoreProps = {
   handleDelete: () => Promise<void>;
@@ -24,7 +22,6 @@ const LineMore: React.FC<TLineMoreProps> = ({
   handleDelete,
   handleEditLine
 }) => {
-  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [openQuestion, setOpenQuestion] = useState(false);
   const { isProcessing, execute } = useAsync();

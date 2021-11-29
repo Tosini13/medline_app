@@ -1,23 +1,23 @@
 import { List, Grid } from "@mui/material";
 import {
   Add,
-  Badge,
+  AccountCircle,
   Logout,
   FormatLineSpacing,
   Info,
   Login,
-  AppRegistration
+  AppRegistration,
+  ContactPage
 } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 import { ERoutes } from "../../models/routes";
 import ListElement from "../reusable/list/ListElement";
-import { TGetCurrentUserResult, useGetCurrentUser } from "../../queries/users/getCurrentUser";
+import { useGetCurrentUser } from "../../queries/users/getCurrentUser";
 import { observer } from "mobx-react";
 import { useContext } from "react";
 import { AuthStoreContext } from "../../stores/Auth";
 import { LoadingIcon } from "../forms/Buttons";
 import { theme } from "../../style/theme";
-
 type TMenuProps = {
   handleClose: () => void;
 };
@@ -43,8 +43,8 @@ type TMenuLoggedInProps = {
 const MenuLoggedIn: React.FC<TMenuLoggedInProps> = observer(({ handleClose }) => {
   const authStore = useContext(AuthStoreContext);
 
-  const res = useGetCurrentUser();
-  const user = res?.data;
+  const { response } = useGetCurrentUser();
+  const user = response?.data;
 
   const navigate = useNavigate();
   const handleChooseOption = (handleCallback: () => void) => {
@@ -64,8 +64,13 @@ const MenuLoggedIn: React.FC<TMenuLoggedInProps> = observer(({ handleClose }) =>
       <Grid item>
         <List>
           <ListElement
-            Icon={user ? <Badge style={{ color: "white" }} /> : <LoadingIcon style={{ color: theme.palette.secondary.contrastText }} />}
+            Icon={user ? <AccountCircle style={{ color: "white" }} /> : <LoadingIcon style={{ color: theme.palette.secondary.contrastText }} />}
             text={user ? `${user.firstName} ${user.lastName}` : ' ... '}
+          />
+          <ListElement
+            Icon={<ContactPage style={{ color: "white" }} />}
+            text="User Details"
+            onClick={() => handleChooseOption(() => navigate(ERoutes.user))}
           />
           <ListElement
             Icon={<FormatLineSpacing style={{ color: "white" }} />}
@@ -121,7 +126,7 @@ const MenuLoggedOut: React.FC<TMenuLoggedOutProps> = ({ handleClose }) => {
       <Grid item>
         <List>
           <ListElement
-            Icon={<Badge style={{ color: "white" }} />}
+            Icon={<AccountCircle style={{ color: "white" }} />}
             text="Logged Out"
           />
         </List>

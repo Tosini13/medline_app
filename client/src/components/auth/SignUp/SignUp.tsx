@@ -6,9 +6,9 @@ import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { TextFieldRUForm } from "../../forms/TextField";
-import { Link } from "react-router-dom";
 import { ERoutes } from "../../../models/routes";
-import AuthFormContainer from "../AuthFormContainer";
+import { LinkAuth } from "../../buttons/Links";
+import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
 
 type TSignUpForm = {
     firstName: string;
@@ -41,49 +41,47 @@ const SignUp: React.FC<TSignUpProps> = observer(() => {
     }
 
     return (
-        <Grid container alignItems="center" justifyContent="center">
-            <Grid item>
-                <AuthFormContainer>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <Stack spacing={2}>
-                            <Typography align="center">
-                                Sign Up
-                            </Typography>
-                            <TextFieldRUForm
-                                name="firstName"
-                                label="First Name"
-                                control={control}
-                            />
-                            <TextFieldRUForm
-                                name="lastName"
-                                label="Last Name"
-                                control={control}
-                            />
-                            <TextFieldRUForm
-                                name="email"
-                                label="Email"
-                                control={control}
-                                type="email"
-                            />
-                            <TextFieldRUForm
-                                name="password"
-                                label="Password"
-                                control={control}
-                                type="password"
-                            />
-                            <Button type="submit">
-                                Sign Up
-                            </Button>
-                        </Stack>
-                    </form>
-                </AuthFormContainer>
-                <Stack direction="row" spacing={2}>
-                    <Link to={ERoutes.logIn}>
-                        Log In
-                    </Link>
-                </Stack>
-            </Grid>
-        </Grid>
+        <AuthPageContainer>
+            <AuthFormContainer>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Stack spacing={2}>
+                        <Typography align="center">
+                            Sign Up
+                        </Typography>
+                        <TextFieldRUForm
+                            name="firstName"
+                            label="First Name"
+                            control={control}
+                        />
+                        <TextFieldRUForm
+                            name="lastName"
+                            label="Last Name"
+                            control={control}
+                        />
+                        <TextFieldRUForm
+                            name="email"
+                            label="Email"
+                            control={control}
+                            type="email"
+                        />
+                        <TextFieldRUForm
+                            name="password"
+                            label="Password"
+                            control={control}
+                            type="password"
+                        />
+                        <Button type="submit">
+                            Sign Up
+                        </Button>
+                    </Stack>
+                </form>
+            </AuthFormContainer>
+            <Stack direction="row" spacing={2} justifyContent="center">
+                <LinkAuth to={ERoutes.logIn}>
+                    Log In
+                </LinkAuth>
+            </Stack>
+        </AuthPageContainer>
     );
 });
 

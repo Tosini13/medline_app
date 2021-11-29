@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
-import { ESetNewPasswordMessage, TUser } from "../../models/backend";
+import { ESetNewPasswordMessage } from "../../models/backend";
 import { SET_PASSWORD_API_URL } from "../../models/endpoints";
 
 export type TSetNewPasswordParams = { token: string; password: string };

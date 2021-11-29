@@ -1,5 +1,5 @@
 import EditLine from "./EditLine";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useGetLine } from "../../../../queries/lines/getLine";
 import useAsync from "../../../../helpers/useAsync";
 import Loading from "../../../global/loading/Loading";

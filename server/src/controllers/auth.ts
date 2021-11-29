@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
-import User from "../models/user";
+import User, { TUser } from "../models/user";
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { IVerifyTokenRequest } from "../middleware/auth";
 import Token from "../models/token";
 import { addDays, isBefore } from "date-fns";
 import nodemailer from 'nodemailer';
-import { ECheckTokenMessage, EResetPasswordMessage, ESetNewPasswordMessage } from "../models/types";
+import { ECheckTokenMessage, EResetPasswordMessage, ESetNewPasswordMessage } from "../models/messages/auth";
+import { convertUser } from "./users";
 
-
+type TRegisterRes = Omit<TUser, "password">;
+type TLoginRes = Omit<TUser, "password">;
 
 export const register = async (req: Request, res: Response) => {
 
@@ -16,7 +17,7 @@ export const register = async (req: Request, res: Response) => {
         const { firstName, lastName, email, password } = req.body;
 
         if (!(email && password && firstName && lastName)) {
-            res.status(400).send({ message: 'All inputs are required' });
+            return res.status(400).send({ message: 'All inputs are required' });
         }
 
         const userExists = await User.findOne({ email });
@@ -30,7 +31,7 @@ export const register = async (req: Request, res: Response) => {
             firstName,
             lastName,
             email: email.toLowerCase(),
-            password: encryptedPassword
+            password: encryptedPassword,
         })
 
         const token = jwt.sign(
@@ -41,9 +42,14 @@ export const register = async (req: Request, res: Response) => {
             }
         );
 
-        user.token = token;
+        const userData = convertUser(user);
 
-        res.status(201).json(user);
+        const response: TRegisterRes = {
+            ...userData,
+            token
+        }
+
+        res.status(201).json(response);
     } catch (e) {
         console.error(e);
         res.status(500).send({ message: 'Server has an internal error', error: e });
@@ -58,7 +64,7 @@ export const login = async (req: Request, res: Response) => {
         const { email, password } = req.body;
 
         if (!(email && password)) {
-            res.status(400).send({ message: 'Email and password are required' });
+            return res.status(400).send({ message: 'Email and password are required' });
         }
 
         const user = await User.findOne({ email });
@@ -72,12 +78,15 @@ export const login = async (req: Request, res: Response) => {
                 }
             );
 
-            user.token = token;
-
-            res.status(200).json(user);
+            const userData = convertUser(user);
+            const response: TLoginRes = {
+                ...userData,
+                token
+            }
+            res.status(200).json(response);
+        } else {
+            res.status(400).send({ message: 'Invalid credentials' });
         }
-
-        res.status(400).send({ message: 'Invalid credentials' });
 
     } catch (e) {
         console.error(e);
@@ -93,7 +102,7 @@ export const resetPassword = async (req: Request, res: Response) => {
         const { email } = req.body;
 
         if (!(email)) {
-            res.status(400).send({ message: EResetPasswordMessage.EMAIL_IS_REQUIRED });
+            return res.status(400).send({ message: EResetPasswordMessage.EMAIL_IS_REQUIRED });
         }
 
         const user = await User.findOne({ email });
@@ -152,11 +161,11 @@ export const checkToken = async (req: Request, res: Response) => {
 
         const tokenData = await Token.findOne({ token })
         if (tokenData?.expireDate && isBefore(new Date(tokenData.expireDate), new Date())) {
-            res.status(400).send({ message: ECheckTokenMessage.TOKEN_EXPIRED });
+            return res.status(400).send({ message: ECheckTokenMessage.TOKEN_EXPIRED });
         }
 
         if (!tokenData) {
-            res.status(400).send({ message: ECheckTokenMessage.TOKEN_INVALID });
+            return res.status(400).send({ message: ECheckTokenMessage.TOKEN_INVALID });
         }
 
         res.status(200).send({ message: ECheckTokenMessage.TOKEN_VALID });

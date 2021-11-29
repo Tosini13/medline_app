@@ -1,17 +1,9 @@
 import mongoose, { Document } from "mongoose";
-import { Id } from "./types";
+import { BLOOD_GROUP, Id, RH_FACTOR } from "./types";
 
 const Schema = mongoose.Schema;
 
 const SUser = new Schema({
-    firstName: {
-        type: String,
-        required: false,
-    },
-    lastName: {
-        type: String,
-        required: false,
-    },
     email: {
         type: String,
         unique: true,
@@ -24,14 +16,38 @@ const SUser = new Schema({
     token: {
         type: String,
     },
+    firstName: {
+        type: String,
+        required: false,
+    },
+    lastName: {
+        type: String,
+        required: false,
+    },
+    dateOfBirth: {
+        type: String,
+        required: false,
+    },
+    bloodGroup: {
+        type: String,
+        preferences: { default: null }
+    },
+    rhesusFactor: {
+        type: String,
+        preferences: { default: null }
+    },
 });
 
 export type TUserData = {
+    email: string;
+    token: string;
+    password: string;
+
     firstName?: string;
     lastName?: string;
-    email: string;
-    password: string;
-    token: string;
+    dateOfBirth?: Date;
+    bloodGroup?: BLOOD_GROUP | null;
+    rhesusFactor?: RH_FACTOR | null;
 };
 
 export type TUser = TUserData & {
@@ -39,11 +55,15 @@ export type TUser = TUserData & {
 };
 
 export interface IUser extends Document {
-    firstName?: string;
-    lastName?: string;
     email: string;
     password: string;
     token: string;
+
+    firstName?: string;
+    lastName?: string;
+    dateOfBirth?: Date;
+    bloodGroup?: BLOOD_GROUP | null;
+    rhesusFactor?: RH_FACTOR | null;
 }
 
 const User = mongoose.model<IUser>("users", SUser);

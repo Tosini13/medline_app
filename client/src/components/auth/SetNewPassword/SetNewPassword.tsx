@@ -6,9 +6,9 @@ import { useNavigate } from "react-router";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { Link } from "react-router-dom";
 import { ERoutes } from "../../../models/routes";
-import AuthFormContainer from "../AuthFormContainer";
 import { useQuery } from "../../../helpers/useQuery";
 import { setNewPassword, TSetNewPasswordParams } from "../../../queries/auth/setNewPassword";
+import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
 
 type TSetNewPasswordForm = {
     password: string;
@@ -43,39 +43,37 @@ const SetNewPassword: React.FC<TSetNewPasswordProps> = () => {
     }
 
     return (
-        <Grid container alignItems="center" justifyContent="center">
-            <Grid item>
-                <AuthFormContainer>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <Stack spacing={2}>
-                            <Typography align="center">
-                                Sign Up
-                            </Typography>
-                            <TextFieldRUForm
-                                name="password"
-                                label="Password"
-                                control={control}
-                                type="password"
-                            />
-                            <TextFieldRUForm
-                                name="repeatPassword"
-                                label="Repeat Password"
-                                control={control}
-                                type="password"
-                            />
-                            <Button type="submit">
-                                Save
-                            </Button>
-                        </Stack>
-                    </form>
-                </AuthFormContainer>
-                <Stack direction="row" spacing={2}>
-                    <Link to={ERoutes.logIn}>
-                        Log In
-                    </Link>
-                </Stack>
-            </Grid>
-        </Grid>
+        <AuthPageContainer>
+            <AuthFormContainer>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Stack spacing={2}>
+                        <Typography align="center">
+                            Sign Up
+                        </Typography>
+                        <TextFieldRUForm
+                            name="password"
+                            label="Password"
+                            control={control}
+                            type="password"
+                        />
+                        <TextFieldRUForm
+                            name="repeatPassword"
+                            label="Repeat Password"
+                            control={control}
+                            type="password"
+                        />
+                        <Button type="submit">
+                            Save
+                        </Button>
+                    </Stack>
+                </form>
+            </AuthFormContainer>
+            <Stack direction="row" spacing={2}>
+                <Link to={ERoutes.logIn}>
+                    Log In
+                </Link>
+            </Stack>
+        </AuthPageContainer>
     );
 };
 

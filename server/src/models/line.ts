@@ -3,6 +3,10 @@ import { Id, LINE_VALUE } from "./types";
 const Schema = mongoose.Schema;
 
 const SLine = new Schema({
+  user: {
+    type: String,
+    required: [true, "user is required"],
+  },
   title: {
     type: String,
     required: [true, "title is required"],
@@ -26,6 +30,7 @@ const SLine = new Schema({
 });
 
 export type TLine = {
+  user: Id;
   title: string;
   description?: string;
   value: LINE_VALUE;
@@ -39,6 +44,7 @@ export type TLineRes = TLine & {
 };
 
 export interface ILine extends Document {
+  user: Id;
   title: string;
   description?: string;
   value: LINE_VALUE;

@@ -17,6 +17,7 @@ import AuthRedirect from './components/wrappers/AuthRedirect';
 import ResetPassword from "./components/auth/ResetPassword/ResetPassword";
 import CheckToken from "./components/auth/CheckToken/CheckToken";
 import SetNewPassword from "./components/auth/SetNewPassword/SetNewPassword";
+import User from "./components/user/User";
 
 const MainDesktop = styled.div`
   width: calc(100% - ${drawerWidth} - 10px);
@@ -50,8 +51,8 @@ const MainSection: React.FC<TPaperSectionProps> = ({ children, openMenu }) => {
     <>
       <Hidden mdDown>
         <MainDesktop>
-          <Grid container direction="column">
-            <Grid item>{children}</Grid>
+          <Grid container direction="column" style={{ height: '100%' }}>
+            <Grid item style={{ height: '100%' }}>{children}</Grid>
           </Grid>
         </MainDesktop>
       </Hidden>
@@ -88,6 +89,7 @@ function App() {
               <Route path={`${ERoutes.lines}/:id`} element={<LinePage />} />
               <Route path={ERoutes.create} element={<CreateLine />} />
               <Route path={`${ERoutes.edit}/:id`} element={<EditLinePage />} />
+              <Route path={ERoutes.user} element={<User />} />
               <Route path={ERoutes.logIn} element={<LogIn />} />
               <Route path={ERoutes.signUp} element={<SignUp />} />
               <Route path={ERoutes.resetPassword} element={<ResetPassword />} />

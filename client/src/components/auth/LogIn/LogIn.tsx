@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import { observer } from 'mobx-react';
 import { AuthStoreContext, TLogInStoreParams } from "../../../stores/Auth";
 
-import { Grid, Stack, Typography, Button, Hidden } from "@mui/material";
+import { Grid, Stack, Typography, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
 import { ERoutes } from '../../../models/routes';
-import AuthFormContainer from "../AuthFormContainer";
+import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
+import { LinkAuth } from "../../buttons/Links";
 
 type TLoginForm = {
   email: string;
@@ -31,7 +31,7 @@ const LogIn: React.FC<TLogInProps> = observer(() => {
     };
 
     try {
-      const res = await authStore.logIn(logInParams);
+      await authStore.logIn(logInParams);
     } catch (e) {
       console.error(e);
     }
@@ -39,42 +39,40 @@ const LogIn: React.FC<TLogInProps> = observer(() => {
   }
 
   return (
-    <Grid container alignItems="center" justifyContent="center" style={{ height: '100%' }}>
-      <Grid item>
-        <AuthFormContainer>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack spacing={2}>
-              <Typography align="center">
-                Log In
-              </Typography>
-              <TextFieldRUForm
-                name="email"
-                label="Email"
-                control={control}
-                type="email"
-              />
-              <TextFieldRUForm
-                name="password"
-                label="Password"
-                control={control}
-                type="password"
-              />
-              <Button type="submit">
-                Log In
-              </Button>
-            </Stack>
-          </form>
-        </AuthFormContainer>
-        <Stack direction="row" spacing={2}>
-          <Link to={ERoutes.resetPassword}>
-            I forgot password
-          </Link>
-          <Link to={ERoutes.signUp}>
-            I don't have an account yet
-          </Link>
-        </Stack>
-      </Grid>
-    </Grid>
+    <AuthPageContainer>
+      <AuthFormContainer>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack spacing={2}>
+            <Typography align="center">
+              Log In
+            </Typography>
+            <TextFieldRUForm
+              name="email"
+              label="Email"
+              control={control}
+              type="email"
+            />
+            <TextFieldRUForm
+              name="password"
+              label="Password"
+              control={control}
+              type="password"
+            />
+            <Button type="submit">
+              Log In
+            </Button>
+          </Stack>
+        </form>
+      </AuthFormContainer>
+      <Stack direction="row" spacing={2}>
+        <LinkAuth to={ERoutes.resetPassword}>
+          I forgot password
+        </LinkAuth>
+        <LinkAuth to={ERoutes.signUp}>
+          I don't have an account yet
+        </LinkAuth>
+      </Stack>
+    </AuthPageContainer>
   );
 });
 

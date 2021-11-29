@@ -1,10 +1,9 @@
 import { Grid, Typography } from "@mui/material";
-import { Navigate, useParams } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router";
+import { Navigate } from "react-router-dom";
 import { ECheckTokenMessage } from "../../../models/backend";
 import { useCheckToken } from "../../../queries/auth/checkToken";
 import Loading from "../../global/loading/Loading";
-import { ERoutes, navigateTo } from "../../../models/routes";
+import { navigateTo } from "../../../models/routes";
 import { useQuery } from "../../../helpers/useQuery";
 
 type TCheckTokenProps = {};
