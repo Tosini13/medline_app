@@ -10,9 +10,9 @@ type TUserProps = {};
 
 const User: React.FC<TUserProps> = () => {
     const [openForm, setOpenForm] = useState(false);
-    const res = useGetCurrentUser();
+    const { response, reExecute } = useGetCurrentUser();
 
-    const user = res?.data;
+    const user = response?.data;
     if (!user) {
         return <Loading />;
     }
@@ -27,18 +27,18 @@ const User: React.FC<TUserProps> = () => {
                 <Cell label="First Name" value={user.firstName} />
                 <Cell label="Last Name" value={user.lastName} />
                 <Cell label="Email" value={user.email} />
-                <Cell label="Date of Birth" value={user.dateOfBirth && format(user.dateOfBirth, "yyyy.MM.dd hh:mm")} /> {/* Format: DATE (XX years old) */}
+                <Cell label="Date of Birth" value={user.dateOfBirth && format(new Date(user.dateOfBirth), "yyyy.MM.dd hh:mm")} /> {/* Format: DATE (XX years old) */}
                 <Cell label="Blood Group" value={user.bloodGroup} />
                 <Cell label="Rh Factor" value={user.rhesusFactor} />
             </Stack>
-            <EditUser open={openForm} handleClose={() => setOpenForm(false)} user={user} />
+            <EditUser open={openForm} handleClose={() => setOpenForm(false)} user={user} reExecuteGetCurrentUser={reExecute} />
         </>
     );
 };
 
 export default User
 
-type TCellProps = { label: string; value?: string };
+type TCellProps = { label: string; value?: string | null };
 
 const Cell: React.FC<TCellProps> = ({ label, value }) => {
     return (

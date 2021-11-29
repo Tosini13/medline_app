@@ -35,3 +35,21 @@ export const getUser = async (req: IVerifyTokenRequest, res: Response) => {
     }
 }
 
+
+export const updateUser = async (req: IVerifyTokenRequest, res: Response) => {
+    const user: Omit<TUserData, 'id'> = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        dateOfBirth: req.body.dateOfBirth,
+        bloodGroup: req.body.bloodGroup,
+        rhesusFactor: req.body.rhesusFactor,
+    };
+
+    try {
+        await User.updateOne({ _id: req.params.id }, user);
+        res.send(user);
+    } catch (e) {
+        res.send(e);
+    }
+};

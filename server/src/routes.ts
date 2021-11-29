@@ -20,20 +20,24 @@ import {
   getLines,
   updateLine,
 } from "./controllers/lines";
-import { getUser } from "./controllers/users";
+import { getUser, updateUser } from "./controllers/users";
 import { verifyToken } from "./middleware/auth";
 
 const router = express.Router();
 
 
 // -----------------------------------------
-// USERS
+// AUTH
 router.post("/login", login);
 router.post("/register", register);
 router.post("/reset-password", resetPassword);
 router.post("/check-token", checkToken);
 router.post("/set-password", setPassword);
+
+// -----------------------------------------
+// USERS
 router.get("/user", verifyToken, getUser);
+router.put("/user/:id", verifyToken, updateUser);
 
 // -----------------------------------------
 // EVENTS

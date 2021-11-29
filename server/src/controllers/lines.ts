@@ -2,10 +2,11 @@ import { Response } from "express";
 import { LeanDocument } from "mongoose";
 import { IVerifyTokenRequest } from "../middleware/auth";
 import Line, { ILine, TLine, TLineRes } from "../models/line";
+import { ECreateLine } from "../models/messages/lines";
 import { getEventsQtt } from "./actions/events";
 import { removeLineEvents } from "./actions/lines";
 
-const convertLine = async (line: LeanDocument<ILine>): Promise<TLineRes> => {
+const convertLine = async (line: LeanDocument<ILine>): Promise<Omit<TLineRes, "user">> => {
   const contributions = await getEventsQtt(line._id);
   return {
     id: line._id,
@@ -19,7 +20,12 @@ const convertLine = async (line: LeanDocument<ILine>): Promise<TLineRes> => {
 };
 
 export const getLines = (req: IVerifyTokenRequest, res: Response) => {
-  Line.find({})
+  const currentUser: any = req.currentUser;
+
+  if (!currentUser) {
+    return res.status(401).send({ message: ECreateLine.UNAUTHORIZED });
+  }
+  Line.find({ user: currentUser.user_id })
     .then(async (items) => {
       const lines = await Promise.all(
         items.map(async (item) => await convertLine(item))
@@ -42,7 +48,14 @@ export const getLine = (req: IVerifyTokenRequest, res: Response) => {
 };
 
 export const createLine = (req: IVerifyTokenRequest, res: Response) => {
+  const currentUser: any = req.currentUser;
+
+  if (!currentUser) {
+    return res.status(401).send({ message: ECreateLine.UNAUTHORIZED });
+  }
+
   const line: TLine = {
+    user: currentUser.user_id,
     title: req.body.title,
     description: req.body.description,
     value: req.body.value,
@@ -56,7 +69,7 @@ export const createLine = (req: IVerifyTokenRequest, res: Response) => {
 };
 
 export const updateLine = async (req: IVerifyTokenRequest, res: Response) => {
-  const line: TLine = {
+  const line: Omit<TLine, "user"> = {
     title: req.body.title,
     description: req.body.description,
     value: req.body.value,

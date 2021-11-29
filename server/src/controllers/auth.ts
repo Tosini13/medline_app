@@ -17,7 +17,7 @@ export const register = async (req: Request, res: Response) => {
         const { firstName, lastName, email, password } = req.body;
 
         if (!(email && password && firstName && lastName)) {
-            res.status(400).send({ message: 'All inputs are required' });
+            return res.status(400).send({ message: 'All inputs are required' });
         }
 
         const userExists = await User.findOne({ email });
@@ -31,7 +31,7 @@ export const register = async (req: Request, res: Response) => {
             firstName,
             lastName,
             email: email.toLowerCase(),
-            password: encryptedPassword
+            password: encryptedPassword,
         })
 
         const token = jwt.sign(
@@ -64,7 +64,7 @@ export const login = async (req: Request, res: Response) => {
         const { email, password } = req.body;
 
         if (!(email && password)) {
-            res.status(400).send({ message: 'Email and password are required' });
+            return res.status(400).send({ message: 'Email and password are required' });
         }
 
         const user = await User.findOne({ email });
@@ -84,9 +84,9 @@ export const login = async (req: Request, res: Response) => {
                 token
             }
             res.status(200).json(response);
+        } else {
+            res.status(400).send({ message: 'Invalid credentials' });
         }
-
-        res.status(400).send({ message: 'Invalid credentials' });
 
     } catch (e) {
         console.error(e);
@@ -102,7 +102,7 @@ export const resetPassword = async (req: Request, res: Response) => {
         const { email } = req.body;
 
         if (!(email)) {
-            res.status(400).send({ message: EResetPasswordMessage.EMAIL_IS_REQUIRED });
+            return res.status(400).send({ message: EResetPasswordMessage.EMAIL_IS_REQUIRED });
         }
 
         const user = await User.findOne({ email });
@@ -161,11 +161,11 @@ export const checkToken = async (req: Request, res: Response) => {
 
         const tokenData = await Token.findOne({ token })
         if (tokenData?.expireDate && isBefore(new Date(tokenData.expireDate), new Date())) {
-            res.status(400).send({ message: ECheckTokenMessage.TOKEN_EXPIRED });
+            return res.status(400).send({ message: ECheckTokenMessage.TOKEN_EXPIRED });
         }
 
         if (!tokenData) {
-            res.status(400).send({ message: ECheckTokenMessage.TOKEN_INVALID });
+            return res.status(400).send({ message: ECheckTokenMessage.TOKEN_INVALID });
         }
 
         res.status(200).send({ message: ECheckTokenMessage.TOKEN_VALID });

@@ -13,6 +13,7 @@ export const SIGN_UP_API_URL = `${API_URL}/register`;
 
 /* ---------------- USERS ------------------- */
 export const CURRENT_USER_API_URL = `${API_URL}/user`;
+export const USER_API_URL = (id: Id) => `${API_URL}/user/${id}`;
 
 /* ---------------- LINES ------------------- */
 export const LINES_API_URL = `${API_URL}/lines`;

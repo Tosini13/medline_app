@@ -15,19 +15,20 @@ import { useSnackbar } from "notistack";
 import { useEffect } from "react";
 import UserForm, { TUserForm } from "../UserForm";
 import { useEditUser } from "./useEditUser";
+import { TUseGetCurrentUser } from "../../../../queries/users/getCurrentUser";
 
 type TEditUserProps = {
     open: boolean;
     handleClose: () => void;
     user: TUserData;
-    // reExecuteGetEvents: TUseGetEventsReturn["reExecute"];
+    reExecuteGetCurrentUser: TUseGetCurrentUser["reExecute"];
 };
 
 const EditUser: React.FC<TEditUserProps> = ({
     open,
     handleClose,
     user,
-    // reExecuteGetEvents,
+    reExecuteGetCurrentUser,
 }) => {
     const { enqueueSnackbar } = useSnackbar();
     const { handleSubmit, control, reset } = useForm<TUserForm>(
@@ -36,8 +37,8 @@ const EditUser: React.FC<TEditUserProps> = ({
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                bloodGroup: user.bloodGroup,
-                rhesusFactor: user.rhesusFactor,
+                bloodGroup: user.bloodGroup ?? "",
+                rhesusFactor: user.rhesusFactor ?? "",
                 dateOfBirth: user.dateOfBirth ?? null,
             },
         }
@@ -49,8 +50,8 @@ const EditUser: React.FC<TEditUserProps> = ({
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            bloodGroup: user.bloodGroup,
-            rhesusFactor: user.rhesusFactor,
+            bloodGroup: user.bloodGroup ?? "",
+            rhesusFactor: user.rhesusFactor ?? "",
             dateOfBirth: user.dateOfBirth ?? null,
         });
     }, [user, reset]);
@@ -62,7 +63,7 @@ const EditUser: React.FC<TEditUserProps> = ({
 
     const callbackSuccess = () => {
         handleCloseAndReset();
-        // reExecuteGetEvents();
+        reExecuteGetCurrentUser();
         enqueueSnackbar("User's details are saved!", { variant: "success" });
     };
 

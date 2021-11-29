@@ -43,8 +43,8 @@ type TMenuLoggedInProps = {
 const MenuLoggedIn: React.FC<TMenuLoggedInProps> = observer(({ handleClose }) => {
   const authStore = useContext(AuthStoreContext);
 
-  const res = useGetCurrentUser();
-  const user = res?.data;
+  const { response } = useGetCurrentUser();
+  const user = response?.data;
 
   const navigate = useNavigate();
   const handleChooseOption = (handleCallback: () => void) => {

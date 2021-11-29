@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { TUser } from "../../models/backend";
 import { CURRENT_USER_API_URL } from "../../models/endpoints";
 
@@ -15,24 +15,28 @@ export const getCurrentUser = async ({ token }: TGetCurrentUserParams) =>
         }
     });
 
+export type TUseGetCurrentUser = {
+    response?: AxiosResponse<TGetCurrentUserResult, any>;
+    reExecute: () => Promise<void>;
+};
 
-
-
-export const useGetCurrentUser = () => {
+export const useGetCurrentUser = (): TUseGetCurrentUser => {
 
     const [response, setResponse] = useState<
         AxiosResponse<TGetCurrentUserResult> | undefined
     >();
 
-    useEffect(() => {
+    const fetch = useCallback(async () => {
         const token = localStorage.getItem("token") ?? '';
-
-        const fetch = async () => {
-            const res = await getCurrentUser({ token });
-            setResponse(res);
-        };
-        fetch();
+        const res = await getCurrentUser({ token });
+        setResponse(res);
     }, []);
 
-    return response;
+    useEffect(() => {
+        fetch();
+    }, [fetch]);
+
+
+    return { response, reExecute: fetch };
 }
+

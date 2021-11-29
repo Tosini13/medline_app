@@ -30,11 +30,11 @@ const SUser = new Schema({
     },
     bloodGroup: {
         type: String,
-        required: false,
+        preferences: { default: null }
     },
     rhesusFactor: {
         type: String,
-        required: false,
+        preferences: { default: null }
     },
 });
 
@@ -46,8 +46,8 @@ export type TUserData = {
     firstName?: string;
     lastName?: string;
     dateOfBirth?: Date;
-    bloodGroup?: BLOOD_GROUP;
-    rhesusFactor?: RH_FACTOR;
+    bloodGroup?: BLOOD_GROUP | null;
+    rhesusFactor?: RH_FACTOR | null;
 };
 
 export type TUser = TUserData & {
@@ -62,8 +62,8 @@ export interface IUser extends Document {
     firstName?: string;
     lastName?: string;
     dateOfBirth?: Date;
-    bloodGroup?: BLOOD_GROUP;
-    rhesusFactor?: RH_FACTOR;
+    bloodGroup?: BLOOD_GROUP | null;
+    rhesusFactor?: RH_FACTOR | null;
 }
 
 const User = mongoose.model<IUser>("users", SUser);

@@ -35,8 +35,8 @@ export type TUser = {
   email: string;
   password: string;
   token: string;
-  bloodGroup?: BLOOD_GROUP;
-  rhesusFactor?: RH_FACTOR;
+  bloodGroup?: BLOOD_GROUP | null;
+  rhesusFactor?: RH_FACTOR | null;
 };
 
 export type TUserData = Omit<TUser, "password" | "token">;

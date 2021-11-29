@@ -4,14 +4,15 @@ import { Control } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
 import ControlledDateTimePicker from '../../forms/controlled/ControlledDateTimePicker';
 import { BLOOD_GROUP, RH_FACTOR } from '../../../models/backend';
+import ControlledSelect, { TSelectOption } from '../../forms/controlled/ControlledSelect';
 
 export type TUserForm = {
   firstName: string;
   lastName: string;
   email: string;
   dateOfBirth: Date | null;
-  bloodGroup: BLOOD_GROUP;
-  rhesusFactor: RH_FACTOR;
+  bloodGroup: BLOOD_GROUP | "";
+  rhesusFactor: RH_FACTOR | "";
 };
 
 type TUserFormProps = {
@@ -25,6 +26,22 @@ const UserForm: React.FC<TUserFormProps> = ({
   control,
   handleSubmit,
 }) => {
+
+  const bloodGroupOptions: TSelectOption[] = Object.values(BLOOD_GROUP).map(group => ({
+    value: group,
+    label: group
+  }));
+
+  const rhesusFactorOptions: TSelectOption[] = [
+    {
+      value: RH_FACTOR.RHESUS_POSITIVE,
+      label: 'Rh +'
+    },
+    {
+      value: RH_FACTOR.RHESUS_NEGATIVE,
+      label: 'Rh -'
+    }]
+
   return (
     <form onSubmit={handleSubmit}>
       <Grid container spacing={4} direction="column" alignItems="stretch">
@@ -63,15 +80,25 @@ const UserForm: React.FC<TUserFormProps> = ({
             clearable
           />
         </Grid>
-        <Grid item alignSelf="stretch">
-          <Grid container justifyContent="space-between">
-            <Grid item>
-              bloodGroup
-            </Grid>
-            <Grid item>
-              rhesusFactor
-            </Grid>
-          </Grid>
+        <Grid item>
+          <ControlledSelect
+            defaultValue=""
+            label="Blood Group"
+            name="bloodGroup"
+            control={control}
+            options={bloodGroupOptions}
+            clearable
+          />
+        </Grid>
+        <Grid item>
+          <ControlledSelect
+            defaultValue=""
+            label="Rhesus Factor"
+            name="rhesusFactor"
+            control={control}
+            options={rhesusFactorOptions}
+            clearable
+          />
         </Grid>
         <Grid item alignSelf="stretch">
           {Actions}
