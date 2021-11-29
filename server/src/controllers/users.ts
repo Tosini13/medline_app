@@ -12,6 +12,7 @@ export const convertUser = (user: LeanDocument<IUser>): TUserData => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+        dateOfBirth: user.dateOfBirth,
         bloodGroup: user.bloodGroup,
         rhesusFactor: user.rhesusFactor
     };

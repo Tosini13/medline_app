@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { observer } from 'mobx-react';
 import { AuthStoreContext, TLogInStoreParams } from "../../../stores/Auth";
 
-import { Grid, Stack, Typography, Button, Hidden } from "@mui/material";
+import { Grid, Stack, Typography, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { useNavigate } from "react-router";
@@ -31,7 +31,7 @@ const LogIn: React.FC<TLogInProps> = observer(() => {
     };
 
     try {
-      const res = await authStore.logIn(logInParams);
+      await authStore.logIn(logInParams);
     } catch (e) {
       console.error(e);
     }

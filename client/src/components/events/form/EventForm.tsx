@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Control, UseFormReturn } from "react-hook-form";
 import { EVENT_TYPE, TResource } from "../../../models/backend";
 import { TextFieldRUForm } from "../../forms/TextField";
@@ -6,7 +6,6 @@ import ControlledDateTimePicker from "../../forms/controlled/ControlledDateTimeP
 import ControlledUploadFiles from "../../forms/controlled/ControlledUploadFiles";
 import ControlledEventType from "../../forms/controlled/ControlledEventType";
 import CircularProgressWithLabel from "../../forms/CircularProgressWithLabel";
-import ControlledResource from "../../forms/controlled/ControlledResources";
 import ResourceForm from "./ResourceForm";
 
 export type TEventForm = {

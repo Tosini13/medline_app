@@ -1,8 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { observer } from 'mobx-react';
-import { AuthStoreContext, TLogInStoreParams } from "../../../stores/Auth";
 
-import { Grid, Stack, Typography, Button, Hidden } from "@mui/material";
+import { Grid, Stack, Typography, Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { useNavigate } from "react-router";
@@ -19,7 +18,6 @@ type TResetPasswordProps = {};
 
 const ResetPassword: React.FC<TResetPasswordProps> = observer(() => {
 
-    const authStore = useContext(AuthStoreContext);
     const navigate = useNavigate();
     const { handleSubmit, control } = useForm<TResetPasswordForm>();
 
@@ -30,7 +28,7 @@ const ResetPassword: React.FC<TResetPasswordProps> = observer(() => {
         };
 
         try {
-            const res = await resetPassword(resetPasswordParams);
+            await resetPassword(resetPasswordParams);
             navigate(ERoutes.logIn);
         } catch (e) {
             console.error(e);

@@ -24,6 +24,10 @@ const SUser = new Schema({
         type: String,
         required: false,
     },
+    dateOfBirth: {
+        type: String,
+        required: false,
+    },
     bloodGroup: {
         type: String,
         required: false,
@@ -41,6 +45,7 @@ export type TUserData = {
 
     firstName?: string;
     lastName?: string;
+    dateOfBirth?: Date;
     bloodGroup?: BLOOD_GROUP;
     rhesusFactor?: RH_FACTOR;
 };
@@ -56,6 +61,7 @@ export interface IUser extends Document {
 
     firstName?: string;
     lastName?: string;
+    dateOfBirth?: Date;
     bloodGroup?: BLOOD_GROUP;
     rhesusFactor?: RH_FACTOR;
 }

@@ -31,12 +31,15 @@ export type TUser = {
   id: Id;
   firstName?: string;
   lastName?: string;
+  dateOfBirth?: Date;
   email: string;
   password: string;
   token: string;
   bloodGroup?: BLOOD_GROUP;
   rhesusFactor?: RH_FACTOR;
 };
+
+export type TUserData = Omit<TUser, "password" | "token">;
 
 export enum LINE_VALUE {
   "NORMAL" = "NORMAL",

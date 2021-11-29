@@ -10,9 +10,9 @@ import {
   ContactPage
 } from "@mui/icons-material";
 import { useNavigate } from "react-router";
-import { ERoutes, navigateTo } from "../../models/routes";
+import { ERoutes } from "../../models/routes";
 import ListElement from "../reusable/list/ListElement";
-import { TGetCurrentUserResult, useGetCurrentUser } from "../../queries/users/getCurrentUser";
+import { useGetCurrentUser } from "../../queries/users/getCurrentUser";
 import { observer } from "mobx-react";
 import { useContext } from "react";
 import { AuthStoreContext } from "../../stores/Auth";

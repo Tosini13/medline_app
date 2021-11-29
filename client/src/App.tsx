@@ -51,8 +51,8 @@ const MainSection: React.FC<TPaperSectionProps> = ({ children, openMenu }) => {
     <>
       <Hidden mdDown>
         <MainDesktop>
-          <Grid container direction="column">
-            <Grid item>{children}</Grid>
+          <Grid container direction="column" style={{ height: '100%' }}>
+            <Grid item style={{ height: '100%' }}>{children}</Grid>
           </Grid>
         </MainDesktop>
       </Hidden>

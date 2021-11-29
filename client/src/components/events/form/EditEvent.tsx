@@ -9,7 +9,7 @@ import {
   Button,
 } from "@mui/material";
 
-import { EVENT_TYPE, Id, TEvent, TResource } from "../../../models/backend";
+import { EVENT_TYPE, TEvent, TResource } from "../../../models/backend";
 import EventForm, { TEventForm } from "./EventForm";
 import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
 import { LoadingIcon } from "../../forms/Buttons";

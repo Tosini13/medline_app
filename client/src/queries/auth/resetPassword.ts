@@ -1,5 +1,5 @@
 import axios from "axios";
-import { EResetPasswordMessage, TUser } from "../../models/backend";
+import { EResetPasswordMessage } from "../../models/backend";
 import { RESET_PASSWORD_API_URL } from "../../models/endpoints";
 
 export type TResetPasswordParams = { email: string };

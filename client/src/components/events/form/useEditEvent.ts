@@ -4,10 +4,6 @@ import { SubmitHandler } from "react-hook-form";
 
 import useAsync from "../../../helpers/useAsync";
 import { Id, TResource, TEvent } from "../../../models/backend";
-import {
-  createEvent,
-  TCreateEventParams,
-} from "../../../queries/events/createEvent";
 import { editEvent, TEditEventParams } from "../../../queries/events/editEvent";
 import {
   TUploadFilesParams,
