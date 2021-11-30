@@ -73,6 +73,11 @@ export enum ESetNewPasswordMessage {
   "NEW_PASSWORD_SET" = "NEW_PASSWORD_SET",
 }
 
+export enum EIsLoggedIn {
+  "LOGGED_IN" = "LOGGED_IN",
+  "LOGGED_OUT" = "LOGGED_OUT",
+}
+
 export enum BLOOD_GROUP {
   "AB" = "AB",
   "A" = "A",

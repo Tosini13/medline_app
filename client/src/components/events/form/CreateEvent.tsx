@@ -8,7 +8,6 @@ import {
   DialogTitle,
   Grid,
   Button,
-  Hidden,
 } from "@mui/material";
 
 import { EVENT_TYPE, Id } from "../../../models/backend";

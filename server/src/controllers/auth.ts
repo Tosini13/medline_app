@@ -161,11 +161,11 @@ export const checkToken = async (req: Request, res: Response) => {
 
         const tokenData = await Token.findOne({ token })
         if (tokenData?.expireDate && isBefore(new Date(tokenData.expireDate), new Date())) {
-            return res.status(400).send({ message: ECheckTokenMessage.TOKEN_EXPIRED });
+            return res.status(200).send({ message: ECheckTokenMessage.TOKEN_EXPIRED });
         }
 
         if (!tokenData) {
-            return res.status(400).send({ message: ECheckTokenMessage.TOKEN_INVALID });
+            return res.status(200).send({ message: ECheckTokenMessage.TOKEN_INVALID });
         }
 
         res.status(200).send({ message: ECheckTokenMessage.TOKEN_VALID });
