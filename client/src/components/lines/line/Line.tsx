@@ -10,6 +10,7 @@ import LineHeader from "./LineHeader";
 import useAsync from "../../../helpers/useAsync";
 import { useGetEvents } from "../../../queries/events/getEvents";
 import { navigateTo } from "../../../models/routes";
+import QRCodeDialog from "./QRCode";
 
 type TLineProps = {};
 
@@ -20,6 +21,7 @@ const Line: React.FC<TLineProps> = () => {
   const { isProcessing, execute } = useAsync();
 
   const [openEventForm, setOpenEventForm] = useState(false);
+  const [openQrCode, setOpenQrCode] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const { response } = useGetLine({ id: id as string, execute });
@@ -74,9 +76,14 @@ const Line: React.FC<TLineProps> = () => {
           handleDelete={handleDeleteLine}
           anchorEl={anchorEl}
           handleClose={() => setAnchorEl(null)}
+          handleOpenQRCode={() => setOpenQrCode(true)}
           handleOpenEventForm={() => setOpenEventForm(true)}
           handleEditLine={() => navigate(navigateTo.editLine(id as string))}
-
+        />
+        <QRCodeDialog
+          open={openQrCode}
+          handleClose={() => setOpenQrCode(false)}
+          lineId={line.id}
         />
       </Stack>
     </>

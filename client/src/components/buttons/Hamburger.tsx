@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import styled from "styled-components";
 import { theme } from "../../style/theme";
 
@@ -35,14 +36,15 @@ const HamburgerStyled = styled.div<{ open: boolean }>`
       : ``}
 `;
 
-export interface HamburgerProps {
+export type HamburgerProps = {
   open: boolean;
   toggleOpen: () => void;
+  style?: CSSProperties | undefined;
 }
 
-const Hamburger: React.FC<HamburgerProps> = ({ open, toggleOpen }) => {
+const Hamburger: React.FC<HamburgerProps> = ({ open, toggleOpen, style }) => {
   return (
-    <HamburgerStyled open={open} onClick={toggleOpen}>
+    <HamburgerStyled open={open} onClick={toggleOpen} style={style}>
       <div></div>
       <div></div>
       <div></div>

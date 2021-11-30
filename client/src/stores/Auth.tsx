@@ -14,7 +14,7 @@ export type TLogInStoreParams = TLogInParams & TAuthFunc;
 export type TSignUpStoreParams = TSignUpParams & TAuthFunc;
 
 class Auth {
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean | undefined;
 
   setAxiosHeaders(AUTH_TOKEN: string) {
     axios.defaults.headers.common['x-access-token'] = AUTH_TOKEN;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Divider, List, Popover, Button } from "@mui/material";
 import ListElement from "../../reusable/list/ListElement";
-import { Delete, Add, Edit, Cancel } from "@mui/icons-material";
+import { Delete, Add, Edit, Cancel, QrCode } from "@mui/icons-material";
 import useAsync from "../../../helpers/useAsync";
 import { LoadingIcon } from "../../forms/Buttons";
 import Question from "../../global/question/Question";
@@ -12,12 +12,14 @@ type TLineMoreProps = {
   anchorEl: HTMLButtonElement | null;
   handleClose: () => void;
   handleOpenEventForm: () => void;
+  handleOpenQRCode: () => void;
   handleEditLine: () => void;
 };
 
 const LineMore: React.FC<TLineMoreProps> = ({
   anchorEl,
   handleOpenEventForm,
+  handleOpenQRCode,
   handleClose,
   handleDelete,
   handleEditLine
@@ -65,6 +67,7 @@ const LineMore: React.FC<TLineMoreProps> = ({
             color="black"
           />
           <ListElement Icon={<Edit color="primary" />} text="Edit Line" onClick={() => handleClickOption(handleEditLine)} color="black" />
+          <ListElement Icon={<QrCode color="primary" />} text="Generate QR code" onClick={() => handleClickOption(handleOpenQRCode)} color="black" />
           <Divider />
           <ListElement
             Icon={<Delete color="error" />}

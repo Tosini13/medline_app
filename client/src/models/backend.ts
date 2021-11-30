@@ -1,3 +1,5 @@
+import { TSelectOption } from "../components/forms/controlled/ControlledSelect";
+
 export type Id = string;
 
 export type TResource = {
@@ -82,3 +84,31 @@ export enum RH_FACTOR {
   "RHESUS_NEGATIVE" = "RHESUS_NEGATIVE",
   "RHESUS_POSITIVE" = "RHESUS_POSITIVE",
 }
+
+export const bloodGroupOptions: TSelectOption[] = [
+  {
+    value: BLOOD_GROUP.ZERO,
+    label: '0'
+  },
+  {
+    value: BLOOD_GROUP.A,
+    label: 'A'
+  },
+  {
+    value: BLOOD_GROUP.B,
+    label: 'B'
+  },
+  {
+    value: BLOOD_GROUP.AB,
+    label: 'AB'
+  }]
+
+export const rhesusFactorOptions: TSelectOption[] = [
+  {
+    value: RH_FACTOR.RHESUS_POSITIVE,
+    label: 'Rh +'
+  },
+  {
+    value: RH_FACTOR.RHESUS_NEGATIVE,
+    label: 'Rh -'
+  }]

@@ -5,6 +5,7 @@ import Loading from "../global/loading/Loading";
 import EditUser from './form/edit/EditUser';
 import { Edit } from "@mui/icons-material";
 import { format } from "date-fns";
+import { rhesusFactorOptions, bloodGroupOptions } from "../../models/backend";
 
 type TUserProps = {};
 
@@ -28,8 +29,8 @@ const User: React.FC<TUserProps> = () => {
                 <Cell label="Last Name" value={user.lastName} />
                 <Cell label="Email" value={user.email} />
                 <Cell label="Date of Birth" value={user.dateOfBirth && format(new Date(user.dateOfBirth), "yyyy.MM.dd hh:mm")} /> {/* Format: DATE (XX years old) */}
-                <Cell label="Blood Group" value={user.bloodGroup} />
-                <Cell label="Rh Factor" value={user.rhesusFactor} />
+                <Cell label="Blood Group" value={bloodGroupOptions.find(rh => rh.value === user.bloodGroup)?.label} />
+                <Cell label="Rh Factor" value={rhesusFactorOptions.find(rh => rh.value === user.rhesusFactor)?.label} />
             </Stack>
             <EditUser open={openForm} handleClose={() => setOpenForm(false)} user={user} reExecuteGetCurrentUser={reExecute} />
         </>
