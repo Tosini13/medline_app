@@ -2,8 +2,9 @@ import React from "react";
 import axios from "axios";
 import { action, makeObservable, observable } from "mobx";
 import { logIn, TLogInParams } from "../queries/auth/login";
-import { getCurrentUser } from "../queries/users/getCurrentUser";
 import { signUp, TSignUpParams } from "../queries/auth/signUp";
+import { checkToken } from "../queries/auth/checkToken";
+import { ECheckTokenMessage } from "../models/backend";
 
 type TAuthFunc = {
   successCallBack?: () => void;
@@ -22,12 +23,20 @@ class Auth {
 
   async check() {
     const token = localStorage.getItem('token') ?? '';
-    const res = await getCurrentUser({ token });
-    this.setAxiosHeaders(token);
+    if (!token) {
+      this.isLoggedIn = false;
+      return;
+    }
 
-    if (res.data) {
-      this.isLoggedIn = true;
-    } else {
+    try {
+      const res = await checkToken({ token });
+      this.setAxiosHeaders(token);
+      if (res.data.message === ECheckTokenMessage.TOKEN_VALID) {
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = false;
+      }
+    } catch (e) {
       this.isLoggedIn = false;
     }
   }

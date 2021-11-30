@@ -20,7 +20,10 @@ const MobileNav: React.FC<TMobileNavProps> = ({ open, setOpen }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isMain = location.pathname === "/";
+  console.log('location', location);
+
+
+  const isLine = location.pathname.includes('/lines/');
   const args = location.pathname.split("/");
 
   const id = args[args.length - 1];
@@ -31,12 +34,12 @@ const MobileNav: React.FC<TMobileNavProps> = ({ open, setOpen }) => {
         <Grid item style={{ height: headerHeight }}>
           <Grid container justifyContent="space-between">
             <Grid item xs={2}>
-              {!isMain ? (
+              {isLine ? (
                 <Hamburger open={true} toggleOpen={() => navigate("/")} style={{ margin: 'auto' }} />
               ) : null}
             </Grid>
             <Grid item>
-              <NavTitle isMain={isMain} id={id} />
+              <NavTitle isMain={!isLine} id={id} />
             </Grid>
             <Grid item xs={2}>
               <Hamburger open={open} toggleOpen={() => setOpen(!open)} style={{ margin: 'auto' }} />
