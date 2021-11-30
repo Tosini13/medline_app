@@ -1,8 +1,7 @@
-import { Grid, IconButton } from "@mui/material";
+import { Grid } from "@mui/material";
 import Hamburger from "../buttons/Hamburger";
 import styled from "styled-components";
 import Menu from "./Menu";
-import { Close } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 import NavTitle from "./mobile/NavTitle";
 
@@ -33,16 +32,14 @@ const MobileNav: React.FC<TMobileNavProps> = ({ open, setOpen }) => {
           <Grid container justifyContent="space-between">
             <Grid item xs={2}>
               {!isMain ? (
-                <IconButton onClick={() => navigate("/")}>
-                  <Close style={{ color: "white" }} />
-                </IconButton>
+                <Hamburger open={true} toggleOpen={() => navigate("/")} style={{ margin: 'auto' }} />
               ) : null}
             </Grid>
             <Grid item>
               <NavTitle isMain={isMain} id={id} />
             </Grid>
             <Grid item xs={2}>
-              <Hamburger open={open} toggleOpen={() => setOpen(!open)} />
+              <Hamburger open={open} toggleOpen={() => setOpen(!open)} style={{ margin: 'auto' }} />
             </Grid>
           </Grid>
         </Grid>

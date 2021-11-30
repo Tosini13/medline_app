@@ -8,6 +8,7 @@ import {
   DialogTitle,
   Grid,
   Button,
+  Hidden,
 } from "@mui/material";
 
 import { EVENT_TYPE, Id } from "../../../models/backend";
@@ -67,8 +68,8 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
   });
 
   const Actions = (
-    <Grid container justifyContent="space-between" alignItems="center">
-      <Grid item>
+    <Grid container spacing={1}>
+      <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
         <Button
           type="submit"
           variant="contained"
@@ -79,7 +80,7 @@ const CreateEvent: React.FC<TCreateEventProps> = ({
           Create
         </Button>
       </Grid>
-      <Grid item>
+      <Grid item xs={12} sm={6} style={{ textAlign: 'center' }}>
         <Button
           variant="outlined"
           onClick={handleCloseAndReset}

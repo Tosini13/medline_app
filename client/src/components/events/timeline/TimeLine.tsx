@@ -10,6 +10,7 @@ import ListElement from "../../reusable/list/ListElement";
 
 const Container = styled.div<{
   open: boolean;
+  disabled: boolean;
 }>`
   position: absolute;
   top: 0px;
@@ -23,6 +24,10 @@ const Container = styled.div<{
     props.open
       ? `box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 60%);`
       : "transform: translateX(-100%);"}
+  ${(props) =>
+    props.disabled
+      ? "transform: translateX(-120%);"
+      : ""}
 `;
 
 const IconButtonStyled = styled(IconButton)`
@@ -45,7 +50,7 @@ type TTimeLineProps = {
 const TimeLine: React.FC<TTimeLineProps> = ({ events, callback }) => {
   const [open, setOpen] = useState(false);
   return (
-    <Container open={open}>
+    <Container open={open} disabled={!events?.length}>
       <div style={{ position: "relative", height: "100%" }}>
         <List style={{ height: "100%", overflowY: "auto", padding: '0px' }}>
           {events?.map((event) => (

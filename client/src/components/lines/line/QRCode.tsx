@@ -1,0 +1,36 @@
+import { Dialog } from "@mui/material";
+import { useMemo } from "react";
+import QRCode from "react-qr-code";
+import { theme } from "../../../style/theme";
+
+type TQRCodeDialogProps = {
+    open: boolean;
+    handleClose: () => void;
+    lineId: string;
+};
+
+const QRCodeDialog: React.FC<TQRCodeDialogProps> = ({ open, handleClose, lineId }) => {
+
+    const QRCodeComponent = useMemo(() => {
+        const url = `https://medlineapp.herokuapp.com/lines/${lineId}`;
+        return (
+            <QRCode
+                id="qrCodeElToRender"
+                size={250}
+                value={url}
+                bgColor="white"
+                fgColor={theme.palette.primary.main}
+                level="H"
+            />
+        );
+
+    }, [lineId]);
+
+    return (
+        <Dialog open={open} onClose={handleClose}>
+            {QRCodeComponent}
+        </Dialog>
+    );
+};
+
+export default QRCodeDialog

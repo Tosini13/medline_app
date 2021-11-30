@@ -3,8 +3,9 @@ import { Grid } from "@mui/material";
 import { Control } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
 import ControlledDateTimePicker from '../../forms/controlled/ControlledDateTimePicker';
-import { BLOOD_GROUP, RH_FACTOR } from '../../../models/backend';
-import ControlledSelect, { TSelectOption } from '../../forms/controlled/ControlledSelect';
+
+import { BLOOD_GROUP, rhesusFactorOptions, bloodGroupOptions, RH_FACTOR } from '../../../models/backend';
+import ControlledSelect from '../../forms/controlled/ControlledSelect';
 
 export type TUserForm = {
   firstName: string;
@@ -26,21 +27,6 @@ const UserForm: React.FC<TUserFormProps> = ({
   control,
   handleSubmit,
 }) => {
-
-  const bloodGroupOptions: TSelectOption[] = Object.values(BLOOD_GROUP).map(group => ({
-    value: group,
-    label: group
-  }));
-
-  const rhesusFactorOptions: TSelectOption[] = [
-    {
-      value: RH_FACTOR.RHESUS_POSITIVE,
-      label: 'Rh +'
-    },
-    {
-      value: RH_FACTOR.RHESUS_NEGATIVE,
-      label: 'Rh -'
-    }]
 
   return (
     <form onSubmit={handleSubmit}>
