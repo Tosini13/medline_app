@@ -20,3 +20,8 @@ export enum ESetNewPasswordMessage {
     "USER_DOES_NOT_EXISTS" = "USER_DOES_NOT_EXISTS",
     "NEW_PASSWORD_SET" = "NEW_PASSWORD_SET",
 }
+
+export enum EIsLoggedIn {
+    "LOGGED_IN" = "LOGGED_IN",
+    "LOGGED_OUT" = "LOGGED_OUT",
+}

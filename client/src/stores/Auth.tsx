@@ -4,7 +4,8 @@ import { action, makeObservable, observable } from "mobx";
 import { logIn, TLogInParams } from "../queries/auth/login";
 import { signUp, TSignUpParams } from "../queries/auth/signUp";
 import { checkToken } from "../queries/auth/checkToken";
-import { ECheckTokenMessage } from "../models/backend";
+import { ECheckTokenMessage, EIsLoggedIn } from "../models/backend";
+import { isLoggedIn } from "../queries/auth/isLoggedIn";
 
 type TAuthFunc = {
   successCallBack?: () => void;
@@ -23,15 +24,16 @@ class Auth {
 
   async check() {
     const token = localStorage.getItem('token') ?? '';
+
     if (!token) {
       this.isLoggedIn = false;
       return;
     }
 
     try {
-      const res = await checkToken({ token });
+      const res = await isLoggedIn({ token });
       this.setAxiosHeaders(token);
-      if (res.data.message === ECheckTokenMessage.TOKEN_VALID) {
+      if (res.data.message === EIsLoggedIn.LOGGED_IN) {
         this.isLoggedIn = true;
       } else {
         this.isLoggedIn = false;

@@ -13,6 +13,7 @@ const AuthRedirect: React.FC<TAuthRedirectProps> = observer(({ children }) => {
 
     const nonAuthPaths = [ERoutes.logIn, ERoutes.signUp, ERoutes.resetPassword, ERoutes.checkToken, ERoutes.setPassword]
 
+    authStore.check();
 
     if (authStore.isLoggedIn === undefined) {
         return <Loading />;

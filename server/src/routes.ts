@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register, resetPassword, checkToken, setPassword } from "./controllers/auth";
+import { login, register, resetPassword, checkToken, setPassword, isLoggedIn } from "./controllers/auth";
 import {
   createEvent,
   deleteEvent,
@@ -32,7 +32,9 @@ router.post("/login", login);
 router.post("/register", register);
 router.post("/reset-password", resetPassword);
 router.post("/check-token", checkToken);
+router.post("/is-logged-in", verifyToken, isLoggedIn);
 router.post("/set-password", setPassword);
+
 
 // -----------------------------------------
 // USERS

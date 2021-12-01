@@ -5,8 +5,9 @@ import jwt from 'jsonwebtoken';
 import Token from "../models/token";
 import { addDays, isBefore } from "date-fns";
 import nodemailer from 'nodemailer';
-import { ECheckTokenMessage, EResetPasswordMessage, ESetNewPasswordMessage } from "../models/messages/auth";
+import { ECheckTokenMessage, EIsLoggedIn, EResetPasswordMessage, ESetNewPasswordMessage } from "../models/messages/auth";
 import { convertUser } from "./users";
+import { IVerifyTokenRequest } from "../middleware/auth";
 
 type TRegisterRes = Omit<TUser, "password">;
 type TLoginRes = Omit<TUser, "password">;
@@ -212,3 +213,18 @@ export const setPassword = async (req: Request, res: Response) => {
         console.error(e);
     }
 }
+
+export const isLoggedIn = async (req: IVerifyTokenRequest, res: Response) => {
+    const currentUser: any = req.currentUser;
+
+    if (currentUser) {
+        res.send({
+            message: EIsLoggedIn.LOGGED_IN
+        });
+    } else {
+        res.send({
+            message: EIsLoggedIn.LOGGED_OUT
+        });
+    }
+
+};
