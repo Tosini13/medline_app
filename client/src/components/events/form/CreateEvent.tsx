@@ -7,7 +7,6 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  Button,
 } from "@mui/material";
 
 import { EVENT_TYPE, Id } from "../../../models/backend";
@@ -17,6 +16,7 @@ import { TUseGetEventsReturn } from "../../../queries/events/getEvents";
 import { LoadingIcon } from "../../forms/Buttons";
 import { useSnackbar } from "notistack";
 import { useCreateEvent } from "./useCreateEvent";
+import Button from "../../buttons/Button";
 
 type TCreateEventProps = {
   open: boolean;

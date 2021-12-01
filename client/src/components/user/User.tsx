@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useGetCurrentUser } from "../../queries/users/getCurrentUser";
 import Loading from "../global/loading/Loading";
 import EditUser from './form/edit/EditUser';
 import { Edit } from "@mui/icons-material";
 import { format } from "date-fns";
 import { rhesusFactorOptions, bloodGroupOptions } from "../../models/backend";
+import Button from "../buttons/Button";
 
 type TUserProps = {};
 

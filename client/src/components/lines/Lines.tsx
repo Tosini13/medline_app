@@ -1,10 +1,11 @@
 import { useNavigate, useParams } from "react-router";
 import LineSummary from "./line/LineSummary";
-import { Button, Grid, Hidden, Stack, Typography } from "@mui/material";
+import { Grid, Hidden, Stack, Typography } from "@mui/material";
 import { ERoutes, navigateTo } from "../../models/routes";
 import { useGetLines } from "../../queries/lines/getLines";
 import Loading from "../global/loading/Loading";
 import style from "styled-components";
+import Button from "../buttons/Button";
 
 const LinesContainerStyles = style.div`
 height: calc(100vh - 60px);

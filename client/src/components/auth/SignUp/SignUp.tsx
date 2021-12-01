@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import { AuthStoreContext, TSignUpStoreParams } from "../../../stores/Auth";
 import { observer } from "mobx-react";
 
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { ERoutes } from "../../../models/routes";
 import { LinkAuth } from "../../buttons/Links";
 import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
+import Button from "../../buttons/Button";
 
 type TSignUpForm = {
     firstName: string;
@@ -76,6 +77,7 @@ const SignUp: React.FC<TSignUpProps> = observer(() => {
                     </Stack>
                 </form>
             </AuthFormContainer>
+            <Typography align="center" color="text.primary">or</Typography>
             <Stack direction="row" spacing={2} justifyContent="center">
                 <LinkAuth to={ERoutes.logIn}>
                     Log In

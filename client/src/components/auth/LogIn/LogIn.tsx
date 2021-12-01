@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import { observer } from 'mobx-react';
 import { AuthStoreContext, TLogInStoreParams } from "../../../stores/Auth";
 
-import { Stack, Typography, Button } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { useNavigate } from "react-router";
 import { ERoutes } from '../../../models/routes';
 import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
 import { LinkAuth } from "../../buttons/Links";
+import Button from "../../buttons/Button";
 
 type TLoginForm = {
   email: string;
@@ -64,14 +65,23 @@ const LogIn: React.FC<TLogInProps> = observer(() => {
           </Stack>
         </form>
       </AuthFormContainer>
-      <Stack direction="row" spacing={2}>
-        <LinkAuth to={ERoutes.resetPassword}>
-          I forgot password
-        </LinkAuth>
-        <LinkAuth to={ERoutes.signUp}>
-          I don't have an account yet
-        </LinkAuth>
-      </Stack>
+      <Typography align="center" color="text.primary">or</Typography>
+      <Grid container style={{ maxWidth: '450px', width: '100%' }}>
+        <Grid item xs={12} sm={6}>
+          <Stack alignItems="center">
+            <LinkAuth to={ERoutes.resetPassword}>
+              I forgot password
+            </LinkAuth>
+          </Stack>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Stack alignItems="center">
+            <LinkAuth to={ERoutes.signUp}>
+              I don't have an account yet
+            </LinkAuth>
+          </Stack>
+        </Grid>
+      </Grid>
     </AuthPageContainer>
   );
 });
