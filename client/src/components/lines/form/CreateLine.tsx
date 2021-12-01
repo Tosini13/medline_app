@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LineForm, { TLineForm } from "./LineForm";
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { LINE_VALUE } from "../../../models/backend";
 import {
   TCreateLineParams,
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { theme } from "../../../style/theme";
 import { useSnackbar } from "notistack";
+import Button from "../../buttons/Button";
 
 type TCreateLineProps = {};
 

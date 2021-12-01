@@ -6,7 +6,6 @@ import {
     DialogContent,
     DialogTitle,
     Grid,
-    Button,
 } from "@mui/material";
 
 import { TUserData } from "../../../../models/backend";
@@ -16,6 +15,7 @@ import { useEffect } from "react";
 import UserForm, { TUserForm } from "../UserForm";
 import { useEditUser } from "./useEditUser";
 import { TUseGetCurrentUser } from "../../../../queries/users/getCurrentUser";
+import Button from "../../../buttons/Button";
 
 type TEditUserProps = {
     open: boolean;

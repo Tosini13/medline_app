@@ -15,6 +15,7 @@ const QRCodeDialog: React.FC<TQRCodeDialogProps> = ({ open, handleClose, lineId 
         const url = `https://medlineapp.herokuapp.com/lines/${lineId}`;
         return (
             <QRCode
+                style={{ margin: '5px' }}
                 id="qrCodeElToRender"
                 size={250}
                 value={url}

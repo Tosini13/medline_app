@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import LineForm, { TLineForm } from "../LineForm";
-import { Button, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { LINE_VALUE, TLine } from "../../../../models/backend";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import { editLine, TEditLineParams } from "../../../../queries/lines/editLine";
 import { navigateTo } from "../../../../models/routes";
+import Button from "../../../buttons/Button";
 
 type TEditLineProps = {
     line: TLine

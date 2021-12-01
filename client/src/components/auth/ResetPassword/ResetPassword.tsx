@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from 'mobx-react';
 
-import { Stack, Typography, Button } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { useNavigate } from "react-router";
@@ -9,6 +9,7 @@ import { ERoutes } from '../../../models/routes';
 import { resetPassword, TResetPasswordParams } from "../../../queries/auth/resetPassword";
 import { LinkAuth } from "../../buttons/Links";
 import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
+import Button from "../../buttons/Button";
 
 type TResetPasswordForm = {
     email: string;
@@ -59,6 +60,7 @@ const ResetPassword: React.FC<TResetPasswordProps> = observer(() => {
                     </Stack>
                 </form>
             </AuthFormContainer>
+            <Typography align="center" color="text.primary">or</Typography>
             <Stack direction="row" justifyContent="center" spacing={2}>
                 <LinkAuth to={ERoutes.logIn}>
                     Log In

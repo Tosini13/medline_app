@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { TextFieldRUForm } from "../../forms/TextField";
@@ -9,6 +9,7 @@ import { ERoutes } from "../../../models/routes";
 import { useQuery } from "../../../helpers/useQuery";
 import { setNewPassword, TSetNewPasswordParams } from "../../../queries/auth/setNewPassword";
 import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
+import Button from "../../buttons/Button";
 
 type TSetNewPasswordForm = {
     password: string;
@@ -68,6 +69,7 @@ const SetNewPassword: React.FC<TSetNewPasswordProps> = () => {
                     </Stack>
                 </form>
             </AuthFormContainer>
+            <Typography align="center" color="text.primary">or</Typography>
             <Stack direction="row" spacing={2}>
                 <Link to={ERoutes.logIn}>
                     Log In

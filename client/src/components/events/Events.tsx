@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Id } from "../../models/backend";
 import { TUseGetEventsReturn } from "../../queries/events/getEvents";
 import { TUseGetLineReturn } from "../../queries/lines/getLine";
@@ -7,6 +7,7 @@ import Loading from "../global/loading/Loading";
 import Event from "./event/Event";
 import CreateEvent from "./form/CreateEvent";
 import TimeLine from "./timeline/TimeLine";
+import Button from "../buttons/Button";
 
 const getDivId = (id: Id) => `${id}-event-container`;
 

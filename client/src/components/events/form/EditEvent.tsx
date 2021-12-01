@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogTitle,
   Grid,
-  Button,
 } from "@mui/material";
 
 import { EVENT_TYPE, TEvent, TResource } from "../../../models/backend";
@@ -16,6 +15,7 @@ import { LoadingIcon } from "../../forms/Buttons";
 import { useSnackbar } from "notistack";
 import { useEditEvent } from "./useEditEvent";
 import { useEffect } from "react";
+import Button from "../../buttons/Button";
 
 type TEditEventProps = {
   open: boolean;
