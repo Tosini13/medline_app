@@ -8,7 +8,7 @@ export interface IVerifyTokenRequest extends Request {
 
 export const verifyToken = (req: IVerifyTokenRequest, res: Response, next: NextFunction) => {
 
-    const token = req.headers['x-access-token'];
+    const token = req.headers['x-access-token'] || req.body.token;
 
     if (!token) {
         return res.status(403).send({ message: 'Token is required for authentication' });

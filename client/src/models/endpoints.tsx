@@ -8,6 +8,7 @@ const API_URL = `${SERVER_URL}/api`;
 export const LOGIN_API_URL = `${API_URL}/login`;
 export const RESET_PASSWORD_API_URL = `${API_URL}/reset-password`;
 export const CHECK_TOKEN_API_URL = `${API_URL}/check-token`;
+export const IS_LOGGED_IN_API_URL = `${API_URL}/is-logged-in`;
 export const SET_PASSWORD_API_URL = `${API_URL}/set-password`;
 export const SIGN_UP_API_URL = `${API_URL}/register`;
 
