@@ -5,6 +5,10 @@ export enum ECheckTokenMessage {
     "TOKEN_EXPIRED" = "TOKEN_EXPIRED",
 }
 
+export enum EVerifyTokenMessage {
+    "TOKEN_INVALID" = "TOKEN_INVALID",
+}
+
 export enum EResetPasswordMessage {
     "EMAIL_IS_REQUIRED" = "EMAIL_IS_REQUIRED",
     "EMAIL_SENT" = "EMAIL_SENT",

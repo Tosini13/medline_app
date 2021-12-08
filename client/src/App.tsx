@@ -18,6 +18,7 @@ import ResetPassword from "./components/auth/ResetPassword/ResetPassword";
 import CheckToken from "./components/auth/CheckToken/CheckToken";
 import SetNewPassword from "./components/auth/SetNewPassword/SetNewPassword";
 import User from "./components/user/User";
+import ScanQrCode from "./components/qrCode/ScanQrCode";
 
 const MainDesktop = styled.div`
   width: calc(100% - ${drawerWidth} - 10px);
@@ -95,6 +96,7 @@ function App() {
               <Route path={ERoutes.resetPassword} element={<ResetPassword />} />
               <Route path={ERoutes.checkToken} element={<CheckToken />} />
               <Route path={ERoutes.setPassword} element={<SetNewPassword />} />
+              <Route path={ERoutes.scarQrCode} element={<ScanQrCode />} />
             </Routes>
           </MainSection>
         </AuthRedirect>

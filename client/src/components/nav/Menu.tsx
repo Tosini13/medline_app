@@ -1,6 +1,7 @@
 import { List, Grid } from "@mui/material";
 import {
   Add,
+  QrCode,
   AccountCircle,
   Logout,
   FormatLineSpacing,
@@ -81,6 +82,11 @@ const MenuLoggedIn: React.FC<TMenuLoggedInProps> = observer(({ handleClose }) =>
             Icon={<Add style={{ color: "white" }} />}
             text="Create Line"
             onClick={() => handleChooseOption(() => navigate(ERoutes.create))}
+          />
+          <ListElement
+            Icon={<QrCode style={{ color: "white" }} />}
+            text="Scan QR Code"
+            onClick={() => handleChooseOption(() => navigate(ERoutes.scarQrCode))}
           />
         </List>
       </Grid>

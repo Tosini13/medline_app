@@ -54,7 +54,7 @@ const Line: React.FC<TLineProps> = () => {
           line={line}
           handleOpenMore={handleClick}
           handleClose={() => navigate("/")}
-          contributions={resEvents?.data.length}
+          contributions={resEvents?.data.data?.length}
         />
         <div
           style={{

@@ -43,6 +43,8 @@ export type TUser = {
 
 export type TUserData = Omit<TUser, "password" | "token">;
 
+export type TMessage<T = string> = { message: T };
+
 export enum LINE_VALUE {
   "NORMAL" = "NORMAL",
   "HIGH_VALUE" = "HIGH_VALUE",
@@ -54,6 +56,13 @@ export enum EVENT_TYPE {
   "OCCURRENCE" = "OCCURRENCE",
   "SURGERY" = "SURGERY",
   "TEST" = "TEST",
+}
+
+export enum EVerifyTokenMessage {
+  "TOKEN_INVALID" = "TOKEN_INVALID",
+}
+export enum EGetEvents {
+  "UNAUTHORIZED" = "UNAUTHORIZED",
 }
 
 export enum ECheckTokenMessage {

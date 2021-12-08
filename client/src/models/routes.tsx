@@ -9,7 +9,8 @@ export enum ERoutes {
   "signUp" = "/sign-up",
   "resetPassword" = "/reset-password",
   "checkToken" = "/check-token",
-  "setPassword" = "/set-password"
+  "setPassword" = "/set-password",
+  "scarQrCode" = "/scan-qr-code"
 }
 
 export const navigateTo = {
