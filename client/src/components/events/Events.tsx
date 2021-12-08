@@ -1,6 +1,6 @@
 import React from "react";
 import { Stack, Typography } from "@mui/material";
-import { Id } from "../../models/backend";
+import { Id, EVerifyTokenMessage, EGetEvents } from "../../models/backend";
 import { TUseGetEventsReturn } from "../../queries/events/getEvents";
 import { TUseGetLineReturn } from "../../queries/lines/getLine";
 import Loading from "../global/loading/Loading";
@@ -26,9 +26,20 @@ const Events: React.FC<TEventsProps> = ({
   setOpenForm,
   reExecuteGetEvents,
 }) => {
-  if (!resEvents?.data) {
+  console.log('resEvents', resEvents);
+
+  if (resEvents?.data.message === EGetEvents.UNAUTHORIZED || resEvents?.data.message === EVerifyTokenMessage.TOKEN_INVALID) {
+    return (
+      <Typography align="center" style={{ width: '100%' }}>
+        You are not authorized
+      </Typography>
+    );
+  }
+
+  if (!resEvents?.data.data) {
     return <Loading />;
   }
+
   return (
     <>
       <div
@@ -38,9 +49,9 @@ const Events: React.FC<TEventsProps> = ({
           overflowY: "auto",
         }}
       >
-        {resEvents.data.length ? (
+        {resEvents.data.data.length ? (
           <Stack spacing={2} style={{ margin: "0px 5px", width: "100%" }}>
-            {resEvents.data.map((event) => (
+            {resEvents.data.data.map((event) => (
               <div key={event.id} id={getDivId(event.id)}>
                 <Event event={event} reExecuteGetEvents={reExecuteGetEvents} />
               </div>
@@ -60,7 +71,7 @@ const Events: React.FC<TEventsProps> = ({
         />
       </div>
       <TimeLine
-        events={resEvents?.data}
+        events={resEvents?.data.data}
         callback={(id) =>
           document.getElementById(getDivId(id))?.scrollIntoView({
             behavior: "smooth",

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
+import { EVerifyTokenMessage } from "../models/messages/auth";
 const config = process.env;
 
 export interface IVerifyTokenRequest extends Request {
@@ -20,7 +21,8 @@ export const verifyToken = (req: IVerifyTokenRequest, res: Response, next: NextF
         req.currentUser = decoded;
     } catch (e) {
         console.error(e);
-        return res.status(401).send({ message: 'Invalid Token' });
+        console.error('AUTH! INVALID TOKEN');
+        return res.status(200).send({ message: EVerifyTokenMessage.TOKEN_INVALID });
     }
     return next();
 }

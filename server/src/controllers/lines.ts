@@ -6,7 +6,7 @@ import { ECreateLine } from "../models/messages/lines";
 import { getEventsQtt } from "./actions/events";
 import { removeLineEvents } from "./actions/lines";
 
-const convertLine = async (line: LeanDocument<ILine>): Promise<Omit<TLineRes, "user">> => {
+export const convertLine = async (line: LeanDocument<ILine>): Promise<Omit<TLineRes, "user">> => {
   const contributions = await getEventsQtt(line._id);
   return {
     id: line._id,

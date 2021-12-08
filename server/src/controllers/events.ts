@@ -2,7 +2,10 @@ import { Response } from "express";
 import { LeanDocument } from "mongoose";
 import { IVerifyTokenRequest } from "../middleware/auth";
 import Event, { IEvent, TEventRes, TEvent } from "../models/event";
+import { EGetEvents } from "../models/messages/events";
+import { EGetLine } from "../models/messages/lines";
 import { removeResources } from "./actions/events";
+import { checkLineAuthorization } from "./actions/lines";
 
 export const convertEvent = (doc: LeanDocument<IEvent>): TEventRes => ({
   id: doc._id,
@@ -25,10 +28,20 @@ const getEventFromBody = (body: TEvent): TEvent => ({
   resources: body.resources,
 });
 
-export const getEvents = (req: IVerifyTokenRequest, res: Response) => {
+export const getEvents = async (req: IVerifyTokenRequest, res: Response) => {
+  const currentUser: any = req.currentUser;
+
+  const response = await checkLineAuthorization({
+    lineId: req.params.lineId,
+    userId: currentUser.user_id
+  });
+
+  if (response === EGetLine.UNAUTHORIZED || response === EGetLine.DOES_NOT_EXISTS) {
+    return res.status(200).send({ message: EGetEvents.UNAUTHORIZED });
+  }
   Event.find({ line: req.params.lineId })
     .sort({ dateTime: 1 })
-    .then((items) => res.send(items.map((item) => convertEvent(item))))
+    .then((items) => res.send({ data: items.map((item) => convertEvent(item)) }))
     .catch((err) => console.log(err));
 };
 
