@@ -1,26 +1,24 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { StylesProvider } from "@mui/styles";
-import { theme } from "./style/theme";
 import { AuthStoreProvider } from './stores/Auth';
 
 import { LocalizationProvider } from "@mui/lab";
 import DateAdapter from "@mui/lab/AdapterDateFns";
-import { ThemeProvider } from "@mui/material/styles";
+import { StyledEngineProvider } from "@mui/material/styles";
 import { SnackbarProvider } from "notistack";
+import { ThemeStoreProvider } from "./stores/Theme";
 
 ReactDOM.render(
   <AuthStoreProvider>
     <SnackbarProvider>
       <LocalizationProvider dateAdapter={DateAdapter}>
-        <ThemeProvider theme={theme}>
-          <StylesProvider injectFirst>
+        <ThemeStoreProvider>
+          <StyledEngineProvider injectFirst>
             <App />
-          </StylesProvider>
-        </ThemeProvider>
+          </StyledEngineProvider>
+        </ThemeStoreProvider>
       </LocalizationProvider>
     </SnackbarProvider>
   </AuthStoreProvider>,

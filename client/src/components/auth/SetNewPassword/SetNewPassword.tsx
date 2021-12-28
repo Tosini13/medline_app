@@ -8,8 +8,9 @@ import { Link } from "react-router-dom";
 import { ERoutes } from "../../../models/routes";
 import { useQuery } from "../../../helpers/useQuery";
 import { setNewPassword, TSetNewPasswordParams } from "../../../queries/auth/setNewPassword";
-import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
+import { AuthFormContainer } from "../AuthFormContainer";
 import Button from "../../buttons/Button";
+import AuthPageContainer from "../AuthPageContainer";
 
 type TSetNewPasswordForm = {
     password: string;

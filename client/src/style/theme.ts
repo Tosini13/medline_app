@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme, ThemeOptions } from '@mui/material/styles';
 
 declare module "@mui/material/styles" {
   interface Theme {
@@ -18,19 +18,21 @@ declare module "@mui/material/styles" {
   }
 }
 
-export const theme = createTheme({
+export const lightTheme = createTheme({
   palette: {
+    mode: 'light',
     primary: {
-      main: "#2D6B5F",
-      contrastText: "#fff",
+      main: "#153B5C",
+      light: '#2B669A',
+      contrastText: "#FAFAFA",
     },
     secondary: {
-      main: "#000",
-      contrastText: "#fff",
+      main: "#2B669A",
+      contrastText: "#FAFAFA",
     },
     text: {
-      primary: "#313131",
-      secondary: "#727272",
+      primary: "#153B5C",
+      secondary: "#153B5C",
     },
     success: {
       main: "#2D6B5F",

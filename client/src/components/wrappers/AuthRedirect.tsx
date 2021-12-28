@@ -19,12 +19,15 @@ const AuthRedirect: React.FC<TAuthRedirectProps> = observer(({ children }) => {
         return <Loading />;
     }
 
-    if (!authStore.isLoggedIn && !nonAuthPaths.includes(location.pathname as ERoutes)) {
-        return <Navigate to={ERoutes.logIn} />
-    }
-    if (authStore.isLoggedIn && (nonAuthPaths.includes(location.pathname as ERoutes))) {
-        return <Navigate to={'/'} />
-    }
+
+    // TODO: Remove because home page is available for logged in and not
+
+    // if (!authStore.isLoggedIn && !nonAuthPaths.includes(location.pathname as ERoutes)) {
+    //     return <Navigate to={ERoutes.home} />
+    // }
+    // if (authStore.isLoggedIn && (nonAuthPaths.includes(location.pathname as ERoutes))) {
+    //     return <Navigate to={ERoutes.lines} />
+    // }
 
     return (
         <>{children}</>

@@ -8,8 +8,10 @@ import { useNavigate } from "react-router";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { ERoutes } from "../../../models/routes";
 import { LinkAuth } from "../../buttons/Links";
-import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
-import Button from "../../buttons/Button";
+import { AuthFormContainer } from "../AuthFormContainer";
+import Button, { ButtonSecondary } from "../../buttons/Button";
+import ButtonGroup from "../../buttons/ButtonGroup";
+import AuthPageContainer from "../AuthPageContainer";
 
 type TSignUpForm = {
     firstName: string;
@@ -43,46 +45,45 @@ const SignUp: React.FC<TSignUpProps> = observer(() => {
 
     return (
         <AuthPageContainer>
+            <ButtonGroup>
+                <Button onClick={() => navigate(ERoutes.logIn)}>Log In</Button>
+                <ButtonSecondary disabled>Sign Up</ButtonSecondary>
+            </ButtonGroup>
             <AuthFormContainer>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <Stack spacing={2}>
-                        <Typography align="center">
-                            Sign Up
-                        </Typography>
+                    <Stack spacing={2} alignItems="center">
                         <TextFieldRUForm
+                            fullWidth
                             name="firstName"
                             label="First Name"
                             control={control}
                         />
                         <TextFieldRUForm
+                            fullWidth
                             name="lastName"
                             label="Last Name"
                             control={control}
                         />
                         <TextFieldRUForm
+                            fullWidth
                             name="email"
                             label="Email"
                             control={control}
                             type="email"
                         />
                         <TextFieldRUForm
+                            fullWidth
                             name="password"
                             label="Password"
                             control={control}
                             type="password"
                         />
-                        <Button type="submit">
+                        <Button type="submit" >
                             Sign Up
                         </Button>
                     </Stack>
                 </form>
             </AuthFormContainer>
-            <Typography align="center" color="text.primary">or</Typography>
-            <Stack direction="row" spacing={2} justifyContent="center">
-                <LinkAuth to={ERoutes.logIn}>
-                    Log In
-                </LinkAuth>
-            </Stack>
         </AuthPageContainer>
     );
 });

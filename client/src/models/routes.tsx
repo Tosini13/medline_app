@@ -1,6 +1,7 @@
 import { Id } from "./backend";
 
 export enum ERoutes {
+  "home" = "/",
   "lines" = "/lines",
   "create" = "/create",
   "edit" = "/edit",

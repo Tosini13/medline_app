@@ -43,12 +43,13 @@ class Auth {
     }
   }
 
-  async logIn({ email, password, failureCallBack }: TLogInStoreParams) {
+  async logIn({ email, password, successCallBack, failureCallBack }: TLogInStoreParams) {
     const res = await logIn({ email, password });
     if (res.data.token) {
       this.setAxiosHeaders(res.data.token);
       localStorage.setItem("token", res.data.token);
       this.isLoggedIn = true;
+      if (successCallBack) successCallBack();
     } else {
       if (failureCallBack) failureCallBack();
       this.isLoggedIn = false;

@@ -4,11 +4,11 @@ import { format } from "date-fns";
 import styled from "styled-components";
 import { EVENT_TYPE } from "../../../models/backend";
 import { DATE_TIME_FORMAT } from "../../../models/const";
-import { theme } from "../../../style/theme";
+import { lightTheme } from "../../../style/theme";
 import EventTypeIcon from "../EventTypeIcon";
 
 export const TypographyEventStyled = styled(Typography)`
-  color: ${theme.palette.text.secondary};
+  color: ${lightTheme.palette.text.secondary};
 `;
 
 const BorderLine = styled.div`

@@ -1,6 +1,6 @@
 import { CSSProperties } from "react";
 import styled from "styled-components";
-import { theme } from "../../style/theme";
+import { lightTheme } from "../../style/theme";
 
 const HamburgerStyled = styled.div<{ open: boolean }>`
   display: flex;
@@ -11,7 +11,7 @@ const HamburgerStyled = styled.div<{ open: boolean }>`
   padding: 10px;
   z-index: 100;
   > div {
-    background-color: ${theme.palette.primary.contrastText};
+    background-color: ${lightTheme.palette.primary.contrastText};
     width: 100%;
     height: 3px;
     border-radius: 2px;

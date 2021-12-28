@@ -2,15 +2,18 @@ import Lines from "./components/lines/Lines";
 import Drawer from "./components/nav/Drawer";
 import styled from "styled-components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import CreateLine from "./components/lines/form/CreateLine";
-import LogIn from "./components/auth/LogIn/LogIn";
 import { ERoutes } from "./models/routes";
-import LinePage from "./components/lines/line/LinePage";
-import { theme } from "./style/theme";
-import { Grid, Hidden } from "@mui/material";
-import { useState } from "react";
+import { Grid, Hidden, Stack } from "@mui/material";
+import { useContext, useState } from "react";
 import { drawerWidth } from "./components/nav/DesktopNav";
 import { headerHeight } from "./components/nav/MobileNav";
+import { Theme, useTheme } from '@mui/material/styles';
+import { ETheme } from "./stores/Theme";
+import { AuthStoreContext } from "./stores/Auth";
+import NavBar from "./components/nav/navBar/NavBar";
+/* ======== PAGES ======== */
+import HomePage from "./pages/HomePage";
+
 import EditLinePage from "./components/lines/form/edit/EditLinePage";
 import SignUp from "./components/auth/SignUp/SignUp";
 import AuthRedirect from './components/wrappers/AuthRedirect';
@@ -19,21 +22,18 @@ import CheckToken from "./components/auth/CheckToken/CheckToken";
 import SetNewPassword from "./components/auth/SetNewPassword/SetNewPassword";
 import User from "./components/user/User";
 import ScanQrCode from "./components/qrCode/ScanQrCode";
+import CreateLine from "./components/lines/form/CreateLine";
+import LogIn from "./components/auth/LogIn/LogIn";
+import LinePage from "./components/lines/line/LinePage";
 
 const MainDesktop = styled.div`
   width: calc(100% - ${drawerWidth} - 10px);
-  height: 100vh;
-  border-bottom-left-radius: 10px;
-  border-top-left-radius: 10px;
-  box-shadow: 0px 0px 8px 0px rgb(0 0 0 / 60%);
   margin-left: auto;
-  background-color: white;
 `;
 const MainMobile = styled.div<{ close: boolean }>`
   box-shadow: 0px 0px 8px 0px rgb(0 0 0 / 60%);
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-  background-color: white;
   position: absolute;
   top: ${headerHeight};
   left: 0px;
@@ -44,17 +44,22 @@ const MainMobile = styled.div<{ close: boolean }>`
 `;
 
 type TPaperSectionProps = {
-  openMenu: boolean;
 };
 
-const MainSection: React.FC<TPaperSectionProps> = ({ children, openMenu }) => {
+const MainSection: React.FC<TPaperSectionProps> = ({ children }) => {
+  const authStore = useContext(AuthStoreContext);
+  const [openMenu, setOpenMenu] = useState(false);
   return (
     <>
+      {authStore.isLoggedIn ? <Drawer open={openMenu} setOpen={setOpenMenu} /> : <NavBar />}
       <Hidden mdDown>
         <MainDesktop>
-          <Grid container direction="column" style={{ height: '100%' }}>
-            <Grid item style={{ height: '100%' }}>{children}</Grid>
-          </Grid>
+          <Stack>
+            {/* <Grid container direction="column" style={{ height: '100%' }}>
+              <Grid item style={{ height: '100%' }}>{children}</Grid>
+            </Grid> */}
+            {children}
+          </Stack>
         </MainDesktop>
       </Hidden>
       <Hidden mdUp>
@@ -68,40 +73,61 @@ const MainSection: React.FC<TPaperSectionProps> = ({ children, openMenu }) => {
   );
 };
 
-function App() {
-  const [openMenu, setOpenMenu] = useState(false);
+const BodyStyled = styled.div<{ theme: Theme }>`
+  width: 100vw;
+  height: 100vh;
+  
+  ${props => props.theme.palette.mode === ETheme.dark
+    ? 'background-color: rgba(0,0,0,70%);'
+    :
+    'background-color: rgba(255,255,255,70%);'}
+  /* ${props => props.theme.palette.mode === ETheme.dark
+    ? 'background: linear-gradient(265.1deg, rgba(0, 0, 0, 0) -16.19%, rgba(0, 0, 0, 0.608664) 46.25%, #000000 119.67%);'
+    :
+    'background: linear-gradient(265.5deg, rgba(250, 250, 250, 0) 57.94%, #FAFAFA 82.25%);'} */
+`;
 
+type TBodyProps = {};
+
+const Body: React.FC<TBodyProps> = ({
+  children
+}) => {
+  const theme = useTheme();
+  return (<BodyStyled theme={theme}>{children}</BodyStyled>);
+};
+
+function App() {
   return (
+    // <Body>
     <BrowserRouter basename={"/"}>
-      <div
-        style={{
-          position: "relative",
-          overflowX: "hidden",
-          backgroundColor: theme.palette.primary.main,
-          height: "100vh", //mobile
-          overflow: "hidden", //mobile
-        }}
-      >
-        <Drawer open={openMenu} setOpen={setOpenMenu} />
-        <AuthRedirect>
-          <MainSection openMenu={openMenu}>
-            <Routes>
-              <Route path={"/"} element={<Lines />} />
-              <Route path={`${ERoutes.lines}/:id`} element={<LinePage />} />
-              <Route path={ERoutes.create} element={<CreateLine />} />
-              <Route path={`${ERoutes.edit}/:id`} element={<EditLinePage />} />
-              <Route path={ERoutes.user} element={<User />} />
-              <Route path={ERoutes.logIn} element={<LogIn />} />
-              <Route path={ERoutes.signUp} element={<SignUp />} />
-              <Route path={ERoutes.resetPassword} element={<ResetPassword />} />
-              <Route path={ERoutes.checkToken} element={<CheckToken />} />
-              <Route path={ERoutes.setPassword} element={<SetNewPassword />} />
-              <Route path={ERoutes.scarQrCode} element={<ScanQrCode />} />
-            </Routes>
-          </MainSection>
-        </AuthRedirect>
-      </div>
+      {/* <div
+          style={{
+            position: "relative",
+            overflowX: "hidden",
+            height: "100vh", //mobile
+            overflow: "hidden", //mobile
+          }}
+        > */}
+      <AuthRedirect>
+        <Routes>
+          <Route path={"/"} element={<MainSection><HomePage /></MainSection>} />
+          <Route path={ERoutes.lines} element={<MainSection><Lines /></MainSection>} />
+          <Route path={`${ERoutes.lines}/:id`} element={<MainSection><LinePage /></MainSection>} />
+          <Route path={ERoutes.create} element={<MainSection><CreateLine /></MainSection>} />
+          <Route path={`${ERoutes.edit}/:id`} element={<MainSection><EditLinePage /></MainSection>} />
+          <Route path={ERoutes.user} element={<MainSection><User /></MainSection>} />
+          <Route path={ERoutes.scarQrCode} element={<MainSection><ScanQrCode /></MainSection>} />
+          {/* --------------- AUTH --------------- */}
+          <Route path={ERoutes.logIn} element={<LogIn />} />
+          <Route path={ERoutes.signUp} element={<SignUp />} />
+          <Route path={ERoutes.resetPassword} element={<ResetPassword />} />
+          <Route path={ERoutes.checkToken} element={<CheckToken />} />
+          <Route path={ERoutes.setPassword} element={<SetNewPassword />} />
+        </Routes>
+      </AuthRedirect>
+      {/* </div> */}
     </BrowserRouter>
+    // </Body>
   );
 }
 

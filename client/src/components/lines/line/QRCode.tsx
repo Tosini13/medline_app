@@ -1,7 +1,7 @@
 import { Dialog } from "@mui/material";
 import { useMemo } from "react";
 import QRCode from "react-qr-code";
-import { theme } from "../../../style/theme";
+import { lightTheme } from "../../../style/theme";
 
 type TQRCodeDialogProps = {
     open: boolean;
@@ -20,7 +20,7 @@ const QRCodeDialog: React.FC<TQRCodeDialogProps> = ({ open, handleClose, lineId 
                 size={250}
                 value={url}
                 bgColor="white"
-                fgColor={theme.palette.primary.main}
+                fgColor={lightTheme.palette.primary.main}
                 level="H"
             />
         );

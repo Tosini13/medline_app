@@ -8,8 +8,9 @@ import { useNavigate } from "react-router";
 import { ERoutes } from '../../../models/routes';
 import { resetPassword, TResetPasswordParams } from "../../../queries/auth/resetPassword";
 import { LinkAuth } from "../../buttons/Links";
-import AuthPageContainer, { AuthFormContainer } from "../AuthFormContainer";
+import { AuthFormContainer } from "../AuthFormContainer";
 import Button from "../../buttons/Button";
+import AuthPageContainer from "../AuthPageContainer";
 
 type TResetPasswordForm = {
     email: string;
@@ -42,10 +43,10 @@ const ResetPassword: React.FC<TResetPasswordProps> = observer(() => {
             <AuthFormContainer>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Stack spacing={2}>
-                        <Typography align="center">
+                        <Typography align="center" color="text.primary">
                             Reset Password
                         </Typography>
-                        <Typography align="center" fontSize={11} style={{ maxWidth: '300px' }}>
+                        <Typography align="center" color="text.primary" fontSize={11} style={{ maxWidth: '300px' }}>
                             You can choose new password using a link that we will send to the email address.
                         </Typography>
                         <TextFieldRUForm
@@ -54,13 +55,12 @@ const ResetPassword: React.FC<TResetPasswordProps> = observer(() => {
                             control={control}
                             type="email"
                         />
-                        <Button type="submit">
+                        <Button type="submit" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
                             Reset
                         </Button>
                     </Stack>
                 </form>
             </AuthFormContainer>
-            <Typography align="center" color="text.primary">or</Typography>
             <Stack direction="row" justifyContent="center" spacing={2}>
                 <LinkAuth to={ERoutes.logIn}>
                     Log In

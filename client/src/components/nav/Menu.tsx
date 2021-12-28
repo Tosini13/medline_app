@@ -1,4 +1,5 @@
 import { List, Grid } from "@mui/material";
+import MedLineIcon from '../../resources/logo/MedLine_logo.png';
 import {
   Add,
   QrCode,
@@ -8,7 +9,9 @@ import {
   Info,
   Login,
   AppRegistration,
-  ContactPage
+  ContactPage,
+  LightMode,
+  DarkMode
 } from "@mui/icons-material";
 import { useNavigate } from "react-router";
 import { ERoutes } from "../../models/routes";
@@ -18,7 +21,9 @@ import { observer } from "mobx-react";
 import { useContext } from "react";
 import { AuthStoreContext } from "../../stores/Auth";
 import { LoadingIcon } from "../forms/Buttons";
-import { theme } from "../../style/theme";
+import { lightTheme } from "../../style/theme";
+import ListMenuElement, { ListMenuContainer } from "../reusable/list/ListMenuElement";
+import { ETheme, ThemeStoreContext } from "../../stores/Theme";
 type TMenuProps = {
   handleClose: () => void;
 };
@@ -43,6 +48,7 @@ type TMenuLoggedInProps = {
 
 const MenuLoggedIn: React.FC<TMenuLoggedInProps> = observer(({ handleClose }) => {
   const authStore = useContext(AuthStoreContext);
+  const themeStore = useContext(ThemeStoreContext);
 
   const { response } = useGetCurrentUser();
   const user = response?.data;
@@ -63,47 +69,55 @@ const MenuLoggedIn: React.FC<TMenuLoggedInProps> = observer(({ handleClose }) =>
       justifyContent="space-between"
     >
       <Grid item>
-        <List>
-          <ListElement
-            Icon={user ? <AccountCircle style={{ color: "white" }} /> : <LoadingIcon style={{ color: theme.palette.secondary.contrastText }} />}
+        <ListMenuContainer>
+          <ListMenuElement
+            Icon={<img src={MedLineIcon} alt="MedLine icon" style={{ maxWidth: '40px', cursor: 'pointer' }} onClick={() => handleChooseOption(() => navigate(ERoutes.home))} />}
+          />
+          <ListMenuElement
+            Icon={user ? <AccountCircle style={{ color: "white" }} /> : <LoadingIcon style={{ color: lightTheme.palette.secondary.contrastText }} />}
             text={user ? `${user.firstName} ${user.lastName}` : ' ... '}
           />
-          <ListElement
+          <ListMenuElement
             Icon={<ContactPage style={{ color: "white" }} />}
             text="User Details"
             onClick={() => handleChooseOption(() => navigate(ERoutes.user))}
           />
-          <ListElement
+          <ListMenuElement
             Icon={<FormatLineSpacing style={{ color: "white" }} />}
             text="Lines"
-            onClick={() => handleChooseOption(() => navigate("/"))}
+            onClick={() => handleChooseOption(() => navigate(ERoutes.lines))}
           />
-          <ListElement
+          <ListMenuElement
             Icon={<Add style={{ color: "white" }} />}
             text="Create Line"
             onClick={() => handleChooseOption(() => navigate(ERoutes.create))}
           />
-          <ListElement
+          <ListMenuElement
             Icon={<QrCode style={{ color: "white" }} />}
             text="Scan QR Code"
             onClick={() => handleChooseOption(() => navigate(ERoutes.scarQrCode))}
           />
-        </List>
+        </ListMenuContainer>
       </Grid>
       <Grid item>
-        <List>
-          <ListElement
+        <ListMenuContainer>
+          <ListMenuElement
+            Icon={themeStore.theme === ETheme.dark ? <LightMode style={{ color: "white" }} /> : <DarkMode style={{ color: "white" }} />}
+            text={themeStore.theme === ETheme.dark ? 'Light Mode' : 'Dark Mode'}
+            onClick={() => themeStore.switchTheme()}
+          />
+          <ListMenuElement
             Icon={<Info style={{ color: "white" }} />}
             text={`Version ${process.env.REACT_APP_VERSION}`}
           />
-          <ListElement
+          <ListMenuElement
             Icon={<Logout style={{ color: "white" }} />}
             text="Log out"
             onClick={() => handleChooseOption(() => {
               authStore.logOut({ successCallBack: () => navigate(ERoutes.logIn) });
             })}
           />
-        </List>
+        </ListMenuContainer>
       </Grid>
     </Grid>
   );

@@ -2,14 +2,14 @@
 import { Stack } from '@mui/material';
 import { useMemo, useState } from 'react';
 import QrReader from 'react-qr-reader';
-import { theme } from '../../style/theme';
+import { lightTheme } from '../../style/theme';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { navigateTo } from '../../models/routes';
 
 const QrReaderStyled = styled(QrReader)`
     div {
-        box-shadow: ${theme.palette.primary.main} 0px 0px 0px 5px inset !important;
+        box-shadow: ${lightTheme.palette.primary.main} 0px 0px 0px 5px inset !important;
     }
 `;
 

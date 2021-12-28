@@ -1,17 +1,20 @@
+import { Theme, useTheme } from '@mui/material/styles';
 import { Link, LinkProps } from "react-router-dom";
 import styled from 'styled-components';
-import { theme } from "../../style/theme";
+import { lightTheme } from "../../style/theme";
 
-const LinkStyled = styled(Link)`
-    color: ${theme.palette.primary.main};
+const LinkStyled = styled(Link) <{ theme: Theme }>`
+    color: ${props => props.theme.palette.text.secondary};
     text-decoration: none;
+    transition: all 0.15s;
     &:hover {
-        color: ${theme.palette.text.primary};
+        color: ${props => props.theme.palette.primary.main};
     }
 `;
 
 export type TLinkAuthProps = LinkProps;
 
 export const LinkAuth: React.FC<TLinkAuthProps> = ({ children, ...props }) => {
-    return (<LinkStyled {...props}>{children}</LinkStyled>);
+    const theme = useTheme();
+    return (<LinkStyled theme={theme} {...props}>{children}</LinkStyled>);
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { IconButton, List } from "@mui/material";
 import { MoreVert } from "@mui/icons-material";
 import styled from "styled-components";
-import { theme } from "../../../style/theme";
+import { lightTheme } from "../../../style/theme";
 import { useState } from "react";
 import { TEvent, Id } from "../../../models/backend";
 import EventTypeIcon from "../EventTypeIcon";
@@ -18,7 +18,7 @@ const Container = styled.div<{
   height: 100%;
   width: 300px;
   max-width: calc(100% - 20px);
-  background-color: ${theme.palette.primary.main};
+  background-color: ${lightTheme.palette.primary.main};
   transition: all 0.3s;
   ${(props) =>
     props.open
@@ -35,7 +35,7 @@ const IconButtonStyled = styled(IconButton)`
   top: 50%;
   right: 0%;
   transform: translate(100%, -50%);
-  background-color: ${theme.palette.primary.main} !important;
+  background-color: ${lightTheme.palette.primary.main} !important;
   border-radius: 7px !important;
   width: 16px !important;
   border-bottom-left-radius: 0px !important;
@@ -59,11 +59,11 @@ const TimeLine: React.FC<TTimeLineProps> = ({ events, callback }) => {
                 Icon={
                   <EventTypeIcon
                     type={event.type}
-                    style={{ color: theme.palette.primary.contrastText }}
+                    style={{ color: lightTheme.palette.primary.contrastText }}
                   />
                 }
                 text={event.title}
-                color={theme.palette.primary.contrastText}
+                color={lightTheme.palette.primary.contrastText}
                 onClick={() => {
                   if (callback) callback(event.id);
                   setOpen(false);

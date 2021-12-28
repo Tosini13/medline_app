@@ -6,9 +6,11 @@ export const AuthFormContainer: React.FC<TAuthFormContainerProps> = ({ children 
     return (
         <>
             <Hidden mdDown>
-                <Paper style={{ padding: '20px' }}>
+                <div style={{
+                    width: '300px'
+                }}>
                     {children}
-                </Paper>
+                </div>
             </Hidden>
             <Hidden mdUp>
                 {children}
@@ -17,23 +19,23 @@ export const AuthFormContainer: React.FC<TAuthFormContainerProps> = ({ children 
     );
 };
 
-type TAuthPageContainerProps = {};
+// type TAuthPageContainerProps = {};
 
-const AuthPageContainer: React.FC<TAuthPageContainerProps> = ({ children }) => {
-    return (
-        <>
-            <Hidden mdDown>
-                <Stack spacing={2} alignItems="center" justifyContent="center" style={{ height: '100%' }}>
-                    {children}
-                </Stack>
-            </Hidden>
-            <Hidden mdUp>
-                <Stack spacing={2} alignItems="center" justifyContent="center" style={{ height: '100%' }}>
-                    {children}
-                </Stack>
-            </Hidden>
-        </>
-    );
-};
+// const AuthPageContainer: React.FC<TAuthPageContainerProps> = ({ children }) => {
+//     return (
+//         <>
+//             <Hidden mdDown>
+//                 <Stack spacing={6} alignItems="center" style={{ height: '100%' }}>
+//                     {children}
+//                 </Stack>
+//             </Hidden>
+//             <Hidden mdUp>
+//                 <Stack spacing={2} alignItems="center" justifyContent="center" style={{ height: '100%' }}>
+//                     {children}
+//                 </Stack>
+//             </Hidden>
+//         </>
+//     );
+// };
 
-export default AuthPageContainer;
+// export default AuthPageContainer;
