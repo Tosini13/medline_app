@@ -1,6 +1,6 @@
 import Lines from "./components/lines/Lines";
 import Drawer from "./components/nav/Drawer";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ERoutes } from "./models/routes";
 import { Grid, Hidden, Stack } from "@mui/material";
@@ -25,6 +25,22 @@ import ScanQrCode from "./components/qrCode/ScanQrCode";
 import CreateLine from "./components/lines/form/CreateLine";
 import LogIn from "./components/auth/LogIn/LogIn";
 import LinePage from "./components/lines/line/LinePage";
+import MainLoggedOut from "./components/main/MainLoggedOut";
+
+const GlobalStyle = createGlobalStyle<{ theme: Theme }>`
+  body {
+    ${props => props.theme.palette.mode === ETheme.dark ?
+    `background: ${props.theme.gradient.main};`
+    :
+    `
+    background-image: url("./resources/background/medline-background.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    backdrop-filter: contrast(0.5);
+    `
+  }
+  }`;
+
 
 const MainDesktop = styled.div`
   width: calc(100% - ${drawerWidth} - 10px);
@@ -97,38 +113,63 @@ const Body: React.FC<TBodyProps> = ({
 };
 
 function App() {
+  const authStore = useContext(AuthStoreContext);
+  const theme = useTheme();
+  if (authStore.isLoggedIn) {
+    return (
+      <>
+        <GlobalStyle theme={theme} />
+        <LoggedInRoutes />
+      </>
+    );
+  }
   return (
-    // <Body>
+    <>
+      <GlobalStyle theme={theme} />
+      <LoggedOutRoutes />
+    </>
+  );
+}
+
+export default App;
+
+
+type TLoggedOutRoutesProps = {};
+
+const LoggedOutRoutes: React.FC<TLoggedOutRoutesProps> = () => {
+  return (
     <BrowserRouter basename={"/"}>
-      {/* <div
-          style={{
-            position: "relative",
-            overflowX: "hidden",
-            height: "100vh", //mobile
-            overflow: "hidden", //mobile
-          }}
-        > */}
+      <MainLoggedOut>
+        <AuthRedirect>
+          <Routes>
+            <Route path={"/"} element={<HomePage />} />
+            <Route path={ERoutes.logIn} element={<LogIn />} />
+            <Route path={ERoutes.signUp} element={<SignUp />} />
+            <Route path={ERoutes.resetPassword} element={<ResetPassword />} />
+            <Route path={ERoutes.checkToken} element={<CheckToken />} />
+            <Route path={ERoutes.setPassword} element={<SetNewPassword />} />
+          </Routes>
+        </AuthRedirect>
+      </MainLoggedOut>
+    </BrowserRouter>
+  );
+};
+
+type TLoggedInRoutesProps = {};
+
+const LoggedInRoutes: React.FC<TLoggedInRoutesProps> = () => {
+  return (
+    <BrowserRouter basename={ERoutes.lines}>
       <AuthRedirect>
         <Routes>
-          <Route path={"/"} element={<MainSection><HomePage /></MainSection>} />
           <Route path={ERoutes.lines} element={<MainSection><Lines /></MainSection>} />
           <Route path={`${ERoutes.lines}/:id`} element={<MainSection><LinePage /></MainSection>} />
           <Route path={ERoutes.create} element={<MainSection><CreateLine /></MainSection>} />
           <Route path={`${ERoutes.edit}/:id`} element={<MainSection><EditLinePage /></MainSection>} />
           <Route path={ERoutes.user} element={<MainSection><User /></MainSection>} />
           <Route path={ERoutes.scarQrCode} element={<MainSection><ScanQrCode /></MainSection>} />
-          {/* --------------- AUTH --------------- */}
-          <Route path={ERoutes.logIn} element={<LogIn />} />
-          <Route path={ERoutes.signUp} element={<SignUp />} />
-          <Route path={ERoutes.resetPassword} element={<ResetPassword />} />
-          <Route path={ERoutes.checkToken} element={<CheckToken />} />
-          <Route path={ERoutes.setPassword} element={<SetNewPassword />} />
         </Routes>
       </AuthRedirect>
-      {/* </div> */}
     </BrowserRouter>
-    // </Body>
   );
-}
-
-export default App;
+};

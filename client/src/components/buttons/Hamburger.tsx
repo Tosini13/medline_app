@@ -7,8 +7,8 @@ const HamburgerStyled = styled.div<{ open: boolean }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 25px;
-  padding: 10px;
+  width: 20px;
+  padding: 3px;
   z-index: 100;
   > div {
     background-color: ${lightTheme.palette.primary.contrastText};

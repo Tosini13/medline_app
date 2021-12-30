@@ -2,6 +2,9 @@ import { createTheme } from '@mui/material/styles';
 
 declare module "@mui/material/styles" {
     interface Theme {
+        gradient: {
+            main: string;
+        }
         value: {
             normal: string;
             high: string;
@@ -10,6 +13,9 @@ declare module "@mui/material/styles" {
     }
     // allow configuration using `createTheme`
     interface ThemeOptions {
+        gradient?: {
+            main?: string;
+        }
         value?: {
             normal?: string;
             high?: string;
@@ -58,4 +64,7 @@ export const darkTheme = createTheme({
         high: "yellow",
         highest: "red",
     },
+    gradient: {
+        main: 'linear-gradient(270.1deg, #153B5C -77.26%, #000000 103.68%)'
+    }
 });

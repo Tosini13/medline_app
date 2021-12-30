@@ -4,10 +4,6 @@ body {
     "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("./resources/background/medline-background.jpg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  backdrop-filter: contrast(0.5);
 }
 
 code {

@@ -1,11 +1,20 @@
 import { IconButton, Stack, Typography } from "@mui/material";
 import { drawerWidth } from "../nav/DesktopNav";
 import ArrowUp from '../../resources/icons/arrow_up.svg';
+import ArrowUpWhite from '../../resources/icons/arrow_up_white.svg';
 import ArrowDown from '../../resources/icons/arrow_down.svg';
 import styled from 'styled-components';
+import { Box } from "@mui/system";
+import { useTheme } from "@mui/material/styles";
+import { ETheme } from "../../stores/Theme";
 
-export const ArrowImg = styled.img`
-    height: 10px;
+export const ArrowUpImg = styled.img`
+    height: 15px;
+`;
+
+export const ArrowDownImg = styled.img`
+    height: 15px;
+    transform: rotate(180deg);
 `;
 
 type TArrowIconButtonProps = {
@@ -14,18 +23,26 @@ type TArrowIconButtonProps = {
 
 export const ArrowIconButton: React.FC<TArrowIconButtonProps> = ({ children, id }) => {
     return (
-        <a href={`#${id}`} style={{ textDecoration: 'none' }}>
-            <IconButton style={{ height: '40px', width: '40px' }}>
+        <a href={`#${id}`} style={{ textDecoration: 'none', zIndex: 2 }}>
+            <IconButton style={{ height: '45px', width: '45px' }}>
                 {children}
             </IconButton>
         </a>
     );
 };
 
+export const StackStyled = styled(Stack)`
+    min-height: 100vh;
+    padding-top: 59px;
+    padding-bottom: 5px;
+    width: 100%;
+    box-sizing: border-box;
+`;
 
 export enum ESectionId {
     home = 'home',
     aboutUs = 'aboutUs',
+    howItWorks = 'howItWorks',
     contact = 'contact',
 }
 
@@ -36,26 +53,26 @@ type TSectionProps = {
 };
 
 const Section: React.FC<TSectionProps> = ({ children, id, nextId, prevId }) => {
+    const theme = useTheme();
+    const isLight = theme.palette.mode === ETheme.light;
     return (
-        <section id={id} style={{
-            height: '100vh',
-            padding: `50px calc(${drawerWidth} - 5px) 0px 5px`,
-            boxSizing: 'border-box'
-        }}>
-            <Stack alignItems={"center"} style={{ height: '100%', width: '100%' }}>
-                {prevId &&
-                    <ArrowIconButton id={prevId}>
-                        <ArrowImg src={ArrowUp} alt="Arrow Up" />
-                    </ArrowIconButton>}
-                <div style={{ flexGrow: 1, width: '100%' }}>
-                    {children}
-                </div>
-                {nextId &&
-                    <ArrowIconButton id={nextId}>
-                        <ArrowImg src={ArrowDown} alt="Arrow Down" />
-                    </ArrowIconButton>
-                }
-            </Stack>
+        <section id={id}>
+            <Box px={{ xs: 1, sm: 3, md: 6 }}>
+                <StackStyled alignItems={"center"}>
+                    {prevId &&
+                        <ArrowIconButton id={prevId}>
+                            <ArrowUpImg src={isLight ? ArrowUp : ArrowUpWhite} alt="Arrow Up" />
+                        </ArrowIconButton>}
+                    <Stack style={{ flexGrow: 1, width: '100%' }} alignItems={"center"}>
+                        {children}
+                    </Stack>
+                    {nextId &&
+                        <ArrowIconButton id={nextId}>
+                            <ArrowDownImg src={isLight ? ArrowUp : ArrowUpWhite} alt="Arrow Down" />
+                        </ArrowIconButton>
+                    }
+                </StackStyled>
+            </Box>
         </section >
     );
 };

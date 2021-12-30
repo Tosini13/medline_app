@@ -6,6 +6,7 @@ import { ETheme } from "../../stores/Theme";
 import { useTheme, Theme } from "@mui/material/styles";
 
 const TextFieldStyled = styled(TextField) <{ theme: Theme }>`
+  ${props => `color: ${props.theme.palette.primary.contrastText};`}
   div.MuiOutlinedInput-root{
   ${props => props.theme.palette.mode === ETheme.dark
     ? `background-color: rgba(${hexToRgb(props.theme.palette.primary.light)},0.8);`
@@ -17,6 +18,16 @@ const TextFieldStyled = styled(TextField) <{ theme: Theme }>`
     ? `-webkit-box-shadow: 0 0 0 100px rgba(${hexToRgb(props.theme.palette.primary.main)},0.8) inset !important;`
     :
     '-webkit-box-shadow: 0 0 0 100px rgba(255,255,255,0.8) inset !important;'}
+  }
+  .MuiInput-root{
+    &:hover{
+      &::before{
+      ${props => `border-bottom: 1px solid rgba(${hexToRgb(props.theme.palette.primary.main)}, 0.9);`}
+      }
+    }
+    &::before{
+      ${props => `border-bottom: 1px solid rgba(${hexToRgb(props.theme.palette.primary.main)}, 0.7);`}
+    }
   }
 `;
 
