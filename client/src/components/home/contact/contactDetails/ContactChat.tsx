@@ -15,6 +15,7 @@ const ChatContainerStyled = styled.div<{ theme: Theme }>`
     width: 300px;
     padding: 20px;
     margin-top: 80px;
+    max-width: 90%;
     position: relative;
     &::before{
         content: '';
