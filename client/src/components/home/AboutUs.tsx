@@ -1,9 +1,9 @@
 import { Grid, Hidden, Stack, Typography } from '@mui/material';
-import MedLineLogo from '../../resources/logo/MedLine_logo_oneColor.svg'
 import DesktopView from '../../resources/background/views/desktop-view.svg'
 import TabletView from '../../resources/background/views/tablet-view.svg'
 import Section, { ESectionId } from './Section';
 import { Paragraph } from './Home';
+import MedLineImg from '../utils/components/Logo/MedLineImg';
 
 type TAboutUsProps = {};
 
@@ -14,7 +14,7 @@ const AboutUs: React.FC<TAboutUsProps> = () => {
                 <Grid item xs={12} md={6}>
                     <Stack spacing={3} alignItems={"center"}>
                         <Stack direction="row" alignItems={"center"} justifyContent={"flex-start"} spacing={2}>
-                            <img src={MedLineLogo} alt="MedLine logo" style={{ height: '30px' }} />
+                            <MedLineImg />
                             <Typography color="text.primary" variant="h4">About Us</Typography>
                         </Stack>
                         <Paragraph color="text.primary" align='justify'>
