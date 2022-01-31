@@ -11,7 +11,7 @@ const app = express();
 initNodeGallery();
 connectMongoose();
 
-// -------- AWS -------
+// -------- AWS ------- //
 
 const AWS_CREDENTIALS = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
