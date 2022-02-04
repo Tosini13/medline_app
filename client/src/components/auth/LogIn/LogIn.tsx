@@ -1,18 +1,17 @@
 import React, { useContext } from "react";
-import { observer } from 'mobx-react';
+import { observer } from "mobx-react";
 import { AuthStoreContext, TLogInStoreParams } from "../../../stores/Auth";
 
-import { Grid, Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { TextFieldRUForm } from "../../forms/TextField";
 import { useNavigate } from "react-router";
-import { ERoutes } from '../../../models/routes';
+import { ERoutes } from "../../../models/routes";
 import { AuthFormContainer } from "../AuthFormContainer";
 import { LinkAuth } from "../../buttons/Links";
 import Button, { ButtonSecondary } from "../../buttons/Button";
-import { ThemeStoreContext } from "../../../stores/Theme";
 import ButtonGroup from "../../buttons/ButtonGroup";
-import AuthPageContainer from "../AuthPageContainer";
+import AuthPageContainer from "../../layout/auth/AuthPageContainer";
 import useAsync from "../../../helpers/useAsync";
 import { LoadingIcon } from "../../forms/Buttons";
 import { Login } from "@mui/icons-material";
@@ -20,7 +19,7 @@ import { Login } from "@mui/icons-material";
 type TLoginForm = {
   email: string;
   password: string;
-}
+};
 
 type TLogInProps = {};
 
@@ -30,21 +29,22 @@ const LogIn: React.FC<TLogInProps> = observer(() => {
   const navigate = useNavigate();
   const { handleSubmit, control } = useForm<TLoginForm>();
 
-  const onSubmit = async (data: TLoginForm) => {
+  const onSubmit = React.useCallback(
+    async (data: TLoginForm) => {
+      const logInParams: TLogInStoreParams = {
+        email: data.email,
+        password: data.password,
+        successCallBack: () => navigate("/"),
+      };
 
-    const logInParams: TLogInStoreParams = {
-      email: data.email,
-      password: data.password,
-      successCallBack: () => navigate('/')
-    };
-
-    try {
-      await execute(authStore.logIn(logInParams));
-    } catch (e) {
-      console.error(e);
-    }
-
-  }
+      try {
+        await execute(authStore.logIn(logInParams));
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    [authStore, navigate, execute]
+  );
 
   return (
     <AuthPageContainer>
@@ -54,7 +54,11 @@ const LogIn: React.FC<TLogInProps> = observer(() => {
       </ButtonGroup>
       <AuthFormContainer>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={2} alignItems={"center"} style={{ width: '300px', maxWidth: '90vw' }}>
+          <Stack
+            spacing={2}
+            alignItems={"center"}
+            style={{ width: "300px", maxWidth: "90vw" }}
+          >
             <TextFieldRUForm
               fullWidth
               name="email"
@@ -69,7 +73,11 @@ const LogIn: React.FC<TLogInProps> = observer(() => {
               control={control}
               type="password"
             />
-            <Button type="submit" startIcon={isProcessing ? <LoadingIcon /> : <Login />} disabled={isProcessing}>
+            <Button
+              type="submit"
+              startIcon={isProcessing ? <LoadingIcon /> : <Login />}
+              disabled={isProcessing}
+            >
               Log In
             </Button>
           </Stack>
